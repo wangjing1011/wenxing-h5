@@ -1,0 +1,4488 @@
+{
+  "inputs": {
+    "node_modules/tyme4ts/dist/lib/index.mjs": {
+      "bytes": 293677,
+      "imports": [
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/astronomy-engine/esm/astronomy.js": {
+      "bytes": 412025,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/calendar/date-validation.js": {
+      "bytes": 3805,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/calendar/dateUtils.js": {
+      "bytes": 1657,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/date-validation.js",
+          "kind": "import-statement",
+          "original": "./date-validation.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/calendar/historical-timezone.js": {
+      "bytes": 13434,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/date-validation.js",
+          "kind": "import-statement",
+          "original": "./date-validation.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/calendar/civil-time.js": {
+      "bytes": 6905,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/date-validation.js",
+          "kind": "import-statement",
+          "original": "./date-validation.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/historical-timezone.js",
+          "kind": "import-statement",
+          "original": "./historical-timezone.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/shared/version.js": {
+      "bytes": 85,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/shared/result.js": {
+      "bytes": 8182,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/shared/version.js",
+          "kind": "import-statement",
+          "original": "./version.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/shared/version.js",
+          "kind": "import-statement",
+          "original": "./version.js"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/calendar/china-dst.js": {
+      "bytes": 2985,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/civil-time.js",
+          "kind": "import-statement",
+          "original": "./civil-time.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/shared/result.js",
+          "kind": "import-statement",
+          "original": "../shared/result.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/calendar/true-solar-time.js": {
+      "bytes": 24657,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/astronomy-engine/esm/astronomy.js",
+          "kind": "import-statement",
+          "original": "astronomy-engine"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/date-validation.js",
+          "kind": "import-statement",
+          "original": "./date-validation.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/dateUtils.js",
+          "kind": "import-statement",
+          "original": "./dateUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/china-dst.js",
+          "kind": "import-statement",
+          "original": "./china-dst.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/civil-time.js",
+          "kind": "import-statement",
+          "original": "./civil-time.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/ganzhi/data.js": {
+      "bytes": 2889,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/paipanWarnings.js": {
+      "bytes": 7030,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/data.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/ganzhi/validation.js": {
+      "bytes": 3364,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "./data.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/ganzhi/relations.js": {
+      "bytes": 11634,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "./data.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/validation.js",
+          "kind": "import-statement",
+          "original": "./validation.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziMappingsData.js": {
+      "bytes": 6276,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/data.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziElementData.js": {
+      "bytes": 2576,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenShaData.js": {
+      "bytes": 6062,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziDisplayData.js": {
+      "bytes": 326,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/dateUtils.js",
+          "kind": "import-statement",
+          "original": "../calendar/dateUtils.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziDefinitions.js": {
+      "bytes": 396,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziElementData.js",
+          "kind": "import-statement",
+          "original": "./baziElementData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenShaData.js",
+          "kind": "import-statement",
+          "original": "./baziShenShaData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDisplayData.js",
+          "kind": "import-statement",
+          "original": "./baziDisplayData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziUtils.js": {
+      "bytes": 4696,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "./baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/validation.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/validation.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/validation.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/validation.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziElementData.js",
+          "kind": "import-statement",
+          "original": "./baziElementData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/nobleRules.js": {
+      "bytes": 9202,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "../../baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../../../ganzhi/data.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/shared/random.js": {
+      "bytes": 6373,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/shared/result.js",
+          "kind": "import-statement",
+          "original": "./result.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/calendar/timeManager.js": {
+      "bytes": 6188,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/civil-time.js",
+          "kind": "import-statement",
+          "original": "./civil-time.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/shared/random.js",
+          "kind": "import-statement",
+          "original": "../shared/random.js"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/ganzhi/index.js": {
+      "bytes": 16873,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/timeManager.js",
+          "kind": "import-statement",
+          "original": "../calendar/timeManager.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "./relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "./data.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/validation.js",
+          "kind": "import-statement",
+          "original": "./validation.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "./relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "./data.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "./data.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/validation.js",
+          "kind": "import-statement",
+          "original": "./validation.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/luRules.js": {
+      "bytes": 6987,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "../../baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/index.js",
+          "kind": "import-statement",
+          "original": "../../../ganzhi/index.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/dayRules.js": {
+      "bytes": 6226,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "../../baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../../../ganzhi/data.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/marriageRules.js": {
+      "bytes": 1570,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/index.js",
+          "kind": "import-statement",
+          "original": "../../../ganzhi/index.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/kongWang.js": {
+      "bytes": 465,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/index.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/disasterRules.js": {
+      "bytes": 17042,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/kongWang.js",
+          "kind": "import-statement",
+          "original": "../../kongWang.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "../../baziUtils.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/globalRules.js": {
+      "bytes": 2235,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/tenGodAnalysis.js": {
+      "bytes": 2029,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenSha/scope.js": {
+      "bytes": 1405,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenSha/variants.js": {
+      "bytes": 849,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziShenSha/index.js": {
+      "bytes": 3181,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "../baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/nobleRules.js",
+          "kind": "import-statement",
+          "original": "./helpers/nobleRules.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/luRules.js",
+          "kind": "import-statement",
+          "original": "./helpers/luRules.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/dayRules.js",
+          "kind": "import-statement",
+          "original": "./helpers/dayRules.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/marriageRules.js",
+          "kind": "import-statement",
+          "original": "./helpers/marriageRules.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/disasterRules.js",
+          "kind": "import-statement",
+          "original": "./helpers/disasterRules.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/globalRules.js",
+          "kind": "import-statement",
+          "original": "./helpers/globalRules.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/tenGodAnalysis.js",
+          "kind": "import-statement",
+          "original": "./helpers/tenGodAnalysis.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/scope.js",
+          "kind": "import-statement",
+          "original": "./scope.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/variants.js",
+          "kind": "import-statement",
+          "original": "./variants.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "../baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/variants.js",
+          "kind": "import-statement",
+          "original": "./variants.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/scope.js",
+          "kind": "import-statement",
+          "original": "./scope.js"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziFormationUtils.js": {
+      "bytes": 2011,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziElementData.js",
+          "kind": "import-statement",
+          "original": "./baziElementData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziRootFacts.js": {
+      "bytes": 2034,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "./baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziRootAdjudication.js": {
+      "bytes": 1583,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootFacts.js",
+          "kind": "import-statement",
+          "original": "./baziRootFacts.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/wuxing/index.js": {
+      "bytes": 9835,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/data.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTypes.js": {
+      "bytes": 391,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/wuxing/index.js",
+          "kind": "import-statement",
+          "original": "../wuxing/index.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziStrengthAnalyzer.js": {
+      "bytes": 16575,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziFormationUtils.js",
+          "kind": "import-statement",
+          "original": "./baziFormationUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootFacts.js",
+          "kind": "import-statement",
+          "original": "./baziRootFacts.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootAdjudication.js",
+          "kind": "import-statement",
+          "original": "./baziRootAdjudication.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTypes.js",
+          "kind": "import-statement",
+          "original": "./baziTypes.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/harmonyTransform.js": {
+      "bytes": 18005,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTypes.js",
+          "kind": "import-statement",
+          "original": "./baziTypes.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziElementData.js",
+          "kind": "import-statement",
+          "original": "./baziElementData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziPatternFulfillment.js": {
+      "bytes": 44949,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "./baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/harmonyTransform.js",
+          "kind": "import-statement",
+          "original": "./harmonyTransform.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootAdjudication.js",
+          "kind": "import-statement",
+          "original": "./baziRootAdjudication.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootFacts.js",
+          "kind": "import-statement",
+          "original": "./baziRootFacts.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/transformedPatternStrategy.js": {
+      "bytes": 12549,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/harmonyTransform.js",
+          "kind": "import-statement",
+          "original": "./harmonyTransform.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "./baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziFormationUtils.js",
+          "kind": "import-statement",
+          "original": "./baziFormationUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootAdjudication.js",
+          "kind": "import-statement",
+          "original": "./baziRootAdjudication.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootFacts.js",
+          "kind": "import-statement",
+          "original": "./baziRootFacts.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziQuzhiStrategy.js": {
+      "bytes": 4366,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziFormationUtils.js",
+          "kind": "import-statement",
+          "original": "./baziFormationUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziCongErStrategy.js": {
+      "bytes": 18329,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziFormationUtils.js",
+          "kind": "import-statement",
+          "original": "./baziFormationUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/harmonyTransform.js",
+          "kind": "import-statement",
+          "original": "./harmonyTransform.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootAdjudication.js",
+          "kind": "import-statement",
+          "original": "./baziRootAdjudication.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootFacts.js",
+          "kind": "import-statement",
+          "original": "./baziRootFacts.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziPatternStrategy.js": {
+      "bytes": 15487,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "./baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziFormationUtils.js",
+          "kind": "import-statement",
+          "original": "./baziFormationUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziPatternFulfillment.js",
+          "kind": "import-statement",
+          "original": "./baziPatternFulfillment.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/transformedPatternStrategy.js",
+          "kind": "import-statement",
+          "original": "./transformedPatternStrategy.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziQuzhiStrategy.js",
+          "kind": "import-statement",
+          "original": "./baziQuzhiStrategy.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziCongErStrategy.js",
+          "kind": "import-statement",
+          "original": "./baziCongErStrategy.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/general.js": {
+      "bytes": 2621,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/yin.js": {
+      "bytes": 413,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/mao.js": {
+      "bytes": 394,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/chen.js": {
+      "bytes": 408,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/si.js": {
+      "bytes": 431,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/wu.js": {
+      "bytes": 836,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/wei.js": {
+      "bytes": 940,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/shen.js": {
+      "bytes": 388,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/you.js": {
+      "bytes": 406,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/xu.js": {
+      "bytes": 390,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/hai.js": {
+      "bytes": 353,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/zi.js": {
+      "bytes": 390,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/chou.js": {
+      "bytes": 401,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/index.js": {
+      "bytes": 859,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/yin.js",
+          "kind": "import-statement",
+          "original": "./yin.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/mao.js",
+          "kind": "import-statement",
+          "original": "./mao.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/chen.js",
+          "kind": "import-statement",
+          "original": "./chen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/si.js",
+          "kind": "import-statement",
+          "original": "./si.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/wu.js",
+          "kind": "import-statement",
+          "original": "./wu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/wei.js",
+          "kind": "import-statement",
+          "original": "./wei.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/shen.js",
+          "kind": "import-statement",
+          "original": "./shen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/you.js",
+          "kind": "import-statement",
+          "original": "./you.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/xu.js",
+          "kind": "import-statement",
+          "original": "./xu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/hai.js",
+          "kind": "import-statement",
+          "original": "./hai.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/zi.js",
+          "kind": "import-statement",
+          "original": "./zi.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/chou.js",
+          "kind": "import-statement",
+          "original": "./chou.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/yin.js": {
+      "bytes": 366,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/mao.js": {
+      "bytes": 375,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/chen.js": {
+      "bytes": 389,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/si.js": {
+      "bytes": 762,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/wu.js": {
+      "bytes": 861,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/wei.js": {
+      "bytes": 363,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/shen.js": {
+      "bytes": 365,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/you.js": {
+      "bytes": 1913,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/xu.js": {
+      "bytes": 351,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/hai.js": {
+      "bytes": 354,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/zi.js": {
+      "bytes": 362,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/chou.js": {
+      "bytes": 384,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/index.js": {
+      "bytes": 834,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/yin.js",
+          "kind": "import-statement",
+          "original": "./yin.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/mao.js",
+          "kind": "import-statement",
+          "original": "./mao.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/chen.js",
+          "kind": "import-statement",
+          "original": "./chen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/si.js",
+          "kind": "import-statement",
+          "original": "./si.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/wu.js",
+          "kind": "import-statement",
+          "original": "./wu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/wei.js",
+          "kind": "import-statement",
+          "original": "./wei.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/shen.js",
+          "kind": "import-statement",
+          "original": "./shen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/you.js",
+          "kind": "import-statement",
+          "original": "./you.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/xu.js",
+          "kind": "import-statement",
+          "original": "./xu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/hai.js",
+          "kind": "import-statement",
+          "original": "./hai.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/zi.js",
+          "kind": "import-statement",
+          "original": "./zi.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/chou.js",
+          "kind": "import-statement",
+          "original": "./chou.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/yin.js": {
+      "bytes": 2125,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/mao.js": {
+      "bytes": 860,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/chen.js": {
+      "bytes": 953,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/si.js": {
+      "bytes": 1261,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/wu.js": {
+      "bytes": 2423,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/wei.js": {
+      "bytes": 2244,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/shen.js": {
+      "bytes": 391,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/you.js": {
+      "bytes": 5260,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/xu.js": {
+      "bytes": 4099,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/zi.js": {
+      "bytes": 885,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/chou.js": {
+      "bytes": 412,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/index.js": {
+      "bytes": 813,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/yin.js",
+          "kind": "import-statement",
+          "original": "./yin.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/mao.js",
+          "kind": "import-statement",
+          "original": "./mao.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/chen.js",
+          "kind": "import-statement",
+          "original": "./chen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/si.js",
+          "kind": "import-statement",
+          "original": "./si.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/wu.js",
+          "kind": "import-statement",
+          "original": "./wu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/wei.js",
+          "kind": "import-statement",
+          "original": "./wei.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/shen.js",
+          "kind": "import-statement",
+          "original": "./shen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/you.js",
+          "kind": "import-statement",
+          "original": "./you.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/xu.js",
+          "kind": "import-statement",
+          "original": "./xu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/zi.js",
+          "kind": "import-statement",
+          "original": "./zi.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/chou.js",
+          "kind": "import-statement",
+          "original": "./chou.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/yin.js": {
+      "bytes": 345,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/mao.js": {
+      "bytes": 861,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/chen.js": {
+      "bytes": 420,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/si.js": {
+      "bytes": 416,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/wu.js": {
+      "bytes": 1876,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/wei.js": {
+      "bytes": 382,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/shen.js": {
+      "bytes": 420,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/you.js": {
+      "bytes": 1188,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/xu.js": {
+      "bytes": 368,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/hai.js": {
+      "bytes": 382,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/zi.js": {
+      "bytes": 1750,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/chou.js": {
+      "bytes": 420,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/index.js": {
+      "bytes": 884,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/yin.js",
+          "kind": "import-statement",
+          "original": "./yin.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/mao.js",
+          "kind": "import-statement",
+          "original": "./mao.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/chen.js",
+          "kind": "import-statement",
+          "original": "./chen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/si.js",
+          "kind": "import-statement",
+          "original": "./si.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/wu.js",
+          "kind": "import-statement",
+          "original": "./wu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/wei.js",
+          "kind": "import-statement",
+          "original": "./wei.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/shen.js",
+          "kind": "import-statement",
+          "original": "./shen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/you.js",
+          "kind": "import-statement",
+          "original": "./you.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/xu.js",
+          "kind": "import-statement",
+          "original": "./xu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/hai.js",
+          "kind": "import-statement",
+          "original": "./hai.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/zi.js",
+          "kind": "import-statement",
+          "original": "./zi.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/chou.js",
+          "kind": "import-statement",
+          "original": "./chou.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/yin.js": {
+      "bytes": 1114,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/mao.js": {
+      "bytes": 363,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/chen.js": {
+      "bytes": 2239,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/si.js": {
+      "bytes": 400,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/wu.js": {
+      "bytes": 828,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/wei.js": {
+      "bytes": 1619,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/shen.js": {
+      "bytes": 2512,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/you.js": {
+      "bytes": 1425,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/xu.js": {
+      "bytes": 428,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/hai.js": {
+      "bytes": 354,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/zi.js": {
+      "bytes": 361,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/chou.js": {
+      "bytes": 365,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/index.js": {
+      "bytes": 834,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/yin.js",
+          "kind": "import-statement",
+          "original": "./yin.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/mao.js",
+          "kind": "import-statement",
+          "original": "./mao.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/chen.js",
+          "kind": "import-statement",
+          "original": "./chen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/si.js",
+          "kind": "import-statement",
+          "original": "./si.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/wu.js",
+          "kind": "import-statement",
+          "original": "./wu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/wei.js",
+          "kind": "import-statement",
+          "original": "./wei.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/shen.js",
+          "kind": "import-statement",
+          "original": "./shen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/you.js",
+          "kind": "import-statement",
+          "original": "./you.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/xu.js",
+          "kind": "import-statement",
+          "original": "./xu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/hai.js",
+          "kind": "import-statement",
+          "original": "./hai.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/zi.js",
+          "kind": "import-statement",
+          "original": "./zi.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/chou.js",
+          "kind": "import-statement",
+          "original": "./chou.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/yin.js": {
+      "bytes": 375,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/mao.js": {
+      "bytes": 1067,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/chen.js": {
+      "bytes": 390,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/si.js": {
+      "bytes": 969,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/wu.js": {
+      "bytes": 358,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/wei.js": {
+      "bytes": 387,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/shen.js": {
+      "bytes": 374,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/you.js": {
+      "bytes": 366,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/xu.js": {
+      "bytes": 416,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/hai.js": {
+      "bytes": 363,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/zi.js": {
+      "bytes": 361,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/chou.js": {
+      "bytes": 398,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/index.js": {
+      "bytes": 834,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/yin.js",
+          "kind": "import-statement",
+          "original": "./yin.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/mao.js",
+          "kind": "import-statement",
+          "original": "./mao.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/chen.js",
+          "kind": "import-statement",
+          "original": "./chen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/si.js",
+          "kind": "import-statement",
+          "original": "./si.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/wu.js",
+          "kind": "import-statement",
+          "original": "./wu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/wei.js",
+          "kind": "import-statement",
+          "original": "./wei.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/shen.js",
+          "kind": "import-statement",
+          "original": "./shen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/you.js",
+          "kind": "import-statement",
+          "original": "./you.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/xu.js",
+          "kind": "import-statement",
+          "original": "./xu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/hai.js",
+          "kind": "import-statement",
+          "original": "./hai.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/zi.js",
+          "kind": "import-statement",
+          "original": "./zi.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/chou.js",
+          "kind": "import-statement",
+          "original": "./chou.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/yin.js": {
+      "bytes": 753,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/mao.js": {
+      "bytes": 1313,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/chen.js": {
+      "bytes": 1343,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/si.js": {
+      "bytes": 816,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/wu.js": {
+      "bytes": 363,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/wei.js": {
+      "bytes": 412,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/shen.js": {
+      "bytes": 819,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/you.js": {
+      "bytes": 733,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/xu.js": {
+      "bytes": 361,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/hai.js": {
+      "bytes": 913,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/zi.js": {
+      "bytes": 856,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/chou.js": {
+      "bytes": 389,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/index.js": {
+      "bytes": 884,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/yin.js",
+          "kind": "import-statement",
+          "original": "./yin.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/mao.js",
+          "kind": "import-statement",
+          "original": "./mao.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/chen.js",
+          "kind": "import-statement",
+          "original": "./chen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/si.js",
+          "kind": "import-statement",
+          "original": "./si.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/wu.js",
+          "kind": "import-statement",
+          "original": "./wu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/wei.js",
+          "kind": "import-statement",
+          "original": "./wei.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/shen.js",
+          "kind": "import-statement",
+          "original": "./shen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/you.js",
+          "kind": "import-statement",
+          "original": "./you.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/xu.js",
+          "kind": "import-statement",
+          "original": "./xu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/hai.js",
+          "kind": "import-statement",
+          "original": "./hai.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/zi.js",
+          "kind": "import-statement",
+          "original": "./zi.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/chou.js",
+          "kind": "import-statement",
+          "original": "./chou.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/chen.js": {
+      "bytes": 8774,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/si.js": {
+      "bytes": 8069,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/wu.js": {
+      "bytes": 8004,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/wei.js": {
+      "bytes": 7767,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/shen.js": {
+      "bytes": 4898,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/you.js": {
+      "bytes": 17808,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/xu.js": {
+      "bytes": 7024,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/hai.js": {
+      "bytes": 6251,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/zi.js": {
+      "bytes": 7628,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/chou.js": {
+      "bytes": 3875,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/yin.js": {
+      "bytes": 7007,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/mao.js": {
+      "bytes": 9197,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/index.js": {
+      "bytes": 859,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/chen.js",
+          "kind": "import-statement",
+          "original": "./chen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/si.js",
+          "kind": "import-statement",
+          "original": "./si.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/wu.js",
+          "kind": "import-statement",
+          "original": "./wu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/wei.js",
+          "kind": "import-statement",
+          "original": "./wei.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/shen.js",
+          "kind": "import-statement",
+          "original": "./shen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/you.js",
+          "kind": "import-statement",
+          "original": "./you.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/xu.js",
+          "kind": "import-statement",
+          "original": "./xu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/hai.js",
+          "kind": "import-statement",
+          "original": "./hai.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/zi.js",
+          "kind": "import-statement",
+          "original": "./zi.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/chou.js",
+          "kind": "import-statement",
+          "original": "./chou.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/yin.js",
+          "kind": "import-statement",
+          "original": "./yin.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/mao.js",
+          "kind": "import-statement",
+          "original": "./mao.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/yin.js": {
+      "bytes": 1637,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/mao.js": {
+      "bytes": 809,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/chen.js": {
+      "bytes": 1248,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/si.js": {
+      "bytes": 415,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/wu.js": {
+      "bytes": 375,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/wei.js": {
+      "bytes": 1453,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/shen.js": {
+      "bytes": 390,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/you.js": {
+      "bytes": 1242,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/xu.js": {
+      "bytes": 737,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/hai.js": {
+      "bytes": 1983,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/zi.js": {
+      "bytes": 2507,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/chou.js": {
+      "bytes": 830,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/index.js": {
+      "bytes": 859,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/yin.js",
+          "kind": "import-statement",
+          "original": "./yin.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/mao.js",
+          "kind": "import-statement",
+          "original": "./mao.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/chen.js",
+          "kind": "import-statement",
+          "original": "./chen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/si.js",
+          "kind": "import-statement",
+          "original": "./si.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/wu.js",
+          "kind": "import-statement",
+          "original": "./wu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/wei.js",
+          "kind": "import-statement",
+          "original": "./wei.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/shen.js",
+          "kind": "import-statement",
+          "original": "./shen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/you.js",
+          "kind": "import-statement",
+          "original": "./you.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/xu.js",
+          "kind": "import-statement",
+          "original": "./xu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/hai.js",
+          "kind": "import-statement",
+          "original": "./hai.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/zi.js",
+          "kind": "import-statement",
+          "original": "./zi.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/chou.js",
+          "kind": "import-statement",
+          "original": "./chou.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/yin.js": {
+      "bytes": 398,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/mao.js": {
+      "bytes": 409,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/chen.js": {
+      "bytes": 873,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/si.js": {
+      "bytes": 1757,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/wu.js": {
+      "bytes": 4595,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/wei.js": {
+      "bytes": 2391,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/shen.js": {
+      "bytes": 390,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/you.js": {
+      "bytes": 395,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/xu.js": {
+      "bytes": 377,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/hai.js": {
+      "bytes": 386,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/zi.js": {
+      "bytes": 405,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/chou.js": {
+      "bytes": 3140,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/index.js": {
+      "bytes": 859,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/yin.js",
+          "kind": "import-statement",
+          "original": "./yin.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/mao.js",
+          "kind": "import-statement",
+          "original": "./mao.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/chen.js",
+          "kind": "import-statement",
+          "original": "./chen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/si.js",
+          "kind": "import-statement",
+          "original": "./si.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/wu.js",
+          "kind": "import-statement",
+          "original": "./wu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/wei.js",
+          "kind": "import-statement",
+          "original": "./wei.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/shen.js",
+          "kind": "import-statement",
+          "original": "./shen.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/you.js",
+          "kind": "import-statement",
+          "original": "./you.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/xu.js",
+          "kind": "import-statement",
+          "original": "./xu.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/hai.js",
+          "kind": "import-statement",
+          "original": "./hai.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/zi.js",
+          "kind": "import-statement",
+          "original": "./zi.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/chou.js",
+          "kind": "import-statement",
+          "original": "./chou.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/recommendationStems.js": {
+      "bytes": 15102,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/verified.js": {
+      "bytes": 6666,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/index.js": {
+      "bytes": 1191,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/general.js",
+          "kind": "import-statement",
+          "original": "./general.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/index.js",
+          "kind": "import-statement",
+          "original": "./jia/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/index.js",
+          "kind": "import-statement",
+          "original": "./yi/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/index.js",
+          "kind": "import-statement",
+          "original": "./bing/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/index.js",
+          "kind": "import-statement",
+          "original": "./ding/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/index.js",
+          "kind": "import-statement",
+          "original": "./wu/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/index.js",
+          "kind": "import-statement",
+          "original": "./ji/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/index.js",
+          "kind": "import-statement",
+          "original": "./geng/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/index.js",
+          "kind": "import-statement",
+          "original": "./xin/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/index.js",
+          "kind": "import-statement",
+          "original": "./ren/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/index.js",
+          "kind": "import-statement",
+          "original": "./gui/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/recommendationStems.js",
+          "kind": "import-statement",
+          "original": "./recommendationStems.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/verified.js",
+          "kind": "import-statement",
+          "original": "./verified.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/strengthHints.js": {
+      "bytes": 418,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/therapeuticPriority.js": {
+      "bytes": 331,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/index.js": {
+      "bytes": 169,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/index.js",
+          "kind": "import-statement",
+          "original": "./climateRules/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/strengthHints.js",
+          "kind": "import-statement",
+          "original": "./strengthHints.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/therapeuticPriority.js",
+          "kind": "import-statement",
+          "original": "./therapeuticPriority.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules.js": {
+      "bytes": 46,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/index.js",
+          "kind": "import-statement",
+          "original": "./baziTherapeuticRules/index.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/helpers.js": {
+      "bytes": 4158,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "../baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/stemPairs.js": {
+      "bytes": 4363,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/branchPairs.js": {
+      "bytes": 1963,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/counts.js": {
+      "bytes": 8670,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/helpers.js",
+          "kind": "import-statement",
+          "original": "./helpers.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/evidence.js": {
+      "bytes": 3506,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/index.js": {
+      "bytes": 7385,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/helpers.js",
+          "kind": "import-statement",
+          "original": "./helpers.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/stemPairs.js",
+          "kind": "import-statement",
+          "original": "./stemPairs.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/branchPairs.js",
+          "kind": "import-statement",
+          "original": "./branchPairs.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/counts.js",
+          "kind": "import-statement",
+          "original": "./counts.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/evidence.js",
+          "kind": "import-statement",
+          "original": "./evidence.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/evidence.js",
+          "kind": "import-statement",
+          "original": "./evidence.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziTherapeuticStrategy.js": {
+      "bytes": 12808,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules.js",
+          "kind": "import-statement",
+          "original": "./baziTherapeuticRules.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/index.js",
+          "kind": "import-statement",
+          "original": "./baziRuleMatcher/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziUsefulGodRules.js": {
+      "bytes": 3259,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziUsefulGodStrategy.js": {
+      "bytes": 30129,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTypes.js",
+          "kind": "import-statement",
+          "original": "./baziTypes.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootAdjudication.js",
+          "kind": "import-statement",
+          "original": "./baziRootAdjudication.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootFacts.js",
+          "kind": "import-statement",
+          "original": "./baziRootFacts.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticStrategy.js",
+          "kind": "import-statement",
+          "original": "./baziTherapeuticStrategy.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUsefulGodRules.js",
+          "kind": "import-statement",
+          "original": "./baziUsefulGodRules.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/index.js",
+          "kind": "import-statement",
+          "original": "./baziRuleMatcher/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules.js",
+          "kind": "import-statement",
+          "original": "./baziTherapeuticRules.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziAnalysisPipeline.js": {
+      "bytes": 3961,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTypes.js",
+          "kind": "import-statement",
+          "original": "./baziTypes.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziFormationUtils.js",
+          "kind": "import-statement",
+          "original": "./baziFormationUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziAnalysis.js": {
+      "bytes": 951,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziStrengthAnalyzer.js",
+          "kind": "import-statement",
+          "original": "./baziStrengthAnalyzer.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziPatternStrategy.js",
+          "kind": "import-statement",
+          "original": "./baziPatternStrategy.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUsefulGodStrategy.js",
+          "kind": "import-statement",
+          "original": "./baziUsefulGodStrategy.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziAnalysisPipeline.js",
+          "kind": "import-statement",
+          "original": "./baziAnalysisPipeline.js"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/luckTiming.js": {
+      "bytes": 6037,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/civil-time.js",
+          "kind": "import-statement",
+          "original": "../calendar/civil-time.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/childLimit.js": {
+      "bytes": 611,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/LuckCalculator.js": {
+      "bytes": 7989,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/luckTiming.js",
+          "kind": "import-statement",
+          "original": "./luckTiming.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/childLimit.js",
+          "kind": "import-statement",
+          "original": "./childLimit.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/WuxingCalculator.js": {
+      "bytes": 2500,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTypes.js",
+          "kind": "import-statement",
+          "original": "./baziTypes.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziElementData.js",
+          "kind": "import-statement",
+          "original": "./baziElementData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/climateBalance.js": {
+      "bytes": 2316,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziCalculatorHelpers.js": {
+      "bytes": 2321,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "./baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/kongWang.js",
+          "kind": "import-statement",
+          "original": "./kongWang.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/data.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/calendar/solar-term-evidence.js": {
+      "bytes": 10963,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziCalculatorTime.js": {
+      "bytes": 10018,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "./baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/civil-time.js",
+          "kind": "import-statement",
+          "original": "../calendar/civil-time.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/date-validation.js",
+          "kind": "import-statement",
+          "original": "../calendar/date-validation.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/solar-term-evidence.js",
+          "kind": "import-statement",
+          "original": "../calendar/solar-term-evidence.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/globalTimeBasis.js": {
+      "bytes": 1592,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/civil-time.js",
+          "kind": "import-statement",
+          "original": "../calendar/civil-time.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziEnhancement/useGodRules.js": {
+      "bytes": 4684,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTypes.js",
+          "kind": "import-statement",
+          "original": "../baziTypes.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "../baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/helpers.js": {
+      "bytes": 293,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/formationMatchers.js": {
+      "bytes": 1690,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "../baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/helpers.js",
+          "kind": "import-statement",
+          "original": "./helpers.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "../baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/pillarMatchers.js": {
+      "bytes": 1014,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/branchMatchers.js": {
+      "bytes": 1537,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/stemMatchers.js": {
+      "bytes": 1906,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/strengthMatchers.js": {
+      "bytes": 1096,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "../baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "../baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/index.js": {
+      "bytes": 1167,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/formationMatchers.js",
+          "kind": "import-statement",
+          "original": "./formationMatchers.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/pillarMatchers.js",
+          "kind": "import-statement",
+          "original": "./pillarMatchers.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/branchMatchers.js",
+          "kind": "import-statement",
+          "original": "./branchMatchers.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/stemMatchers.js",
+          "kind": "import-statement",
+          "original": "./stemMatchers.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/strengthMatchers.js",
+          "kind": "import-statement",
+          "original": "./strengthMatchers.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/helpers.js",
+          "kind": "import-statement",
+          "original": "./helpers.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziEnhancement/classicPatterns.js": {
+      "bytes": 23226,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziConditionMatchers/index.js",
+          "kind": "import-statement",
+          "original": "../baziConditionMatchers/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziFormationUtils.js",
+          "kind": "import-statement",
+          "original": "../baziFormationUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/harmonyTransform.js",
+          "kind": "import-statement",
+          "original": "../harmonyTransform.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../../ganzhi/data.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziQuzhiStrategy.js",
+          "kind": "import-statement",
+          "original": "../baziQuzhiStrategy.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "../baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziEnhancement/shensha.js": {
+      "bytes": 1969,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziEnhancement/promptHints.js": {
+      "bytes": 1483,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziEnhancement/index.js": {
+      "bytes": 121,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziEnhancement/useGodRules.js",
+          "kind": "import-statement",
+          "original": "./useGodRules.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziEnhancement/classicPatterns.js",
+          "kind": "import-statement",
+          "original": "./classicPatterns.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziEnhancement/shensha.js",
+          "kind": "import-statement",
+          "original": "./shensha.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziEnhancement/promptHints.js",
+          "kind": "import-statement",
+          "original": "./promptHints.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziPromptEnhancement.js": {
+      "bytes": 12812,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziEnhancement/index.js",
+          "kind": "import-statement",
+          "original": "./baziEnhancement/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziFormationUtils.js",
+          "kind": "import-statement",
+          "original": "./baziFormationUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/harmonyTransform.js",
+          "kind": "import-statement",
+          "original": "./harmonyTransform.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziAnalysisFormatter.js": {
+      "bytes": 22324,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/wuxing/index.js",
+          "kind": "import-statement",
+          "original": "../wuxing/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziPromptEnhancement.js",
+          "kind": "import-statement",
+          "original": "./baziPromptEnhancement.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziPromptEnhancement.js",
+          "kind": "import-statement",
+          "original": "./baziPromptEnhancement.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/natalEvidence.js": {
+      "bytes": 35465,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziAnalysisFormatter.js",
+          "kind": "import-statement",
+          "original": "./baziAnalysisFormatter.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziPromptEnhancement.js",
+          "kind": "import-statement",
+          "original": "./baziPromptEnhancement.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/kongWang.js",
+          "kind": "import-statement",
+          "original": "./kongWang.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/data.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziUnknownTime.js": {
+      "bytes": 18056,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/natalEvidence.js",
+          "kind": "import-statement",
+          "original": "./natalEvidence.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/true-solar-time.js",
+          "kind": "import-statement",
+          "original": "../calendar/true-solar-time.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/dateUtils.js",
+          "kind": "import-statement",
+          "original": "../calendar/dateUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/china-dst.js",
+          "kind": "import-statement",
+          "original": "../calendar/china-dst.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/historical-timezone.js",
+          "kind": "import-statement",
+          "original": "../calendar/historical-timezone.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDefinitions.js",
+          "kind": "import-statement",
+          "original": "./baziDefinitions.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/index.js",
+          "kind": "import-statement",
+          "original": "./baziShenSha/index.js"
+        },
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDisplayData.js",
+          "kind": "import-statement",
+          "original": "./baziDisplayData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/mingGua.js": {
+      "bytes": 1412,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziCalculator.js": {
+      "bytes": 24303,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/true-solar-time.js",
+          "kind": "import-statement",
+          "original": "../calendar/true-solar-time.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/china-dst.js",
+          "kind": "import-statement",
+          "original": "../calendar/china-dst.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/paipanWarnings.js",
+          "kind": "import-statement",
+          "original": "./paipanWarnings.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/index.js",
+          "kind": "import-statement",
+          "original": "./baziShenSha/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziAnalysis.js",
+          "kind": "import-statement",
+          "original": "./baziAnalysis.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/LuckCalculator.js",
+          "kind": "import-statement",
+          "original": "./LuckCalculator.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/WuxingCalculator.js",
+          "kind": "import-statement",
+          "original": "./WuxingCalculator.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/climateBalance.js",
+          "kind": "import-statement",
+          "original": "./climateBalance.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziCalculatorHelpers.js",
+          "kind": "import-statement",
+          "original": "./baziCalculatorHelpers.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziCalculatorTime.js",
+          "kind": "import-statement",
+          "original": "./baziCalculatorTime.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/dateUtils.js",
+          "kind": "import-statement",
+          "original": "../calendar/dateUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/date-validation.js",
+          "kind": "import-statement",
+          "original": "../calendar/date-validation.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/globalTimeBasis.js",
+          "kind": "import-statement",
+          "original": "./globalTimeBasis.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUnknownTime.js",
+          "kind": "import-statement",
+          "original": "./baziUnknownTime.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/mingGua.js",
+          "kind": "import-statement",
+          "original": "./mingGua.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziPromptEnhancement.js",
+          "kind": "import-statement",
+          "original": "./baziPromptEnhancement.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/natalEvidence.js",
+          "kind": "import-statement",
+          "original": "./natalEvidence.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziDisplayData.js",
+          "kind": "import-statement",
+          "original": "./baziDisplayData.js"
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/input.js": {
+      "bytes": 3476,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/date-validation.js",
+          "kind": "import-statement",
+          "original": "../calendar/date-validation.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/dateUtils.js",
+          "kind": "import-statement",
+          "original": "../calendar/dateUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziCalculator.js",
+          "kind": "import-statement",
+          "original": "./baziCalculator.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/calendarTool.js": {
+      "bytes": 11787,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/solar-term-evidence.js",
+          "kind": "import-statement",
+          "original": "../calendar/solar-term-evidence.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/luckTiming.js",
+          "kind": "import-statement",
+          "original": "./luckTiming.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/prompt-evidence/format.js": {
+      "bytes": 2153,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/fortuneTriggerEvidence.js": {
+      "bytes": 25582,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/prompt-evidence/format.js",
+          "kind": "import-statement",
+          "original": "../prompt-evidence/format.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/fortuneActionEvidence.js": {
+      "bytes": 11518,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootFacts.js",
+          "kind": "import-statement",
+          "original": "./baziRootFacts.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/data.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/fortuneSelection/helpers/breakdown.js": {
+      "bytes": 4015,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/date-validation.js",
+          "kind": "import-statement",
+          "original": "../../../calendar/date-validation.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/luckTiming.js",
+          "kind": "import-statement",
+          "original": "../../luckTiming.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/fortuneSelection/helpers/resolvers.js": {
+      "bytes": 1640,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/calendarTool.js",
+          "kind": "import-statement",
+          "original": "../../calendarTool.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/fortuneSelection/current.js": {
+      "bytes": 2980,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/calendarTool.js",
+          "kind": "import-statement",
+          "original": "../calendarTool.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/luckTiming.js",
+          "kind": "import-statement",
+          "original": "../luckTiming.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/fortuneSelection/index.js": {
+      "bytes": 28933,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/calendarTool.js",
+          "kind": "import-statement",
+          "original": "../calendarTool.js"
+        },
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/luckTiming.js",
+          "kind": "import-statement",
+          "original": "../luckTiming.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "../baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/prompt-evidence/format.js",
+          "kind": "import-statement",
+          "original": "../../prompt-evidence/format.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/fortuneTriggerEvidence.js",
+          "kind": "import-statement",
+          "original": "../fortuneTriggerEvidence.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/fortuneActionEvidence.js",
+          "kind": "import-statement",
+          "original": "../fortuneActionEvidence.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/fortuneSelection/helpers/breakdown.js",
+          "kind": "import-statement",
+          "original": "./helpers/breakdown.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/fortuneSelection/helpers/resolvers.js",
+          "kind": "import-statement",
+          "original": "./helpers/resolvers.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "../baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/fortuneSelection/current.js",
+          "kind": "import-statement",
+          "original": "./current.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/fortuneModalSelection.js": {
+      "bytes": 494,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/baziValues.js": {
+      "bytes": 309,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/trueSolarTime.js": {
+      "bytes": 45,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/true-solar-time.js",
+          "kind": "import-statement",
+          "original": "../calendar/true-solar-time.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/chinaDst.js": {
+      "bytes": 39,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/calendar/china-dst.js",
+          "kind": "import-statement",
+          "original": "../calendar/china-dst.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/tenGodAnalysis.js": {
+      "bytes": 3855,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/stemRootAnalysis.js": {
+      "bytes": 5136,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTypes.js",
+          "kind": "import-statement",
+          "original": "./baziTypes.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRootFacts.js",
+          "kind": "import-statement",
+          "original": "./baziRootFacts.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/relationStructure.js": {
+      "bytes": 4075,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/kongWangAnalysis.js": {
+      "bytes": 1006,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/kongWang.js",
+          "kind": "import-statement",
+          "original": "./kongWang.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/tombStorage.js": {
+      "bytes": 1998,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTypes.js",
+          "kind": "import-statement",
+          "original": "./baziTypes.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/lifeStageAnalysis.js": {
+      "bytes": 2974,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/usefulGodPlacement.js": {
+      "bytes": 1589,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/luckDetails.js": {
+      "bytes": 1418,
+      "imports": [
+        {
+          "path": "node_modules/tyme4ts/dist/lib/index.mjs",
+          "kind": "import-statement",
+          "original": "tyme4ts"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/data.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/childLimit.js",
+          "kind": "import-statement",
+          "original": "./childLimit.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/nayinAnalysis.js": {
+      "bytes": 895,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/data.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/monthCommand.js": {
+      "bytes": 2436,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziTypes.js",
+          "kind": "import-statement",
+          "original": "./baziTypes.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziElementData.js",
+          "kind": "import-statement",
+          "original": "./baziElementData.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/compatibility-marriage.js": {
+      "bytes": 7778,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/data.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/data.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/compatibilityEvidence.js": {
+      "bytes": 33607,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/prompt-evidence/format.js",
+          "kind": "import-statement",
+          "original": "../prompt-evidence/format.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziAnalysisFormatter.js",
+          "kind": "import-statement",
+          "original": "./baziAnalysisFormatter.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/compatibility-marriage.js",
+          "kind": "import-statement",
+          "original": "./compatibility-marriage.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/ganzhi/relations.js",
+          "kind": "import-statement",
+          "original": "../ganzhi/relations.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/mingyu-core/dist/bazi/index.js": {
+      "bytes": 4098,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziCalculator.js",
+          "kind": "import-statement",
+          "original": "./baziCalculator.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziPatternFulfillment.js",
+          "kind": "import-statement",
+          "original": "./baziPatternFulfillment.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/input.js",
+          "kind": "import-statement",
+          "original": "./input.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziAnalysisFormatter.js",
+          "kind": "import-statement",
+          "original": "./baziAnalysisFormatter.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziPromptEnhancement.js",
+          "kind": "import-statement",
+          "original": "./baziPromptEnhancement.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/fortuneSelection/index.js",
+          "kind": "import-statement",
+          "original": "./fortuneSelection/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/fortuneSelection/helpers/breakdown.js",
+          "kind": "import-statement",
+          "original": "./fortuneSelection/helpers/breakdown.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/fortuneModalSelection.js",
+          "kind": "import-statement",
+          "original": "./fortuneModalSelection.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/calendarTool.js",
+          "kind": "import-statement",
+          "original": "./calendarTool.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziMappingsData.js",
+          "kind": "import-statement",
+          "original": "./baziMappingsData.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziValues.js",
+          "kind": "import-statement",
+          "original": "./baziValues.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/kongWang.js",
+          "kind": "import-statement",
+          "original": "./kongWang.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUtils.js",
+          "kind": "import-statement",
+          "original": "./baziUtils.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/index.js",
+          "kind": "import-statement",
+          "original": "./baziShenSha/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziShenSha/index.js",
+          "kind": "import-statement",
+          "original": "./baziShenSha/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/index.js",
+          "kind": "import-statement",
+          "original": "./baziRuleMatcher/index.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziPatternStrategy.js",
+          "kind": "import-statement",
+          "original": "./baziPatternStrategy.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziCongErStrategy.js",
+          "kind": "import-statement",
+          "original": "./baziCongErStrategy.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/baziUsefulGodStrategy.js",
+          "kind": "import-statement",
+          "original": "./baziUsefulGodStrategy.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/trueSolarTime.js",
+          "kind": "import-statement",
+          "original": "./trueSolarTime.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/chinaDst.js",
+          "kind": "import-statement",
+          "original": "./chinaDst.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/paipanWarnings.js",
+          "kind": "import-statement",
+          "original": "./paipanWarnings.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/paipanWarnings.js",
+          "kind": "import-statement",
+          "original": "./paipanWarnings.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/LuckCalculator.js",
+          "kind": "import-statement",
+          "original": "./LuckCalculator.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/childLimit.js",
+          "kind": "import-statement",
+          "original": "./childLimit.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/luckTiming.js",
+          "kind": "import-statement",
+          "original": "./luckTiming.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/tenGodAnalysis.js",
+          "kind": "import-statement",
+          "original": "./tenGodAnalysis.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/stemRootAnalysis.js",
+          "kind": "import-statement",
+          "original": "./stemRootAnalysis.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/relationStructure.js",
+          "kind": "import-statement",
+          "original": "./relationStructure.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/kongWangAnalysis.js",
+          "kind": "import-statement",
+          "original": "./kongWangAnalysis.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/tombStorage.js",
+          "kind": "import-statement",
+          "original": "./tombStorage.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/lifeStageAnalysis.js",
+          "kind": "import-statement",
+          "original": "./lifeStageAnalysis.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/usefulGodPlacement.js",
+          "kind": "import-statement",
+          "original": "./usefulGodPlacement.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/mingGua.js",
+          "kind": "import-statement",
+          "original": "./mingGua.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/luckDetails.js",
+          "kind": "import-statement",
+          "original": "./luckDetails.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/nayinAnalysis.js",
+          "kind": "import-statement",
+          "original": "./nayinAnalysis.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/monthCommand.js",
+          "kind": "import-statement",
+          "original": "./monthCommand.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/harmonyTransform.js",
+          "kind": "import-statement",
+          "original": "./harmonyTransform.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/compatibilityEvidence.js",
+          "kind": "import-statement",
+          "original": "./compatibilityEvidence.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/fortuneTriggerEvidence.js",
+          "kind": "import-statement",
+          "original": "./fortuneTriggerEvidence.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/natalEvidence.js",
+          "kind": "import-statement",
+          "original": "./natalEvidence.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/climateBalance.js",
+          "kind": "import-statement",
+          "original": "./climateBalance.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/compatibility-marriage.js",
+          "kind": "import-statement",
+          "original": "./compatibility-marriage.js"
+        },
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/fortuneActionEvidence.js",
+          "kind": "import-statement",
+          "original": "./fortuneActionEvidence.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "entry.js": {
+      "bytes": 428,
+      "imports": [
+        {
+          "path": "node_modules/mingyu-core/dist/bazi/index.js",
+          "kind": "import-statement",
+          "original": "mingyu-core/bazi"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "mingyu-nomin.js": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "entry.js",
+      "inputs": {
+        "entry.js": {
+          "bytesInOutput": 356
+        },
+        "node_modules/tyme4ts/dist/lib/index.mjs": {
+          "bytesInOutput": 305565
+        },
+        "node_modules/astronomy-engine/esm/astronomy.js": {
+          "bytesInOutput": 211077
+        },
+        "node_modules/mingyu-core/dist/calendar/date-validation.js": {
+          "bytesInOutput": 3680
+        },
+        "node_modules/mingyu-core/dist/calendar/dateUtils.js": {
+          "bytesInOutput": 2022
+        },
+        "node_modules/mingyu-core/dist/calendar/historical-timezone.js": {
+          "bytesInOutput": 18233
+        },
+        "node_modules/mingyu-core/dist/calendar/civil-time.js": {
+          "bytesInOutput": 4494
+        },
+        "node_modules/mingyu-core/dist/shared/result.js": {
+          "bytesInOutput": 3021
+        },
+        "node_modules/mingyu-core/dist/calendar/china-dst.js": {
+          "bytesInOutput": 3800
+        },
+        "node_modules/mingyu-core/dist/calendar/true-solar-time.js": {
+          "bytesInOutput": 31469
+        },
+        "node_modules/mingyu-core/dist/ganzhi/data.js": {
+          "bytesInOutput": 4223
+        },
+        "node_modules/mingyu-core/dist/bazi/paipanWarnings.js": {
+          "bytesInOutput": 10419
+        },
+        "node_modules/mingyu-core/dist/ganzhi/validation.js": {
+          "bytesInOutput": 1517
+        },
+        "node_modules/mingyu-core/dist/ganzhi/relations.js": {
+          "bytesInOutput": 9415
+        },
+        "node_modules/mingyu-core/dist/bazi/baziMappingsData.js": {
+          "bytesInOutput": 7637
+        },
+        "node_modules/mingyu-core/dist/bazi/baziDefinitions.js": {
+          "bytesInOutput": 0
+        },
+        "node_modules/mingyu-core/dist/bazi/baziElementData.js": {
+          "bytesInOutput": 4180
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenShaData.js": {
+          "bytesInOutput": 4152
+        },
+        "node_modules/mingyu-core/dist/bazi/baziDisplayData.js": {
+          "bytesInOutput": 302
+        },
+        "node_modules/mingyu-core/dist/bazi/baziUtils.js": {
+          "bytesInOutput": 5854
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/nobleRules.js": {
+          "bytesInOutput": 13698
+        },
+        "node_modules/mingyu-core/dist/ganzhi/index.js": {
+          "bytesInOutput": 424
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/luRules.js": {
+          "bytesInOutput": 9903
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/dayRules.js": {
+          "bytesInOutput": 9075
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/marriageRules.js": {
+          "bytesInOutput": 2441
+        },
+        "node_modules/mingyu-core/dist/bazi/kongWang.js": {
+          "bytesInOutput": 432
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/disasterRules.js": {
+          "bytesInOutput": 25141
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/globalRules.js": {
+          "bytesInOutput": 3310
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenSha/helpers/tenGodAnalysis.js": {
+          "bytesInOutput": 3771
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenSha/scope.js": {
+          "bytesInOutput": 2285
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenSha/variants.js": {
+          "bytesInOutput": 918
+        },
+        "node_modules/mingyu-core/dist/bazi/baziShenSha/index.js": {
+          "bytesInOutput": 3204
+        },
+        "node_modules/mingyu-core/dist/bazi/baziFormationUtils.js": {
+          "bytesInOutput": 2309
+        },
+        "node_modules/mingyu-core/dist/bazi/baziRootFacts.js": {
+          "bytesInOutput": 2432
+        },
+        "node_modules/mingyu-core/dist/bazi/baziRootAdjudication.js": {
+          "bytesInOutput": 1826
+        },
+        "node_modules/mingyu-core/dist/wuxing/index.js": {
+          "bytesInOutput": 125
+        },
+        "node_modules/mingyu-core/dist/bazi/baziStrengthAnalyzer.js": {
+          "bytesInOutput": 20455
+        },
+        "node_modules/mingyu-core/dist/bazi/harmonyTransform.js": {
+          "bytesInOutput": 21308
+        },
+        "node_modules/mingyu-core/dist/bazi/baziPatternFulfillment.js": {
+          "bytesInOutput": 61889
+        },
+        "node_modules/mingyu-core/dist/bazi/transformedPatternStrategy.js": {
+          "bytesInOutput": 16865
+        },
+        "node_modules/mingyu-core/dist/bazi/baziQuzhiStrategy.js": {
+          "bytesInOutput": 5667
+        },
+        "node_modules/mingyu-core/dist/bazi/baziCongErStrategy.js": {
+          "bytesInOutput": 23003
+        },
+        "node_modules/mingyu-core/dist/bazi/baziPatternStrategy.js": {
+          "bytesInOutput": 19653
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/general.js": {
+          "bytesInOutput": 4137
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/yin.js": {
+          "bytesInOutput": 649
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/mao.js": {
+          "bytesInOutput": 606
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/chen.js": {
+          "bytesInOutput": 635
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/si.js": {
+          "bytesInOutput": 680
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/wu.js": {
+          "bytesInOutput": 1324
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/wei.js": {
+          "bytesInOutput": 1473
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/shen.js": {
+          "bytesInOutput": 591
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/you.js": {
+          "bytesInOutput": 633
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/xu.js": {
+          "bytesInOutput": 599
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/hai.js": {
+          "bytesInOutput": 523
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/zi.js": {
+          "bytesInOutput": 599
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/chou.js": {
+          "bytesInOutput": 616
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/jia/index.js": {
+          "bytesInOutput": 339
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/yin.js": {
+          "bytesInOutput": 557
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/mao.js": {
+          "bytesInOutput": 575
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/chen.js": {
+          "bytesInOutput": 601
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/si.js": {
+          "bytesInOutput": 1207
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/wu.js": {
+          "bytesInOutput": 1338
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/wei.js": {
+          "bytesInOutput": 545
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/shen.js": {
+          "bytesInOutput": 547
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/you.js": {
+          "bytesInOutput": 2930
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/xu.js": {
+          "bytesInOutput": 524
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/hai.js": {
+          "bytesInOutput": 527
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/zi.js": {
+          "bytesInOutput": 552
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/chou.js": {
+          "bytesInOutput": 592
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/yi/index.js": {
+          "bytesInOutput": 326
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/yin.js": {
+          "bytesInOutput": 3286
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/mao.js": {
+          "bytesInOutput": 1348
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/chen.js": {
+          "bytesInOutput": 1481
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/si.js": {
+          "bytesInOutput": 1945
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/wu.js": {
+          "bytesInOutput": 3743
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/wei.js": {
+          "bytesInOutput": 3567
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/shen.js": {
+          "bytesInOutput": 599
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/you.js": {
+          "bytesInOutput": 8184
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/xu.js": {
+          "bytesInOutput": 6387
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/zi.js": {
+          "bytesInOutput": 1404
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/chou.js": {
+          "bytesInOutput": 641
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/bing/index.js": {
+          "bytesInOutput": 325
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/yin.js": {
+          "bytesInOutput": 506
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/mao.js": {
+          "bytesInOutput": 1345
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/chen.js": {
+          "bytesInOutput": 653
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/si.js": {
+          "bytesInOutput": 649
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/wu.js": {
+          "bytesInOutput": 2874
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/wei.js": {
+          "bytesInOutput": 579
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/shen.js": {
+          "bytesInOutput": 653
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/you.js": {
+          "bytesInOutput": 1852
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/xu.js": {
+          "bytesInOutput": 553
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/hai.js": {
+          "bytesInOutput": 579
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/zi.js": {
+          "bytesInOutput": 2813
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/chou.js": {
+          "bytesInOutput": 659
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ding/index.js": {
+          "bytesInOutput": 352
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/yin.js": {
+          "bytesInOutput": 1759
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/mao.js": {
+          "bytesInOutput": 545
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/chen.js": {
+          "bytesInOutput": 3538
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/si.js": {
+          "bytesInOutput": 619
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/wu.js": {
+          "bytesInOutput": 1293
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/wei.js": {
+          "bytesInOutput": 2493
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/shen.js": {
+          "bytesInOutput": 3920
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/you.js": {
+          "bytesInOutput": 2201
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/xu.js": {
+          "bytesInOutput": 677
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/hai.js": {
+          "bytesInOutput": 527
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/zi.js": {
+          "bytesInOutput": 543
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/chou.js": {
+          "bytesInOutput": 547
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/wu/index.js": {
+          "bytesInOutput": 326
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/yin.js": {
+          "bytesInOutput": 571
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/mao.js": {
+          "bytesInOutput": 1708
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/chen.js": {
+          "bytesInOutput": 597
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/si.js": {
+          "bytesInOutput": 1481
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/wu.js": {
+          "bytesInOutput": 537
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/wei.js": {
+          "bytesInOutput": 593
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/shen.js": {
+          "bytesInOutput": 563
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/you.js": {
+          "bytesInOutput": 557
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/xu.js": {
+          "bytesInOutput": 653
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/hai.js": {
+          "bytesInOutput": 545
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/zi.js": {
+          "bytesInOutput": 543
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/chou.js": {
+          "bytesInOutput": 613
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ji/index.js": {
+          "bytesInOutput": 326
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/yin.js": {
+          "bytesInOutput": 1153
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/mao.js": {
+          "bytesInOutput": 2019
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/chen.js": {
+          "bytesInOutput": 2047
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/si.js": {
+          "bytesInOutput": 1252
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/wu.js": {
+          "bytesInOutput": 539
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/wei.js": {
+          "bytesInOutput": 639
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/shen.js": {
+          "bytesInOutput": 1264
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/you.js": {
+          "bytesInOutput": 1119
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/xu.js": {
+          "bytesInOutput": 546
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/hai.js": {
+          "bytesInOutput": 1426
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/zi.js": {
+          "bytesInOutput": 1309
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/chou.js": {
+          "bytesInOutput": 595
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/geng/index.js": {
+          "bytesInOutput": 352
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/chen.js": {
+          "bytesInOutput": 13984
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/si.js": {
+          "bytesInOutput": 12506
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/wu.js": {
+          "bytesInOutput": 13171
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/wei.js": {
+          "bytesInOutput": 12589
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/shen.js": {
+          "bytesInOutput": 8117
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/you.js": {
+          "bytesInOutput": 28092
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/xu.js": {
+          "bytesInOutput": 11295
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/hai.js": {
+          "bytesInOutput": 10263
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/zi.js": {
+          "bytesInOutput": 12540
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/chou.js": {
+          "bytesInOutput": 6308
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/yin.js": {
+          "bytesInOutput": 11456
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/mao.js": {
+          "bytesInOutput": 15139
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/xin/index.js": {
+          "bytesInOutput": 339
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/yin.js": {
+          "bytesInOutput": 2611
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/mao.js": {
+          "bytesInOutput": 1254
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/chen.js": {
+          "bytesInOutput": 1890
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/si.js": {
+          "bytesInOutput": 645
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/wu.js": {
+          "bytesInOutput": 575
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/wei.js": {
+          "bytesInOutput": 2305
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/shen.js": {
+          "bytesInOutput": 602
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/you.js": {
+          "bytesInOutput": 1967
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/xu.js": {
+          "bytesInOutput": 1161
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/hai.js": {
+          "bytesInOutput": 3203
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/zi.js": {
+          "bytesInOutput": 3862
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/chou.js": {
+          "bytesInOutput": 1302
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/ren/index.js": {
+          "bytesInOutput": 339
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/yin.js": {
+          "bytesInOutput": 619
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/mao.js": {
+          "bytesInOutput": 639
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/chen.js": {
+          "bytesInOutput": 1382
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/si.js": {
+          "bytesInOutput": 2690
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/wu.js": {
+          "bytesInOutput": 7480
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/wei.js": {
+          "bytesInOutput": 3923
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/shen.js": {
+          "bytesInOutput": 601
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/you.js": {
+          "bytesInOutput": 613
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/xu.js": {
+          "bytesInOutput": 580
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/hai.js": {
+          "bytesInOutput": 597
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/zi.js": {
+          "bytesInOutput": 635
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/chou.js": {
+          "bytesInOutput": 5048
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/gui/index.js": {
+          "bytesInOutput": 339
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/recommendationStems.js": {
+          "bytesInOutput": 16746
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/verified.js": {
+          "bytesInOutput": 10376
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/climateRules/index.js": {
+          "bytesInOutput": 600
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/index.js": {
+          "bytesInOutput": 0
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/strengthHints.js": {
+          "bytesInOutput": 650
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticRules/therapeuticPriority.js": {
+          "bytesInOutput": 483
+        },
+        "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/helpers.js": {
+          "bytesInOutput": 5297
+        },
+        "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/stemPairs.js": {
+          "bytesInOutput": 5590
+        },
+        "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/branchPairs.js": {
+          "bytesInOutput": 2415
+        },
+        "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/counts.js": {
+          "bytesInOutput": 10238
+        },
+        "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/evidence.js": {
+          "bytesInOutput": 3815
+        },
+        "node_modules/mingyu-core/dist/bazi/baziRuleMatcher/index.js": {
+          "bytesInOutput": 6448
+        },
+        "node_modules/mingyu-core/dist/bazi/baziTherapeuticStrategy.js": {
+          "bytesInOutput": 10922
+        },
+        "node_modules/mingyu-core/dist/bazi/baziUsefulGodRules.js": {
+          "bytesInOutput": 5204
+        },
+        "node_modules/mingyu-core/dist/bazi/baziUsefulGodStrategy.js": {
+          "bytesInOutput": 35805
+        },
+        "node_modules/mingyu-core/dist/bazi/baziAnalysisPipeline.js": {
+          "bytesInOutput": 4401
+        },
+        "node_modules/mingyu-core/dist/bazi/baziAnalysis.js": {
+          "bytesInOutput": 847
+        },
+        "node_modules/mingyu-core/dist/bazi/luckTiming.js": {
+          "bytesInOutput": 4683
+        },
+        "node_modules/mingyu-core/dist/bazi/childLimit.js": {
+          "bytesInOutput": 699
+        },
+        "node_modules/mingyu-core/dist/bazi/LuckCalculator.js": {
+          "bytesInOutput": 9497
+        },
+        "node_modules/mingyu-core/dist/bazi/WuxingCalculator.js": {
+          "bytesInOutput": 3086
+        },
+        "node_modules/mingyu-core/dist/bazi/climateBalance.js": {
+          "bytesInOutput": 3777
+        },
+        "node_modules/mingyu-core/dist/bazi/baziCalculatorHelpers.js": {
+          "bytesInOutput": 2659
+        },
+        "node_modules/mingyu-core/dist/calendar/solar-term-evidence.js": {
+          "bytesInOutput": 13940
+        },
+        "node_modules/mingyu-core/dist/bazi/baziCalculatorTime.js": {
+          "bytesInOutput": 10406
+        },
+        "node_modules/mingyu-core/dist/bazi/globalTimeBasis.js": {
+          "bytesInOutput": 1613
+        },
+        "node_modules/mingyu-core/dist/bazi/baziPromptEnhancement.js": {
+          "bytesInOutput": 6345
+        },
+        "node_modules/mingyu-core/dist/bazi/baziAnalysisFormatter.js": {
+          "bytesInOutput": 4917
+        },
+        "node_modules/mingyu-core/dist/bazi/natalEvidence.js": {
+          "bytesInOutput": 48577
+        },
+        "node_modules/mingyu-core/dist/bazi/baziUnknownTime.js": {
+          "bytesInOutput": 22219
+        },
+        "node_modules/mingyu-core/dist/bazi/mingGua.js": {
+          "bytesInOutput": 2015
+        },
+        "node_modules/mingyu-core/dist/bazi/baziCalculator.js": {
+          "bytesInOutput": 28976
+        },
+        "node_modules/mingyu-core/dist/bazi/index.js": {
+          "bytesInOutput": 0
+        }
+      },
+      "bytes": 1499778
+    }
+  }
+}

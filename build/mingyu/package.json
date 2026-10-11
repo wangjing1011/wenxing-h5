@@ -1,0 +1,10 @@
+{
+  "name": "mingyu-build",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "mingyu-core": "^0.4.2"
+  }
+}

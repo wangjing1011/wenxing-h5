@@ -1,0 +1,13 @@
+{
+  "name": "wenxing-ai-proxy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "问星 H5 AI 解读代理：持有模型 Key、提示词组装、红线词后置过滤。零依赖，原生 Node。",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

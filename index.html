@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="问星 · 塔罗占卜 八字命盘 黄历宜忌">
+<title>问星 · 塔罗 八字 黄历</title>
+<link rel="stylesheet" href="css/style.css">
+<script>
+/* 上线前把下面替换为你的 GitHub 仓库地址（AGPL-3.0 合规：需向用户提供源码入口）。
+   留空时页脚与说明弹层不会显示「源码」链接。 */
+window.WX_SOURCE_URL = "";
+</script>
+</head>
+<body>
+<div id="app">
+
+  <!-- 首页：常用工具 2×2 + 更多 3×3 -->
+  <section class="view" id="view-home">
+    <div class="brand">
+      <div class="moon"></div>
+      <h1>问星</h1>
+      <p>塔罗 · 八字 · 黄历　传统历法与娱乐测评</p>
+    </div>
+
+    <div class="section-title">常用工具</div>
+    <div class="home-grid home-grid-2">
+      <button class="home-tile tile-lg" data-go="tarot">
+        <span class="ic" data-icon="tarot"></span>
+        <b>塔罗牌阵</b>
+        <span class="sub">8 种经典牌阵</span>
+      </button>
+      <button class="home-tile tile-lg" data-go="bazi">
+        <span class="ic" data-icon="bazi"></span>
+        <b>八字排盘</b>
+        <span class="sub">四柱十神大运</span>
+      </button>
+      <button class="home-tile tile-lg" data-go="ziwei">
+        <span class="ic" data-icon="ziwei"></span>
+        <b>紫微斗数</b>
+        <span class="sub">十二宫命盘</span>
+      </button>
+      <button class="home-tile tile-lg" data-go="huangli">
+        <span class="ic" data-icon="huangli"></span>
+        <b>黄历查询</b>
+        <span class="sub">每日宜忌择日</span>
+      </button>
+    </div>
+
+    <div class="section-title" style="margin-top:16px">更多功能</div>
+    <div class="home-grid home-grid-3">
+      <button class="home-tile" data-go="qian">
+        <span class="ic" data-icon="qian"></span>
+        <b>古法灵签</b>
+      </button>
+      <button class="home-tile" data-go="liuyao">
+        <span class="ic" data-icon="liuyao"></span>
+        <b>六爻</b>
+      </button>
+      <button class="home-tile" data-go="meihua">
+        <span class="ic" data-icon="meihua"></span>
+        <b>梅花起卦</b>
+      </button>
+      <button class="home-tile" data-go="name">
+        <span class="ic" data-icon="name"></span>
+        <b>起名</b>
+      </button>
+      <button class="home-tile locked" data-todo="奇门遁甲">
+        <span class="ic" data-icon="qimen"></span>
+        <b>奇门遁甲</b>
+        <span class="sub">待定</span>
+      </button>
+    </div>
+
+    <div class="home-links">
+      <button id="btn-history">历史记录</button>
+      <button id="btn-about">说明与声明</button>
+    </div>
+    <footer class="legal">
+      <p>本产品为传统历法研究与娱乐测评内容，结果不构成任何决策、医疗或心理建议。<br>您的所有记录仅保存在本机浏览器，我们不收集、不上传任何个人信息。</p>
+      <p class="cp">© 2026 问星 · 内容由算法生成，仅供娱乐与自我探索<br>塔罗牌面为 1909 年 Rider-Waite 公版图案（Pamela Colman Smith）<br><a class="src-link" data-source-link href="#" target="_blank" rel="noopener noreferrer" hidden>前端源码（AGPL-3.0）</a></p>
+    </footer>
+  </section>
+
+  <!-- 塔罗：牌阵列表 -->
+  <section class="view" id="view-tarot" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">塔罗牌阵</span>
+    </div>
+
+    <div class="section-title">轻量速览 · 1-3 牌</div>
+    <button class="spread-card" data-spread="single">
+      <div class="icon">☽</div>
+      <div class="info">
+        <b>单张指引</b>
+        <span>一个问题，一张牌。适合日常小困惑和「今天该注意什么」。</span>
+      </div>
+      <span class="cnt">1 牌</span>
+      <span class="arrow">›</span>
+    </button>
+    <button class="spread-card" data-spread="three">
+      <div class="icon">✦</div>
+      <div class="info">
+        <b>三牌 · 时间之流</b>
+        <span>过去 → 现在 → 未来。看清一件事的来路与走向。</span>
+      </div>
+      <span class="cnt">3 牌</span>
+      <span class="arrow">›</span>
+    </button>
+    <button class="spread-card" data-spread="soul">
+      <div class="icon">✧</div>
+      <div class="info">
+        <b>三牌 · 身心灵</b>
+        <span>身体 / 情绪 / 精神，三个层面扫描此刻的自己。</span>
+      </div>
+      <span class="cnt">3 牌</span>
+      <span class="arrow">›</span>
+    </button>
+    <button class="spread-card" data-spread="choice">
+      <div class="icon">◇</div>
+      <div class="info">
+        <b>三牌 · 抉择阵</b>
+        <span>两难时刻：两条路各自的走向 + 你内心的答案。</span>
+      </div>
+      <span class="cnt">3 牌</span>
+      <span class="arrow">›</span>
+    </button>
+
+    <div class="section-title" style="margin-top:16px">主题深入 · 5 牌</div>
+    <button class="spread-card" data-spread="relation">
+      <div class="icon">♡</div>
+      <div class="info">
+        <b>五牌 · 关系之镜</b>
+        <span>照见一段关系：双方状态、联结本质与走向。</span>
+      </div>
+      <span class="cnt">5 牌</span>
+      <span class="arrow">›</span>
+    </button>
+    <button class="spread-card" data-spread="break">
+      <div class="icon">◈</div>
+      <div class="info">
+        <b>五牌 · 破局阵</b>
+        <span>面对卡住的事：现状、卡点、资源、对策、出口。</span>
+      </div>
+      <span class="cnt">5 牌</span>
+      <span class="arrow">›</span>
+    </button>
+
+    <div class="section-title" style="margin-top:16px">经典全景 · 7-10 牌</div>
+    <button class="spread-card" data-spread="horseshoe">
+      <div class="icon">❖</div>
+      <div class="info">
+        <b>七牌 · 马蹄阵</b>
+        <span>经典展开：从过去到结果，全线扫描一件事。</span>
+      </div>
+      <span class="cnt">7 牌</span>
+      <span class="arrow">›</span>
+    </button>
+    <button class="spread-card" data-spread="celtic">
+      <div class="icon">✚</div>
+      <div class="info">
+        <b>十牌 · 凯尔特十字</b>
+        <span>塔罗最经典的完整牌阵，看清一个局的全貌。</span>
+      </div>
+      <span class="cnt">10 牌</span>
+      <span class="arrow">›</span>
+    </button>
+  </section>
+
+  <!-- 提问 -->
+  <section class="view" id="view-question" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title" id="q-title">提出你的问题</span>
+    </div>
+    <p class="hint" id="q-hint">在心中默想你的问题，也可以写下来（可不填，直接开始）。<br>问题越具体，解读越有针对性。</p>
+    <div class="input-wrap">
+      <textarea id="question-input" maxlength="60" placeholder="例如：我该不该接受这个新的工作机会？"></textarea>
+      <span class="counter" id="q-counter">0/60</span>
+    </div>
+    <div class="section-title">或者试试这些</div>
+    <div class="chips">
+      <span class="chip">我近期该注意什么？</span>
+      <span class="chip">这段关系将如何发展？</span>
+      <span class="chip">我为什么总是拖延？</span>
+      <span class="chip">这个决定现在成熟了吗？</span>
+    </div>
+    <button class="btn gold" id="btn-start-draw">开始抽牌</button>
+  </section>
+
+  <!-- 抽牌 -->
+  <section class="view" id="view-draw" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">静心 · 抽牌</span>
+    </div>
+    <p class="status" id="draw-status">默想你的问题，然后<b>点击牌堆</b>抽取 <b>1</b> 张</p>
+    <div class="deck" id="deck">
+      <div class="tcard fan-left"><div class="cardback"></div></div>
+      <div class="tcard fan-mid"><div class="cardback"></div></div>
+      <div class="tcard fan-right"><div class="cardback"></div></div>
+    </div>
+    <div class="slots" id="slots"></div>
+    <button class="btn" id="btn-to-result" style="display:none">查看解读</button>
+  </section>
+
+  <!-- 结果 -->
+  <section class="view" id="view-result" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">牌面解读</span>
+    </div>
+    <div class="result-head">
+      <div class="q" id="r-question"></div>
+      <div class="s" id="r-spread-name"></div>
+    </div>
+    <div class="cards-flow" id="cards-flow"></div>
+    <div class="summary">
+      <h3>— 综合提示 —</h3>
+      <p id="r-summary"></p>
+    </div>
+    <div class="ai-box" id="ai-box" style="display:none"></div>
+    <div class="result-actions">
+      <button class="btn gold" id="btn-save">存入历史</button>
+      <button class="btn ghost" id="btn-again">再测一次</button>
+      <button class="btn ai-btn" id="btn-ai" style="display:none">AI 解读（灵感视角）</button>
+    </div>
+    <p class="gen-note">解读由牌义库规则生成 · 仅供娱乐与自我探索</p>
+  </section>
+
+  <!-- 历史 -->
+  <section class="view" id="view-history" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">历史记录</span>
+    </div>
+    <p class="hint" style="margin-top:0">记录仅保存在本机，可随时删除，不会上传。</p>
+    <div id="hist-list"></div>
+    <div class="danger-zone" id="hist-clear-zone" style="display:none">
+      <button class="btn" id="btn-clear-hist">清空全部记录</button>
+    </div>
+    <footer class="legal">
+      <p class="cp">数据仅存于本机（localStorage）· 删除后不可恢复</p>
+    </footer>
+  </section>
+
+  <!-- 黄历查询 -->
+  <section class="view" id="view-huangli" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">黄历查询</span>
+    </div>
+    <p class="hint">选择日期查看当日宜忌、冲煞与吉神方位。择日只是参考，日子好不好，终究看你怎么做。</p>
+    <div class="date-bar">
+      <button class="mini-btn" id="hl-prev">‹ 前一天</button>
+      <input type="date" id="hl-date">
+      <button class="mini-btn" id="hl-next">后一天 ›</button>
+    </div>
+    <button class="btn gold" id="hl-today">回到今天</button>
+    <div id="hl-result"></div>
+  </section>
+
+  <!-- 古法灵签 -->
+  <section class="view" id="view-qian" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">古法灵签</span>
+    </div>
+    <p class="hint">默想一个问题，摇出一支签。签文是古人留下的劝善韵文，读的是心境，不是定论。</p>
+    <div class="input-wrap">
+      <textarea id="qian-q" maxlength="60" placeholder="例如：这件事现在该推进还是再等等？"></textarea>
+      <span class="counter" id="qian-counter">0/60</span>
+    </div>
+    <div class="section-title">或者试试这些</div>
+    <div class="chips" id="qian-chips">
+      <span class="chip">这件事该推进还是再等等？</span>
+      <span class="chip">我当下最该注意什么？</span>
+      <span class="chip">眼前的困局怎么解？</span>
+    </div>
+
+    <div class="tube-wrap">
+      <div class="qian-tube" id="qian-tube">
+        <div class="sticks"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="body"><span>签</span></div>
+      </div>
+    </div>
+    <p class="status" id="qian-status">静心默想后，<b>点击签筒</b>摇出一支签</p>
+
+    <div id="qian-result"></div>
+
+    <div id="qian-history-block" style="display:none">
+      <div class="section-title">我的签文</div>
+      <div id="qian-history"></div>
+      <div class="danger-zone">
+        <button class="btn" id="btn-clear-qian">清空签文记录</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 六爻 -->
+  <section class="view" id="view-liuyao" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">六爻</span>
+    </div>
+    <p class="hint">三枚铜钱摇六次，自下而上成卦。带 ○ × 的是动爻，会变出「之卦」。<br>一卦看的是势，怎么走仍在你。</p>
+    <div class="input-wrap">
+      <textarea id="ly-q" maxlength="60" placeholder="例如：这个项目接下来会顺利吗？"></textarea>
+      <span class="counter" id="ly-counter">0/60</span>
+    </div>
+    <div class="section-title">或者试试这些</div>
+    <div class="chips" id="ly-chips">
+      <span class="chip">这件事接下来会顺利吗？</span>
+      <span class="chip">现在该进还是该守？</span>
+      <span class="chip">这个合作值得继续吗？</span>
+    </div>
+
+    <div class="coin-box" id="ly-coins">
+      <div class="coin">字</div>
+      <div class="coin">字</div>
+      <div class="coin">字</div>
+    </div>
+    <button class="btn gold" id="btn-ly-roll">摇第 1 爻</button>
+    <p class="status" id="ly-status">共需摇 <b>6</b> 次，自下而上依次成爻</p>
+
+    <div class="yao-stack" id="ly-yaos"></div>
+    <div id="ly-result"></div>
+
+    <div id="ly-history-block" style="display:none">
+      <div class="section-title">我的卦象</div>
+      <div id="ly-history"></div>
+      <div class="danger-zone">
+        <button class="btn" id="btn-clear-ly">清空卦象记录</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 紫微斗数 -->
+  <section class="view" id="view-ziwei" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">紫微斗数</span>
+    </div>
+    <p class="hint">输入出生时间排出十二宫与十四主星。<b>数据仅在本机计算，不会上传。</b><br>排盘算法在首次排盘时按需载入，不影响首屏。</p>
+
+    <div class="form-block">
+      <div class="form-label">性别</div>
+      <div class="seg" id="zw-gender">
+        <button class="seg-btn on" data-g="1">男</button>
+        <button class="seg-btn" data-g="0">女</button>
+      </div>
+      <div class="form-label">出生日期（公历）</div>
+      <input type="date" id="zw-date" class="form-input">
+      <div class="form-label">出生时辰</div>
+      <select id="zw-hour" class="form-input">
+        <option value="-1">不确定（按午时排）</option>
+        <option value="0">子时 23:00-01:00</option>
+        <option value="2">丑时 01:00-03:00</option>
+        <option value="4">寅时 03:00-05:00</option>
+        <option value="6">卯时 05:00-07:00</option>
+        <option value="8">辰时 07:00-09:00</option>
+        <option value="10">巳时 09:00-11:00</option>
+        <option value="12">午时 11:00-13:00</option>
+        <option value="14">未时 13:00-15:00</option>
+        <option value="16">申时 15:00-17:00</option>
+        <option value="18">酉时 17:00-19:00</option>
+        <option value="20">戌时 19:00-21:00</option>
+        <option value="22">亥时 21:00-23:00</option>
+      </select>
+      <div class="form-label">称呼（选填，可留空）</div>
+      <input type="text" id="zw-name" class="form-input" maxlength="12" placeholder="仅用于显示，不上传">
+      <button class="btn gold" id="btn-ziwei-go" style="margin-top:16px">开始排盘</button>
+    </div>
+
+    <p class="status" id="ziwei-status"></p>
+    <div id="ziwei-result"></div>
+
+    <div id="ziwei-history-block" style="display:none">
+      <div class="section-title">我的命盘</div>
+      <div id="ziwei-history"></div>
+      <div class="danger-zone">
+        <button class="btn" id="btn-clear-zw">清空命盘记录</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 起名 -->
+  <section class="view" id="view-name" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">起名</span>
+    </div>
+    <p class="hint">按字义、读音与笔画生成候选名字。<b>生辰为选填项，填了也只在本机计算，不会上传。</b><br>不填生辰也可以起名，只是少一份五行分布参考。</p>
+
+    <div class="form-block">
+      <div class="form-label">姓氏</div>
+      <input type="text" id="nm-surname" class="form-input" maxlength="2" placeholder="1-2 个字，如「李」「欧阳」">
+      <div class="form-label">性别取向</div>
+      <div class="seg" id="nm-gender">
+        <button class="seg-btn on" data-v="0">不限</button>
+        <button class="seg-btn" data-v="1">偏男</button>
+        <button class="seg-btn" data-v="2">偏女</button>
+      </div>
+      <div class="form-label">名字字数</div>
+      <div class="seg" id="nm-len">
+        <button class="seg-btn" data-v="1">单字</button>
+        <button class="seg-btn on" data-v="2">双字</button>
+      </div>
+      <div class="form-label">风格偏好（可多选，也可不选）</div>
+      <div class="chips" id="nm-styles">
+        <span class="chip" data-s="steady">沉稳</span>
+        <span class="chip" data-s="lively">灵动</span>
+        <span class="chip" data-s="bookish">书卷气</span>
+        <span class="chip" data-s="elegant">清雅</span>
+        <span class="chip" data-s="grand">大气</span>
+        <span class="chip" data-s="gentle">温婉</span>
+      </div>
+      <div class="form-label">出生日期（选填）</div>
+      <input type="date" id="nm-date" class="form-input">
+      <div class="form-label">出生时辰（选填）</div>
+      <select id="nm-hour" class="form-input">
+        <option value="-1">不确定（按午时算）</option>
+        <option value="0">子时 23:00-01:00</option>
+        <option value="2">丑时 01:00-03:00</option>
+        <option value="4">寅时 03:00-05:00</option>
+        <option value="6">卯时 05:00-07:00</option>
+        <option value="8">辰时 07:00-09:00</option>
+        <option value="10">巳时 09:00-11:00</option>
+        <option value="12">午时 11:00-13:00</option>
+        <option value="14">未时 13:00-15:00</option>
+        <option value="16">申时 15:00-17:00</option>
+        <option value="18">酉时 17:00-19:00</option>
+        <option value="20">戌时 19:00-21:00</option>
+        <option value="22">亥时 21:00-23:00</option>
+      </select>
+      <button class="btn gold" id="btn-name-go" style="margin-top:16px">生成名字</button>
+    </div>
+
+    <div id="name-result"></div>
+
+    <div id="name-history-block" style="display:none">
+      <div class="section-title">我收藏的名字</div>
+      <div id="name-history"></div>
+      <div class="danger-zone">
+        <button class="btn" id="btn-clear-name">清空收藏</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 梅花起卦 -->
+  <section class="view" id="view-meihua" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">梅花起卦</span>
+    </div>
+    <p class="hint">以时间、或心念所报之数起卦，一局看三段：当下、过程、结果。<br>读的是形势与关系，不是定论。</p>
+    <div class="input-wrap">
+      <textarea id="mh-q" maxlength="60" placeholder="例如：眼前这个机会要不要接？"></textarea>
+      <span class="counter" id="mh-counter">0/60</span>
+    </div>
+    <div class="section-title">或者试试这些</div>
+    <div class="chips" id="mh-chips">
+      <span class="chip">眼前这个机会要不要接？</span>
+      <span class="chip">现在该进还是该守？</span>
+      <span class="chip">这件事最后会怎么收场？</span>
+    </div>
+
+    <div class="section-title" style="margin-top:16px">起卦方式</div>
+    <div class="seg" id="mh-method">
+      <button class="seg-btn on" data-m="time">时间起卦</button>
+      <button class="seg-btn" data-m="num">报数起卦</button>
+    </div>
+
+    <div id="mh-pane-time">
+      <div class="form-block">
+        <div class="form-label">起卦时刻（默认此刻，可改）</div>
+        <input type="datetime-local" id="mh-when" class="form-input">
+        <div class="mh-now" id="mh-now"></div>
+      </div>
+    </div>
+
+    <div id="mh-pane-num" style="display:none">
+      <div class="form-block">
+        <div class="form-label">心里想到两个数（1-9999）</div>
+        <div class="mh-2col">
+          <input type="number" id="mh-n1" class="form-input" min="1" max="9999" placeholder="数一">
+          <input type="number" id="mh-n2" class="form-input" min="1" max="9999" placeholder="数二">
+        </div>
+        <button class="btn" id="btn-mh-random" style="margin-top:10px">随意报数</button>
+      </div>
+    </div>
+
+    <button class="btn gold" id="btn-mh-roll">开始起卦</button>
+    <div id="mh-result"></div>
+
+    <div id="mh-history-block" style="display:none">
+      <div class="section-title">我的梅花卦</div>
+      <div id="mh-history"></div>
+      <div class="danger-zone">
+        <button class="btn" id="btn-clear-mh">清空梅花记录</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 八字排盘 -->
+  <section class="view" id="view-bazi" style="display:none">
+    <div class="nav-top">
+      <button class="back" data-to="home">‹</button>
+      <span class="title">八字排盘</span>
+    </div>
+    <p class="hint">输入出生时间排出四柱。性别用于排大运顺逆。<b>数据仅在本机计算，不会上传。</b><br><span style="font-size:11.5px">注：23:00 后按传统夜子时排入次日时柱，日柱不换日。</span></p>
+
+    <div class="form-block">
+      <div class="form-label">性别</div>
+      <div class="seg" id="bz-gender">
+        <button class="seg-btn on" data-g="1">男</button>
+        <button class="seg-btn" data-g="0">女</button>
+      </div>
+      <div class="form-label">出生日期（公历）</div>
+      <input type="date" id="bz-date" class="form-input">
+      <div class="form-label">出生时辰</div>
+      <select id="bz-hour" class="form-input">
+        <option value="-1">不确定（按午时排）</option>
+        <option value="0">子时 23:00-01:00</option>
+        <option value="2">丑时 01:00-03:00</option>
+        <option value="4">寅时 03:00-05:00</option>
+        <option value="6">卯时 05:00-07:00</option>
+        <option value="8">辰时 07:00-09:00</option>
+        <option value="10">巳时 09:00-11:00</option>
+        <option value="12">午时 11:00-13:00</option>
+        <option value="14">未时 13:00-15:00</option>
+        <option value="16">申时 15:00-17:00</option>
+        <option value="18">酉时 17:00-19:00</option>
+        <option value="20">戌时 19:00-21:00</option>
+        <option value="22">亥时 21:00-23:00</option>
+      </select>
+      <div class="form-label">称呼（选填，可留空）</div>
+      <input type="text" id="bz-name" class="form-input" maxlength="12" placeholder="仅用于显示，不上传">
+      <button class="btn gold" id="btn-bazi-go" style="margin-top:16px">开始排盘</button>
+    </div>
+
+    <div id="bazi-result"></div>
+
+    <div id="bazi-history-block" style="display:none">
+      <div class="section-title">我的命盘</div>
+      <div id="bazi-history"></div>
+      <div class="danger-zone">
+        <button class="btn" id="btn-clear-bazi">清空命盘记录</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- 说明与声明 -->
+<div class="sheet-mask" id="sheet-mask">
+  <div class="sheet">
+    <h3>说明与声明</h3>
+    <p><b style="color:#d4b96a">关于内容：</b>问星提供塔罗牌义、八字干支与黄历宜忌查询，内容为传统历法研究与娱乐测评性质，不构成任何决策、医疗、心理或投资建议。</p>
+    <p><b style="color:#d4b96a">关于数据：</b>您的提问、抽牌记录与生辰信息仅保存在本机浏览器（localStorage），我们不上传、不收集、不共享任何个人信息，您可以随时删除。</p>
+    <p><b style="color:#d4b96a">关于解读：</b>解读基于规则库生成，同一结果在不同处境下含义不同，请结合自身情况参考。</p>
+    <p><b style="color:#d4b96a">关于开源：</b>本站前端源码公开托管于 GitHub；八字排盘引擎命语（mingyu-core）以 <b style="color:#d4b96a">AGPL-3.0</b> 许可发布，我们据此开放对应源码。<a class="src-link" data-source-link href="#" target="_blank" rel="noopener noreferrer" hidden>查看源码 →</a></p>
+    <button class="btn ghost" id="sheet-close">我知道了</button>
+  </div>
+</div>
+
+<!-- 生辰信息单独同意（个人信息保护：单独同意） -->
+<div class="sheet-mask" id="sheet-consent">
+  <div class="sheet">
+    <h3>关于您的生辰信息</h3>
+    <p>出生日期与时辰属于<b style="color:#d4b96a">个人信息</b>，我们需要先向您说明并获得同意：</p>
+    <p>· <b style="color:#d4b96a">仅本机计算</b>：生辰只用于在本机浏览器完成排盘计算，不会上传到任何服务器；<br>· <b style="color:#d4b96a">不共享</b>：不会提供给任何第三方，也不会用于模型训练；<br>· <b style="color:#d4b96a">可删除</b>：命盘记录仅存本机，您可随时删除，删除后不可恢复。</p>
+    <p>如不同意，可继续使用塔罗与黄历（这两项不需要生辰信息）。</p>
+    <button class="btn gold" id="btn-consent-yes" style="margin-bottom:10px">同意并排盘</button>
+    <button class="btn ghost" id="btn-consent-no">暂不，返回</button>
+  </div>
+</div>
+
+<script src="js/vendor/lunar.js"></script>
+<script src="js/tarot-data-major.js"></script>
+<script src="js/tarot-data-minor.js"></script>
+<script src="js/tarot-images.js"></script>
+<script src="js/bazi-meanings.js"></script>
+<script src="js/qian-data-1.js"></script>
+<script src="js/qian-data-2.js"></script>
+<script src="js/liuyao-data.js"></script>
+<script src="js/meihua-data.js"></script>
+<script src="js/ziwei-meanings.js"></script>
+<script src="js/name-data.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/app.js"></script>
+<script src="js/app-fortune.js"></script>
+<script src="js/app-divine.js"></script>
+<script src="js/app-meihua.js"></script>
+<script src="js/app-ziwei.js"></script>
+<script src="js/app-name.js"></script>
+<!-- 注：js/vendor/iztro.js 由 app-ziwei.js 按需载入，不放进首屏 -->
+</body>
+</html>
