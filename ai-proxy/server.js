@@ -56,8 +56,10 @@ var redwords = require("./redwords");
 
 var PORT = parseInt(process.env.PORT || "8787", 10);
 // 监听地址：0.0.0.0 = 所有网卡（托管平台需要）；
-// 自建服务器建议设为 127.0.0.1，只由 Caddy / Nginx 反向代理对外，避免绕过 HTTPS 直连。
-var HOST = process.env.HOST || "0.0.0.0";
+// 自建服务器可设为 127.0.0.1，只由 Caddy / Nginx 反向代理对外，避免绕过 HTTPS 直连。
+// 变量名故意用 BIND_HOST 而非 HOST —— 不少托管平台会预置 HOST，撞名会导致只绑回环地址、
+// 外部探测不到端口而被判为「服务未启动」。
+var BIND_HOST = process.env.BIND_HOST || "0.0.0.0";
 var CACHE_TTL = parseInt(process.env.AI_CACHE_TTL || "21600", 10) * 1000;
 var SERVE_STATIC = (process.env.AI_SERVE_STATIC || "1") !== "0";
 var ROOT = path.join(__dirname, ".."); // tarot-h5 根目录
@@ -299,7 +301,12 @@ var server = http.createServer(function (req, res) {
   sendJson(res, 404, { error: "not found" });
 });
 
-server.listen(PORT, HOST, function () {
-  console.log("[ai-proxy] listening on http://" + (HOST === "0.0.0.0" ? "localhost" : HOST) + ":" + PORT +
+server.listen(PORT, BIND_HOST, function () {
+  console.log("[ai-proxy] listening on http://" + (BIND_HOST === "0.0.0.0" ? "localhost" : BIND_HOST) + ":" + PORT +
     (process.env.AI_KEY ? " (MODEL: " + (process.env.AI_MODEL || "deepseek-chat") + ")" : " (NO AI_KEY → mock mode)"));
+});
+// 监听失败要打出明确原因，否则托管平台只会报「端口未监听」，无从排查
+server.on("error", function (e) {
+  console.error("[ai-proxy] 监听失败 " + BIND_HOST + ":" + PORT + " -> " + (e.code || e.message));
+  process.exit(1);
 });

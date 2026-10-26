@@ -113,7 +113,7 @@ After=network.target
 Type=simple
 WorkingDirectory=$APP_DIR
 Environment=PORT=$PORT
-Environment=HOST=127.0.0.1
+Environment=BIND_HOST=127.0.0.1
 Environment=NODE_ENV=production
 ExecStart=$NODE_BIN ai-proxy/server.js
 Restart=always
