@@ -5,6 +5,8 @@
 // 启动：
 //   node server.js
 // 配置（环境变量，均可不填，不填则走离线 mock）：
+//   也可以写在同级目录的 .env 文件里（见 .env.example），启动时自动读取。
+//   优先级：真实环境变量 > .env。
 //   PORT          监听端口（默认 8787）
 //   AI_KEY        大模型 API Key（必填才能调真实模型）
 //   AI_MODEL      模型名（默认 deepseek-chat）
@@ -29,7 +31,33 @@ var crypto = require("crypto");
 var prompt = require("./prompt");
 var redwords = require("./redwords");
 
+// ---------------- 极简 .env 加载（零依赖） ----------------
+// 为什么需要：部分托管平台（如 WorkBuddy Sites）不给传环境变量的入口，
+// 只能把配置放在本目录的 .env 里随源码一起上传。
+// 安全：.env 已被 .gitignore 忽略，不会进入公开仓库。
+// 规则：KEY=VALUE / 忽略空行与 # 注释 / 已存在的环境变量优先（不覆盖）。
+(function loadDotEnv() {
+  var file = path.join(__dirname, ".env");
+  var text;
+  try { text = fs.readFileSync(file, "utf8"); } catch (e) { return; }
+  text.split(/\r?\n/).forEach(function (line) {
+    var s = line.trim();
+    if (!s || s.charAt(0) === "#") return;
+    var eq = s.indexOf("=");
+    if (eq < 1) return;
+    var k = s.slice(0, eq).trim();
+    var v = s.slice(eq + 1).trim();
+    if (v.length > 1 && (v.charAt(0) === '"' || v.charAt(0) === "'") && v.slice(-1) === v.charAt(0)) {
+      v = v.slice(1, -1);
+    }
+    if (!(k in process.env)) process.env[k] = v;
+  });
+})();
+
 var PORT = parseInt(process.env.PORT || "8787", 10);
+// 监听地址：0.0.0.0 = 所有网卡（托管平台需要）；
+// 自建服务器建议设为 127.0.0.1，只由 Caddy / Nginx 反向代理对外，避免绕过 HTTPS 直连。
+var HOST = process.env.HOST || "0.0.0.0";
 var CACHE_TTL = parseInt(process.env.AI_CACHE_TTL || "21600", 10) * 1000;
 var SERVE_STATIC = (process.env.AI_SERVE_STATIC || "1") !== "0";
 var ROOT = path.join(__dirname, ".."); // tarot-h5 根目录
@@ -210,8 +238,14 @@ var MIME = {
   ".js": "application/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".json": "application/json; charset=utf-8",
-  ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml",
-  ".ico": "image/x-icon", ".woff": "font/woff", ".woff2": "font/woff2"
+  ".png": "image/png",
+  ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+  ".webp": "image/webp", ".avif": "image/avif", ".gif": "image/gif",
+  ".svg": "image/svg+xml",
+  ".ico": "image/x-icon", ".woff": "font/woff", ".woff2": "font/woff2",
+  ".mp3": "audio/mpeg", ".mp4": "video/mp4",
+  ".txt": "text/plain; charset=utf-8",
+  ".map": "application/json; charset=utf-8"
 };
 function serveStatic(req, res, urlPath) {
   var rel = decodeURIComponent(urlPath.split("?")[0]);
@@ -265,7 +299,7 @@ var server = http.createServer(function (req, res) {
   sendJson(res, 404, { error: "not found" });
 });
 
-server.listen(PORT, function () {
-  console.log("[ai-proxy] listening on http://localhost:" + PORT +
+server.listen(PORT, HOST, function () {
+  console.log("[ai-proxy] listening on http://" + (HOST === "0.0.0.0" ? "localhost" : HOST) + ":" + PORT +
     (process.env.AI_KEY ? " (MODEL: " + (process.env.AI_MODEL || "deepseek-chat") + ")" : " (NO AI_KEY → mock mode)"));
 });

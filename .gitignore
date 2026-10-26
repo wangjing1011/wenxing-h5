@@ -6,6 +6,9 @@ node_modules/
 .env.*
 *.local
 
+# 但配置模板要入库（不含任何密钥）
+!.env.example
+
 # 系统与编辑器
 .DS_Store
 Thumbs.db

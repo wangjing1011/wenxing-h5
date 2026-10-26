@@ -411,15 +411,11 @@
     $("btn-save").disabled = false;
     $("btn-save").textContent = "存入历史";
 
-    // AI 解读入口（PoC 仅对单张 / 三牌开放，且只传牌面、不传生辰）
+    // AI 解读入口：所有牌阵统一开放（后端按牌数自适应组装，只传牌面、不传生辰）
     var aiBtn = $("btn-ai");
-    if (state.spread === "single" || state.spread === "three") {
-      aiBtn.style.display = "block";
-      aiBtn.disabled = false;
-      aiBtn.textContent = "AI 解读（灵感视角）";
-    } else {
-      aiBtn.style.display = "none";
-    }
+    aiBtn.style.display = "block";
+    aiBtn.disabled = false;
+    aiBtn.textContent = "AI 解读（灵感视角）";
     state.aiText = "";
     var aiBox = $("ai-box");
     aiBox.style.display = "none";
