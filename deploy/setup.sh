@@ -131,9 +131,15 @@ systemctl restart "$SERVICE"
 
 # ---------- 6. 反向代理 + 证书 ----------
 echo "==> [6/6] 配置 Caddy（自动申请 HTTPS 证书）"
+# 主域名与 www 一起纳入证书；若传入的已是 www 开头则不再叠加
+if [ "${DOMAIN#www.}" != "$DOMAIN" ]; then
+  CADDY_HOSTS="$DOMAIN"
+else
+  CADDY_HOSTS="$DOMAIN, www.$DOMAIN"
+fi
 cat > /etc/caddy/Caddyfile <<EOF
 # 由 deploy/setup.sh 生成
-$DOMAIN {
+$CADDY_HOSTS {
 	encode gzip zstd
 	reverse_proxy 127.0.0.1:$PORT
 }

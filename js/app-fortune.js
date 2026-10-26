@@ -409,9 +409,9 @@
     if (deep) html += renderMingyuDeep(deep);
 
     html += '<p class="gen-note" style="margin-top:14px">' + esc(window.BAZI_LIB.note) + "</p>" +
-      '<button class="btn gold" id="btn-bazi-save" style="margin-top:12px">存入「我的命盘」</button>' +
       '<div class="result-actions" style="margin-top:12px"><button class="btn ai-btn" id="btn-bazi-ai">AI 解读（灵感视角）</button></div>' +
       '<div class="ai-box" id="bazi-ai-box" style="display:none"></div>' +
+      '<button class="btn gold" id="btn-bazi-save" style="margin-top:14px">存入「我的命盘」</button>' +
       "</div>";
     return html;
   }

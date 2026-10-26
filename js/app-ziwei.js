@@ -223,12 +223,12 @@
       '<div class="section-title" style="margin-top:16px">十二宫 · 自命宫起顺时针</div>' + rows +
       shHtml +
       '<div class="ly-note" style="margin-top:12px"><h4>— 说 明 —</h4>' + esc(summary) + "</div>" +
-      '<div class="result-actions">' +
+      '<div class="result-actions" style="margin-top:12px"><button class="btn ai-btn" id="btn-zw-ai">AI 解读（灵感视角）</button></div>' +
+      '<div class="ai-box" id="zw-ai-box" style="display:none"></div>' +
+      '<div class="result-actions" style="margin-top:14px">' +
         '<button class="btn gold" id="btn-zw-save">存入历史</button>' +
         '<button class="btn ghost" id="btn-zw-again">重新排盘</button>' +
       "</div>" +
-      '<div class="result-actions" style="margin-top:12px"><button class="btn ai-btn" id="btn-zw-ai">AI 解读（灵感视角）</button></div>' +
-      '<div class="ai-box" id="zw-ai-box" style="display:none"></div>' +
       '<p class="gen-note">排盘算法 iztro（MIT）· 内容为传统文化研究，仅供娱乐与自我探索</p>';
 
     zwState.save = {
