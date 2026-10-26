@@ -107,7 +107,11 @@
         '<div class="qian-poem">' + lines + "</div>" +
         '<div class="jie"><h4>— 解 曰 —</h4>' + esc(q.j) + "</div>" +
         '<div class="jie" style="margin-top:10px"><h4>— 提 示 —</h4>' + esc(LEVEL_TEXT[q.l] || "") + "</div>" +
-        '<div class="result-actions">' +
+        '<div class="result-actions" style="margin-top:12px">' +
+          '<button class="btn ai-btn" id="btn-qian-ai">AI 解读（灵感视角）</button>' +
+        "</div>" +
+        '<div class="ai-box" id="qian-ai-box" style="display:none"></div>' +
+        '<div class="result-actions" style="margin-top:14px">' +
           '<button class="btn gold" id="btn-qian-save">存入历史</button>' +
           '<button class="btn ghost" id="btn-qian-again">再摇一次</button>' +
         "</div>" +
@@ -121,6 +125,19 @@
       $("qian-status").innerHTML = "静心默想后，<b>点击签筒</b>摇出一支签";
       window.scrollTo(0, 0);
     });
+    // AI 解读：只上传签诗与解曰，不上传吉凶等级，避免模型据此下判定
+    if (window.WenxingOracleAI) {
+      window.WenxingOracleAI.attach({
+        btnId: "btn-qian-ai",
+        boxId: "qian-ai-box",
+        kind: "qian",
+        question: function () { return qianState.question; },
+        data: function () {
+          return { no: q.n, topic: q.t, poem: q.p, note: q.j };
+        },
+        fallback: (q.j || "") + " " + (LEVEL_TEXT[q.l] || "")
+      });
+    }
     box.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -363,7 +380,11 @@
       (bian ? guaBlock(bian, bianYaos, "之卦（变后）", false) : "") +
       mvHtml +
       '<div class="ly-note" style="margin-top:12px"><h4>— 综 合 —</h4>' + esc(sum) + "</div>" +
-      '<div class="result-actions">' +
+      '<div class="result-actions" style="margin-top:12px">' +
+        '<button class="btn ai-btn" id="btn-ly-ai">AI 解读（灵感视角）</button>' +
+      "</div>" +
+      '<div class="ai-box" id="ly-ai-box" style="display:none"></div>' +
+      '<div class="result-actions" style="margin-top:14px">' +
         '<button class="btn gold" id="btn-ly-save">存入历史</button>' +
         '<button class="btn ghost" id="btn-ly-again">重新摇卦</button>' +
       "</div>" +
@@ -374,6 +395,26 @@
       resetLiuyao();
       window.scrollTo(0, 0);
     });
+    // AI 解读：传本卦 / 之卦 / 动爻辞意，不传吉凶趋势
+    if (window.WenxingOracleAI) {
+      window.WenxingOracleAI.attach({
+        btnId: "btn-ly-ai",
+        boxId: "ly-ai-box",
+        kind: "liuyao",
+        question: function () { return lyState.question; },
+        data: function () {
+          return {
+            ben: ben ? ben.name : "",
+            bian: bian ? bian.name : "",
+            moving: moved.map(function (i) { return YAO_POS[i]; }),
+            yaoNotes: moved.map(function (i) {
+              return YAO_POS[i] + "（" + Y[i].name + " " + Y[i].mk + "）：" + (YAO_NOTE[i] || "");
+            })
+          };
+        },
+        fallback: sum
+      });
+    }
     $("ly-result").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 

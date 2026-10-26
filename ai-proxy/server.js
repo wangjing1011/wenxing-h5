@@ -178,6 +178,33 @@ function mockChartInterpret(payload) {
   return head + body + tail;
 }
 
+// 签卦 / 起名离线 mock：按类型给一段规则兜底（同样过红线过滤，绝不下吉凶判断）
+function mockOracleInterpret(p) {
+  var d = p.data || {};
+  var head = {
+    qian: "这是一支从传统签诗中抽出的签。",
+    liuyao: "这是一组由六爻起出的卦象。",
+    meihua: "这是一组以梅花易数起出的卦象。",
+    name: "这是几个按笔画与五行搭配出的名字备选。"
+  }[p.kind] || "";
+  var body;
+  if (p.kind === "qian") {
+    body = (d.topic ? "签题讲的是「" + d.topic + "」。 " : "") +
+      "签诗的意思往往不在字面，而在它给出的那个画面——你读到它时心里浮起的那句，通常比任何注解都更贴近你此刻的处境。";
+  } else if (p.kind === "liuyao") {
+    body = (d.ben ? "本卦「" + d.ben + "」" + (d.bian ? "，之卦「" + d.bian + "」" : "") + "。 " : "") +
+      "卦象是古人观察变化的模型，讲的是「势」与「位」，不是给你下的判词。";
+  } else if (p.kind === "meihua") {
+    body = (d.ben ? "本卦「" + d.ben + "」" + (d.relName ? "，体用落在「" + d.relName + "」" : "") + "。 " : "") +
+      "它更像一面照见当下处境的镜子，照见的是你在局中的位置，而不是结局。";
+  } else if (p.kind === "name") {
+    body = "名字的好，很少在于笔画算得多准。读音顺不顺口、写出来好不好看、家里人念着喜不喜欢，这些比任何格子都更实在。";
+  } else {
+    body = "这些符号更像一面镜子，映出的是你此刻的心境。";
+  }
+  return head + " " + body + " 它给的是一个看问题的角度，怎么走仍在你手里。";
+}
+
 // ---------------- /interpret 处理 ----------------
 function handleInterpret(req, res) {
   readJson(req).then(function (payload) {
@@ -204,6 +231,31 @@ function handleInterpret(req, res) {
         cacheSet(ckey, { text: cfiltered.text, mock: mock });
         if (cfiltered.dirty) console.warn("[ai-proxy] redword hit, sanitized.");
         return sendJson(res, 200, { text: cfiltered.text, mock: mock });
+      });
+    }
+
+    // 签卦 / 起名解读：结构化占问结果（同样不含生辰与身份信息）
+    if (payload.type === "oracle") {
+      var OKINDS = { qian: 1, liuyao: 1, meihua: 1, name: 1 };
+      if (!payload.kind || !OKINDS[payload.kind] || !payload.data) {
+        return sendJson(res, 400, { error: "invalid oracle payload: kind & data required" });
+      }
+      var okey = crypto.createHash("sha1").update("oracle:" + JSON.stringify({
+        k: payload.kind,
+        q: (payload.question || "").slice(0, 80),
+        d: payload.data
+      })).digest("hex");
+      var ocached = cacheGet(okey);
+      if (ocached) {
+        return sendJson(res, 200, { text: ocached.value.text, mock: ocached.value.mock, cached: true });
+      }
+      return callModel(prompt.buildOracleMessages(payload)).then(function (raw) {
+        var omock = false;
+        if (!raw) { raw = mockOracleInterpret(payload); omock = true; }
+        var ofiltered = redwords.filter(raw);
+        cacheSet(okey, { text: ofiltered.text, mock: omock });
+        if (ofiltered.dirty) console.warn("[ai-proxy] redword hit, sanitized.");
+        return sendJson(res, 200, { text: ofiltered.text, mock: omock });
       });
     }
 

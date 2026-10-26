@@ -108,9 +108,88 @@ function buildChartMessages(p) {
   ];
 }
 
+// ================= 签卦 / 起名解读（灵签 · 六爻 · 梅花 · 起名） =================
+// 与塔罗最大的不同：这三类内容天然自带吉凶标签（上上签、卦之吉凶、体用生克），
+// 稍不注意模型就会写成「你近期会顺利」这类预测。所以提示词的重点是「剥离判定」：
+// 输入层面已经去掉了吉凶等级，提示词层面再锁一遍，只允许讲意象与文化背景。
+
+var SYSTEM_ROLE_ORACLE = [
+  "你是一位熟悉中国传统签文、卦象与姓名文化的陪伴者，从文化意象与自我觉察的角度和人聊天。",
+  "你面对的是一次占问或起名的结构化结果，不是对用户本人的观察，你也不需要任何个人信息。",
+  "",
+  "严格要求：",
+  "1. 只做文化意象的阐释与心理投射，绝不预测吉凶、不给结果判定，不说「会/不会」「吉/凶」「灵/不灵」「注定」「必」。",
+  "2. 输入里若带体用、生克、趋势等判定性字眼，只当作一种情绪氛围来理解，不复述、不据此下结论。",
+  "3. 用「你或许」「可能」「倾向于」「不妨」等开放式语气。",
+  "4. 不替用户做决定，不给出医疗、法律、投资等专业性结论。若议题涉及健康或重大人生决定，温和提醒其寻求现实中的专业帮助。",
+  "5. 行文自然温和，像朋友聊天，避免模板腔。禁止「首先/其次/最后」式罗列，禁止 emoji，破折号不要连用。",
+  "6. 长度适中（中文 130-260 字）。最后一句柔和、留白，不要写「结论」「综上」「总的来说」。"
+].join("\n");
+
+function serializeOracle(p) {
+  var d = p.data || {};
+  var kind = p.kind;
+  var L = [];
+
+  if (kind === "qian") {
+    L.push("【占问形式】古法灵签（抽签）");
+    if (d.topic) L.push("【签题】" + d.topic);
+    if (d.poem && d.poem.length) L.push("【签诗】" + d.poem.join("　"));
+    if (d.note) L.push("【解曰】" + d.note);
+  } else if (kind === "liuyao") {
+    L.push("【占问形式】六爻（周易卦象）");
+    if (d.ben) L.push("【本卦】" + d.ben);
+    if (d.bian) L.push("【之卦】" + d.bian);
+    if (d.moving && d.moving.length) {
+      L.push("【动爻】" + d.moving.join("、"));
+      if (d.yaoNotes && d.yaoNotes.length) L.push("【动爻辞意】" + d.yaoNotes.join("；"));
+    } else {
+      L.push("【动爻】六爻皆静");
+    }
+  } else if (kind === "meihua") {
+    L.push("【占问形式】梅花易数");
+    if (d.ben) L.push("【本卦】" + d.ben);
+    if (d.hu) L.push("【互卦】" + d.hu);
+    if (d.bian) L.push("【变卦】" + d.bian);
+    if (d.tiWX && d.yongWX) L.push("【体用】体卦属" + d.tiWX + "，用卦属" + d.yongWX);
+    if (d.relName) L.push("【体用关系】" + d.relName);
+  } else if (kind === "name") {
+    L.push("【事项】起名参考");
+    if (d.surname) L.push("【姓氏】" + d.surname);
+    if (d.tend) L.push("【四柱五行倾向】" + d.tend);
+    if (d.names && d.names.length) {
+      L.push("【候选名字】");
+      d.names.forEach(function (n, i) {
+        L.push((i + 1) + ". " + n.full + (n.pinyin ? "（" + n.pinyin + "）" : "") +
+          (n.sancai ? "　三才 " + n.sancai : "") +
+          (n.meaning ? "　字义：" + n.meaning : ""));
+      });
+    }
+  }
+
+  if (p.question) {
+    L.push("【用户所问】" + p.question);
+  } else {
+    L.push("【用户所问】（未写下问题，凭心意起卦，请基于结果做开放式阐释）");
+  }
+  L.push("");
+  L.push("请基于以上内容，从文化意象与自我觉察的角度给一段温柔、开放、不替用户做决定的解读。");
+
+  return L.join("\n");
+}
+
+function buildOracleMessages(p) {
+  return [
+    { role: "system", content: SYSTEM_ROLE_ORACLE },
+    { role: "user", content: serializeOracle(p) }
+  ];
+}
+
 module.exports = {
   buildMessages: buildMessages,
   SYSTEM_ROLE: SYSTEM_ROLE,
   buildChartMessages: buildChartMessages,
-  SYSTEM_ROLE_CHART: SYSTEM_ROLE_CHART
+  SYSTEM_ROLE_CHART: SYSTEM_ROLE_CHART,
+  buildOracleMessages: buildOracleMessages,
+  SYSTEM_ROLE_ORACLE: SYSTEM_ROLE_ORACLE
 };

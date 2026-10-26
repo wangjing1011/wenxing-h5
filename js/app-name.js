@@ -333,7 +333,11 @@
       "<br>" + esc((window.NAME_SANCAI || {}).note || "") + "</div>" +
       '<div class="ly-note" style="margin-top:10px"><h4>— 起 名 自 检 —</h4>' +
       "连着姓氏念三遍，看是否顺口；用家乡话念一遍，避开方言联想；写出来看字形是否平衡；查一下姓名拼音缩写有无尴尬组合；问问家里长辈有没有忌讳的字。</div>" +
-      '<div class="result-actions">' +
+      '<div class="result-actions" style="margin-top:12px">' +
+      '<button class="btn ai-btn" id="btn-nm-ai">AI 解读（命名思路）</button>' +
+      "</div>" +
+      '<div class="ai-box" id="nm-ai-box" style="display:none"></div>' +
+      '<div class="result-actions" style="margin-top:14px">' +
       '<button class="btn ghost" id="btn-nm-again">换一批</button>' +
       "</div>" +
       '<p class="gen-note">笔画按简体规范计算，与传统康熙笔画算法不同；三才五格为民国时期传入的评断方法，娱乐参考价值大于实际意义。</p>';
@@ -348,6 +352,29 @@
       nmState.seed++;
       go(true);
     });
+    // AI 解读：传候选名字的构成（字义/三才/音律），不上传生辰
+    if (window.WenxingOracleAI) {
+      window.WenxingOracleAI.attach({
+        btnId: "btn-nm-ai",
+        boxId: "nm-ai-box",
+        kind: "name",
+        data: function () {
+          return {
+            surname: surname,
+            tend: tend ? ("偏少：" + tend.least.join("、") + "；偏多：" + tend.most.join("、")) : "",
+            names: list.slice(0, 5).map(function (c) {
+              return {
+                full: c.full,
+                pinyin: c.pinyin,
+                sancai: c.sc.t + c.sc.r + c.sc.d,
+                meaning: c.chars.map(function (ch) { return ch[0] + "：" + ch[4]; }).join("；")
+              };
+            })
+          };
+        },
+        fallback: window.NAME_NOTE || ""
+      });
+    }
     $("name-result").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 

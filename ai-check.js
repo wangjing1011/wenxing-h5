@@ -54,6 +54,7 @@ const files = [];
 })(path.join(ROOT, "js"));
 const order = ["icons.js", "tarot-data-major.js", "tarot-data-minor.js", "tarot-images.js", "bazi-meanings.js",
   "qian-data-1.js", "qian-data-2.js", "liuyao-data.js", "meihua-data.js", "ziwei-meanings.js", "name-data.js",
+  "ai.js", "ai-oracle.js",
   "app.js", "app-fortune.js", "app-divine.js", "app-meihua.js", "app-ziwei.js", "app-name.js"];
 const ordered = order.map((o) => path.join(ROOT, "js", o))
   .concat(files.filter((f) => !order.some((o) => f.endsWith(o))));
@@ -97,7 +98,7 @@ click($("#btn-to-result"));
 ok($("#view-result").style.display !== "none", "三牌：已进入结果页");
 ok($("#btn-ai").style.display === "block", "三牌结果页显示 AI 解读按钮");
 
-// —— 关系之镜（五牌，非单/三）：结果页应隐藏 AI 按钮 ——
+// —— 关系之镜（五牌）：所有牌阵统一开放 AI 入口（原先仅单/三牌的 PoC 限制已解除）——
 click($("#btn-again"));
 click($("[data-go=tarot]"));
 click($("[data-spread=relation]"));
@@ -110,7 +111,7 @@ for (let i = 0; i < 5; i++) click(rbacks[i % rbacks.length]);
 ok($("#btn-to-result").style.display === "block", "关系之镜：抽满后「查看解读」按钮出现");
 click($("#btn-to-result"));
 ok($("#view-result").style.display !== "none", "关系之镜：已进入结果页");
-ok($("#btn-ai").style.display === "none", "非单/三牌（关系之镜）隐藏 AI 解读按钮");
+ok($("#btn-ai").style.display === "block", "五牌（关系之镜）同样显示 AI 解读按钮");
 
 // —— 单牌链路：显示 AI 按钮，点击后无后端安全降级 ——
 click($("#btn-again"));

@@ -302,7 +302,11 @@
     sum += "　" + NOTE;
 
     html += '<div class="ly-note" style="margin-top:12px"><h4>— 综 合 —</h4>' + esc(sum) + "</div>" +
-      '<div class="result-actions">' +
+      '<div class="result-actions" style="margin-top:12px">' +
+        '<button class="btn ai-btn" id="btn-mh-ai">AI 解读（灵感视角）</button>' +
+      "</div>" +
+      '<div class="ai-box" id="mh-ai-box" style="display:none"></div>' +
+      '<div class="result-actions" style="margin-top:14px">' +
         '<button class="btn gold" id="btn-mh-save">存入历史</button>' +
         '<button class="btn ghost" id="btn-mh-again">重新起卦</button>' +
       "</div>" +
@@ -314,6 +318,26 @@
       $("mh-result").innerHTML = "";
       window.scrollTo(0, 0);
     });
+    // AI 解读：传卦名与体用关系，不传吉凶趋势
+    if (window.WenxingOracleAI) {
+      window.WenxingOracleAI.attach({
+        btnId: "btn-mh-ai",
+        boxId: "mh-ai-box",
+        kind: "meihua",
+        question: function () { return mhState.question; },
+        data: function () {
+          return {
+            ben: R.ben ? R.ben.name : "",
+            hu: R.hu ? R.hu.name : "",
+            bian: R.bian ? R.bian.name : "",
+            tiWX: R.tiWX,
+            yongWX: R.yongWX,
+            relName: (REL[R.rel] || {}).name || ""
+          };
+        },
+        fallback: sum
+      });
+    }
     $("mh-result").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
