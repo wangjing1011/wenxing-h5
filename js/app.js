@@ -15,7 +15,7 @@
       count: 1,
       positions: [{ label: "当下指引", meaning: "此刻给你的提示" }],
       ph: "例如：我近期该注意什么？",
-      hint: "在心中默想你的问题，也可以写下来（可不填，直接开始）。<br>问题越具体，解读越有针对性。",
+      hint: "写下你想问的事，再开始抽牌。<br>问题越具体，解读越有针对性。",
       intro: "", keyPos: 0
     },
     three: {
@@ -27,7 +27,7 @@
         { label: "未来", meaning: "保持现有节奏时的走向" }
       ],
       ph: "例如：这件事接下来会怎么发展？",
-      hint: "在心中默想你的问题，也可以写下来（可不填，直接开始）。<br>问题越具体，解读越有针对性。",
+      hint: "写下你想问的事，再开始抽牌。<br>问题越具体，解读越有针对性。",
       intro: "", keyPos: 2
     },
     soul: {
@@ -52,7 +52,7 @@
         { label: "内心答案", meaning: "你其实已经倾向的东西" }
       ],
       ph: "例如：留在现在团队，还是接受新 offer？",
-      hint: "写下你的两难（可不填）。抽牌时在心里默念选项 A 与选项 B，<br>第三张牌会照出你内心的答案。",
+      hint: "写下你的两难，抽牌时在心里默念选项 A 与选项 B，<br>第三张牌会照出你内心的答案。",
       intro: "两条路各照出一面镜子——",
       keyPos: 2
     },
@@ -237,7 +237,16 @@
     });
   });
   $("btn-start-draw").addEventListener("click", function () {
-    state.question = qInput.value.trim();
+    var q = qInput.value.trim();
+    // 必须先写下问题：AI 解读要回应具体的事，没有问题的解读只会变成泛泛的牌义复述
+    if (!q) {
+      if (window.AppView && window.AppView.toast) {
+        window.AppView.toast("先把你想问的事写下来，再开始抽牌");
+      }
+      try { qInput.focus(); } catch (e) {}
+      return;
+    }
+    state.question = q;
     initDraw();
   });
 
@@ -346,7 +355,7 @@
       state.aiText = r.text;
       box.innerHTML =
         '<div class="ai-mark">AI 生成 · 娱乐参考' + (r.mock ? " · 离线示例" : "") + '</div>' +
-        '<p class="ai-text">' + esc(r.text).replace(/\n/g, "<br>") + '</p>';
+        aiParagraphs(r.text);
       btn.textContent = "重新解读";
       btn.disabled = false;
     }).catch(function () {
@@ -354,12 +363,18 @@
     });
   });
 
+  // 段落渲染统一交给 ai.js 的公共函数（空行分段），这里只做转发
+  function aiParagraphs(text) {
+    if (window.WenxingAIText) return window.WenxingAIText.paragraphs(text);
+    return '<p class="ai-text">' + esc(text).replace(/\n/g, "<br>") + "</p>";
+  }
+
   // AI 不可用时的降级：用规则综合提示（与红线词基调一致）
   function renderAiFallback(box, btn) {
     state.aiText = buildSummary();
     box.innerHTML =
       '<div class="ai-mark">离线综合解读 · 娱乐参考</div>' +
-      '<p class="ai-text">' + esc(state.aiText).replace(/\n/g, "<br>") + '</p>';
+      aiParagraphs(state.aiText);
     btn.textContent = "重新解读";
     btn.disabled = false;
     if (window.AppView && window.AppView.toast) window.AppView.toast("AI 服务暂不可用，已切换本地综合解读");

@@ -23,6 +23,11 @@
     }, 1900);
   }
   function resolve(v) { return typeof v === "function" ? v() : v; }
+  // 段落渲染统一走 ai.js 的公共函数；缺失时退回单段
+  function paras(text) {
+    if (window.WenxingAIText) return window.WenxingAIText.paragraphs(text);
+    return '<p class="ai-text">' + esc(text) + "</p>";
+  }
 
   // opts: { btnId, boxId, kind, question?, data, fallback }
   //   kind  —— qian | liuyao | meihua | name
@@ -48,7 +53,7 @@
       var fallback = function () {
         box.innerHTML =
           '<div class="ai-mark">离线综合解读 · 娱乐参考</div>' +
-          '<p class="ai-text">' + esc(resolve(opts.fallback) || "") + "</p>";
+          paras(resolve(opts.fallback) || "");
         btn.textContent = "重新解读";
         btn.disabled = false;
         toast("AI 服务暂不可用，已切换本地解读");
@@ -59,7 +64,7 @@
       window.WenxingAI.interpret(payload).then(function (r) {
         box.innerHTML =
           '<div class="ai-mark">AI 生成 · 娱乐参考' + (r.mock ? " · 离线示例" : "") + "</div>" +
-          '<p class="ai-text">' + esc(r.text).replace(/\n/g, "<br>") + "</p>";
+          paras(r.text);
         btn.textContent = "重新解读";
         btn.disabled = false;
       }).catch(fallback);

@@ -36,5 +36,25 @@
     }).finally(function () { clearTimeout(to); });
   }
 
+  function escHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  // 把模型返回的多段文字按「空行」切成真正的段落：空行 = 段间距，单个换行 = 换行。
+  // 否则整段文字会挤成一大坨，手机上尤其难读。
+  function paragraphs(text) {
+    var parts = String(text == null ? "" : text).split(/\n{2,}/);
+    var out = "";
+    for (var i = 0; i < parts.length; i++) {
+      var t = parts[i].trim();
+      if (!t) continue;
+      out += '<p class="ai-text">' + escHtml(t).replace(/\n/g, "<br>") + "</p>";
+    }
+    return out;
+  }
+
+  window.WenxingAIText = { paragraphs: paragraphs, escHtml: escHtml };
   window.WenxingAI = { interpret: interpret, endpoint: ENDPOINT };
 })();

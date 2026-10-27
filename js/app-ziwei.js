@@ -263,14 +263,19 @@
     window.WenxingAI.interpret(payload).then(function (r) {
       zwChartState.aiText = r.text;
       box.innerHTML = '<div class="ai-mark">AI 生成 · 娱乐参考' + (r.mock ? " · 离线示例" : "") + '</div>' +
-        '<p class="ai-text">' + esc(r.text).replace(/\n/g, "<br>") + '</p>';
+        aiParas(r.text);
       btn.textContent = "重新解读"; btn.disabled = false;
     }).catch(function () { zwAiFallback(box, btn); });
+  }
+  // 段落渲染统一走 ai.js 的公共函数（空行分段）
+  function aiParas(text) {
+    if (window.WenxingAIText) return window.WenxingAIText.paragraphs(text);
+    return '<p class="ai-text">' + esc(text) + '</p>';
   }
   function zwAiFallback(box, btn) {
     zwChartState.aiText = zwLocalSummary();
     box.innerHTML = '<div class="ai-mark">离线综合解读 · 娱乐参考</div>' +
-      '<p class="ai-text">' + esc(zwChartState.aiText).replace(/\n/g, "<br>") + '</p>';
+      aiParas(zwChartState.aiText);
     btn.textContent = "重新解读"; btn.disabled = false;
     if (window.AppView && window.AppView.toast) window.AppView.toast("AI 服务暂不可用，已切换本地综合解读");
   }

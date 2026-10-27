@@ -86,9 +86,24 @@ ok($("#ai-box") !== null, "结果页存在 AI 解读容器 ai-box");
 // 注意：所有抽牌链路（会触发 initDraw → getElementById）都放在顶层同步执行，
 //       避免在 linkedom 定时器上下文触发其 getElementById 返回 null 的已知缺陷。
 
-// —— 三牌链路：结果页应显示 AI 按钮 ——
-click($("[data-spread=three]"));
+// —— 提问必填：未写问题不允许开始抽牌 ——
+click($("[data-spread=single]"));
+ok($("#view-question").style.display !== "none", "进入提问页");
+ok(!/可不填/.test($("#q-hint").textContent), "提示语已去掉「可不填，直接开始」");
+$("#question-input").value = "";
+click($("#btn-start-draw"));
+ok($("#view-draw").style.display === "none", "未写问题时点「开始抽牌」被拦下，不进入抽牌页");
+$("#question-input").value = "这是必填校验测试";
 input($("#question-input"));
+click($("#btn-start-draw"));
+ok($("#view-draw").style.display !== "none", "写下问题后可以正常开始抽牌");
+
+// —— 三牌链路：结果页应显示 AI 按钮 ——
+// 注意：提问已改为必填，未写问题点「开始抽牌」会被拦下，故这里必须赋值
+click($("[data-spread=three]"));
+const q3 = $("#question-input");
+q3.value = "这件事该怎么推进？";
+input(q3);
 click($("#btn-start-draw"));
 ok($("#view-draw").style.display !== "none", "三牌：已进入抽牌页");
 const backs3 = document.querySelectorAll("#deck .cardback");
@@ -102,7 +117,9 @@ ok($("#btn-ai").style.display === "block", "三牌结果页显示 AI 解读按�
 click($("#btn-again"));
 click($("[data-go=tarot]"));
 click($("[data-spread=relation]"));
-input($("#question-input"));
+const q5 = $("#question-input");
+q5.value = "我们之间还有没有可能？";
+input(q5);
 click($("#btn-start-draw"));
 ok($("#view-draw").style.display !== "none", "关系之镜：已进入抽牌页");
 // 牌堆固定 3 张卡背，大牌阵靠重复点击同一张卡背抽满（应用本身即如此处理）

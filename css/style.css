@@ -282,6 +282,7 @@ textarea:focus { border-color: rgba(212,185,106,.6); }
 .ai-box { background: linear-gradient(180deg, rgba(139,124,246,.14), rgba(139,124,246,.06)); border: 1px solid rgba(139,124,246,.38); border-radius: 16px; padding: 16px 15px; margin: 16px 0 0; }
 .ai-mark { font-size: 11px; letter-spacing: 2px; color: #c4bbff; margin-bottom: 9px; opacity: .9; }
 .ai-text { font-size: 13.5px; line-height: 1.95; color: #e3deff; white-space: normal; }
+.ai-text + .ai-text { margin-top: 13px; }
 .ai-loading { font-size: 13px; color: var(--muted); text-align: center; padding: 8px 0; }
 .hist-ai { margin-top: 9px; padding: 10px 12px; background: rgba(139,124,246,.1); border: 1px solid rgba(139,124,246,.25); border-radius: 10px; font-size: 12.5px; line-height: 1.8; color: #d9d4ef; }
 .hist-ai-tag { display: inline-block; font-size: 10px; letter-spacing: 1px; color: #c4bbff; border: 1px solid rgba(196,187,255,.45); border-radius: 8px; padding: 1px 7px; margin-right: 6px; }
