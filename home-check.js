@@ -76,13 +76,13 @@ ok(lgTiles.length === 4, "常用工具 4 项（2×2），实得 " + lgTiles.leng
 ok(smTiles.length === 5, "更多功能 5 项，实得 " + smTiles.length);
 
 const lgGo = lgTiles.map((t) => t.getAttribute("data-go"));
-ok(JSON.stringify(lgGo) === JSON.stringify(["tarot", "bazi", "ziwei", "huangli"]),
-  "常用工具顺序为 塔罗/八字/紫微/黄历，实得 " + lgGo.join("/"));
+ok(JSON.stringify(lgGo) === JSON.stringify(["tarot", "bazi", "qian", "huangli"]),
+  "常用工具顺序为 塔罗/八字/灵签/黄历，实得 " + lgGo.join("/"));
 
 const smGo = smTiles.map((t) => t.getAttribute("data-go") || "locked:" + t.getAttribute("data-todo"));
-ok(smGo.length === 5 && smGo.indexOf("qian") >= 0 && smGo.indexOf("liuyao") >= 0 &&
+ok(smGo.length === 5 && smGo.indexOf("ziwei") >= 0 && smGo.indexOf("liuyao") >= 0 &&
    smGo.indexOf("meihua") >= 0 && smGo.indexOf("name") >= 0 && smGo.join("|").indexOf("locked:奇门遁甲") >= 0,
-  "更多功能含 灵签/六爻/梅花/起名 + 奇门占位，实得 " + smGo.join(" / "));
+  "更多功能含 紫微/六爻/梅花/起名 + 奇门占位，实得 " + smGo.join(" / "));
 
 // 总入口数 = 9（8 可用 + 1 占位）
 const allTiles = $$("#view-home .home-tile");
@@ -100,7 +100,7 @@ $$("#view-home [data-icon]").forEach((el) => {
   if (/<svg[\s>]/.test(el.innerHTML)) iconOk++;
 });
 ok(iconOk === 9, "9 个功能图标全部注入为 SVG，实得 " + iconOk);
-ok(iconNames.join(",") === "tarot,bazi,ziwei,huangli,qian,liuyao,meihua,name,qimen",
+ok(iconNames.join(",") === "tarot,bazi,qian,huangli,ziwei,liuyao,meihua,name,qimen",
   "图标 key 齐全，实得 " + iconNames.join(","));
 
 // 图标必须是 SVG 而非 Unicode 符号

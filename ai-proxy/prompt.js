@@ -67,6 +67,27 @@ var SYSTEM_ROLE_CHART = [
   "6. 结尾不要写「结论」「综上」，用一句柔和、留白的话收尾即可。"
 ].join("\n");
 
+// 八字单独一套：一份四柱能读出的信息量远大于一段话，
+// 之前的通用提示词只要 120-260 字，出来就是「你五行偏木、性格温和」这种空话。
+var SYSTEM_ROLE_BAZI = [
+  "你是一位研究传统干支历法与命理文化的陪伴者，擅长把一张四柱命盘讲成人能听懂的话。",
+  "你面对的是一份已经由排盘工具算好的结构化命盘（四柱干支、十神、五行分布、日主强弱、大运序列），不是用户的出生信息，你也不需要任何生辰。",
+  "",
+  "严格要求：",
+  "1. 只做文化意象与性格、做事方式的开放式探讨，不做命运预测、不下定论、不做健康或投资方面的判断。绝不使用「占卜/算命/预测/改运/转运/消灾/化太岁/命中注定/注定/宿命/天意/神灵/鬼神/命理/风水/吉凶/凶兆/趋吉避凶/批命」等词。",
+  "2. 用「你或许」「可能」「倾向于」「不妨」这类语气，不用「你会/必然/肯定/绝对/一定/务必/注定」。",
+  "3. 必须分段，这是硬要求：按下面的顺序写五段，段与段之间空一行，每段 3 到 5 句。不要写小标题，也不要在正文里写「第一段」「首先」这类标记。",
+  "　· 第一段写这个盘的样子：日主是什么五行、偏强还是偏弱、有没有得月令，然后用一句白话解释这意味着什么——比如「偏强，大致是说你的自我比较足，不太容易被别人的意见带走」。",
+  "　· 第二段写性格与做事方式：从十神分布、哪一行最旺来看，他大概率是个什么样的人——念头怎么起、事情怎么推、被压着的时候什么反应。要给具体的行为描述，不要只丢「伤官」「七杀」这类名词。",
+  "　· 第三段写优势，以及容易踩的坑：优势讲两三条，坑讲一两条，坑要说得具体，比如「容易一开始铺得太开，收尾全靠意志力硬扛」。",
+  "　· 第四段写与人相处和情绪：五行哪一块偏多、哪一块偏少，落到日常是什么感受，和什么样的人容易合得来、和什么样的人容易别扭。",
+  "　· 第五段写大运给的节奏：只讲这一串大运整体像什么节奏（例如「二十几岁那一段是一个明显的换挡期」这种方向感），不预测具体事件，不说哪年哪月会发生什么。",
+  "4. 专业名词第一次出现时用一句白话带过，之后可以简称。避免「能量场」「频率」「振动」「课题」「显化」「高我」这类空泛玄学词，也不要堆「意象」「投射」这类心理学术语。就像一个懂行的朋友坐下来跟你聊，不是在写论文。",
+  "5. 全程散文，不要罗列条目、不要用「首先/其次/最后」、不要 emoji、破折号不要连用。",
+  "6. 长度：中文 550 到 750 字。结尾不要写「结论」「综上」「总而言之」，用一句柔和、留白的话收尾即可。"
+].join("\n");
+
+
 // 把结构化命盘拼成用户消息（纯结构化，无个人信息）
 function serializeChart(p) {
   var d = p.domain, c = p.chart || {}, L = [];
@@ -82,13 +103,62 @@ function serializeChart(p) {
     var dm = c.dayMaster || {};
     L.push("【日主】" + dm.gan + (dm.el ? "（" + dm.el + "）" : "") + (dm.trait ? "　气质：" + dm.trait : ""));
     var wx = c.wuXing || {};
-    L.push("【五行分布】" + ["木", "火", "土", "金", "水"].map(function (w) { return w + (wx[w] || 0); }).join(" "));
+    var ORDER_WX = ["木", "火", "土", "金", "水"];
+    L.push("【五行分布】" + ORDER_WX.map(function (w) { return w + (wx[w] || 0); }).join(" "));
+    // 给模型一些能落地的抓手：哪一行最旺、哪一行是空的
+    var top = ORDER_WX.slice().sort(function (a, b) { return (wx[b] || 0) - (wx[a] || 0); })[0];
+    if (top && wx[top]) L.push("【五行最旺】" + top);
+    var miss = ORDER_WX.filter(function (w) { return !wx[w]; });
+    if (miss.length) L.push("【五行缺】" + miss.join("、"));
     var sk = { "strong": "偏强", "weak": "偏弱", "balance": "中和" }[c.strength] || c.strength || "";
     L.push("【日主强弱】" + (sk || "-") + (c.deLing ? "（得月令）" : ""));
-    if ((c.shiShen || []).length) L.push("【十神】" + c.shiShen.join("、"));
+    if ((c.shiShen || []).length) {
+      var cnt = {};
+      c.shiShen.forEach(function (s) { cnt[s] = (cnt[s] || 0) + 1; });
+      L.push("【十神分布】" + Object.keys(cnt).map(function (k) { return k + "×" + cnt[k]; }).join("、"));
+    }
     if ((c.daYun || []).length) L.push("【大运】" + c.daYun.map(function (dy) { return dy.startAge + "岁起 " + dy.gz; }).join("，"));
     if (c.taiYuan) L.push("【胎元】" + c.taiYuan);
     if (c.mingGong) L.push("【命宫】" + c.mingGong);
+
+    // 命语算出的深度结构（格局 / 旺衰 / 喜用 / 调候 / 神煞 / 起运）。
+    // 这一块以前没带给模型，所以解读只能停在「你五行偏木」这种层面。
+    var dp = c.deep;
+    if (dp) {
+      var flat = function (v) {
+        if (v == null) return "";
+        if (typeof v === "string" || typeof v === "number") return String(v);
+        if (typeof v === "boolean") return v ? "有" : "";
+        if (Array.isArray(v)) return v.map(flat).filter(Boolean).join("、");
+        if (typeof v === "object") {
+          return Object.keys(v).map(function (k) {
+            var vv = flat(v[k]);
+            return vv ? k + " " + vv : "";
+          }).filter(Boolean).join("；");
+        }
+        return "";
+      };
+      if (dp.pattern) L.push("【格局】" + flat(dp.pattern) + (dp.patternStatus ? "（" + flat(dp.patternStatus) + "）" : ""));
+      if (dp.patternBasis) L.push("【格局依据】" + flat(dp.patternBasis));
+      if (dp.dayMasterStrength) L.push("【旺衰判定】" + flat(dp.dayMasterStrength));
+      if (dp.usefulGod) {
+        var ug = dp.usefulGod;
+        L.push("【喜用】" + (flat(ug.useful) || "-") +
+          "　喜用五行：" + (flat(ug.favorableWuxing) || "-") +
+          "　需留意五行：" + (flat(ug.unfavorableWuxing) || "-"));
+      }
+      if (dp.climate) L.push("【调候】" + flat(dp.climate));
+      var sh = flat(dp.shensha);
+      if (sh) L.push("【神煞】" + sh.slice(0, 160));
+      if (dp.luckStartText) L.push("【起运】" + flat(dp.luckStartText));
+      if ((dp.daYun || []).length) {
+        L.push("【大运十神】" + dp.daYun.map(function (dy) {
+          var y0 = (dy.years || [])[0] || {};
+          var tg = [y0.tenGod, y0.tenGodZhi].filter(Boolean).join("·");
+          return (dy.startAge != null ? dy.startAge + "岁 " : "") + (dy.gz || "") + (tg ? "（" + tg + "）" : "");
+        }).filter(Boolean).join("，"));
+      }
+    }
   } else if (d === "ziwei") {
     L.push("【命盘类型】紫微斗数");
     if (c.fiveElementsClass) L.push("【五行局】" + c.fiveElementsClass);
@@ -101,13 +171,20 @@ function serializeChart(p) {
     if ((c.siHua || []).length) L.push("【四化】" + c.siHua.map(function (x) { return "化" + x.type + " " + x.star + " 在 " + x.palace; }).join("；"));
   }
   L.push("");
-  L.push("请基于以上结构化命盘，从传统文化与自我觉察的角度，给一段温柔、开放、不替用户做决定也不下定论的解读。");
+  if (d === "bazi") {
+    L.push("请基于以上结构化命盘，按系统设定的五段顺序写一份完整的解读：盘的样子、性格与做事方式、优势与容易踩的坑、与人相处和情绪、大运的节奏。" +
+      "每段 3 到 5 句、段间空一行，用日常白话讲，名词第一次出现时用一句话解释清楚。" +
+      "不要预测具体事件，不要替用户做决定，也不要用「吉凶」这类判定词。");
+  } else {
+    L.push("请基于以上结构化命盘，从传统文化与自我觉察的角度，给一段温柔、开放、不替用户做决定也不下定论的解读。");
+  }
   return L.join("\n");
 }
 
 function buildChartMessages(p) {
+  var role = p && p.domain === "bazi" ? SYSTEM_ROLE_BAZI : SYSTEM_ROLE_CHART;
   return [
-    { role: "system", content: SYSTEM_ROLE_CHART },
+    { role: "system", content: role },
     { role: "user", content: serializeChart(p) }
   ];
 }
@@ -197,6 +274,7 @@ module.exports = {
   SYSTEM_ROLE: SYSTEM_ROLE,
   buildChartMessages: buildChartMessages,
   SYSTEM_ROLE_CHART: SYSTEM_ROLE_CHART,
+  SYSTEM_ROLE_BAZI: SYSTEM_ROLE_BAZI,
   buildOracleMessages: buildOracleMessages,
   SYSTEM_ROLE_ORACLE: SYSTEM_ROLE_ORACLE
 };

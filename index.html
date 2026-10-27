@@ -35,10 +35,10 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <b>八字排盘</b>
         <span class="sub">四柱十神 · 大运流年</span>
       </button>
-      <button class="home-tile tile-lg" data-go="ziwei" style="--ac:#a48bff">
-        <span class="art"><span class="ic" data-icon="ziwei"></span></span>
-        <b>紫微斗数</b>
-        <span class="sub">十二宫 · 主星落位</span>
+      <button class="home-tile tile-lg" data-go="qian" style="--ac:#f0a54c">
+        <span class="art"><span class="ic" data-icon="qian"></span></span>
+        <b>古法灵签</b>
+        <span class="sub">写下问题 · 摇签问事</span>
       </button>
       <button class="home-tile tile-lg" data-go="huangli" style="--ac:#ea7159">
         <span class="art"><span class="ic" data-icon="huangli"></span></span>
@@ -49,9 +49,9 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
 
     <div class="section-title" style="margin-top:16px">更多功能</div>
     <div class="home-grid home-grid-3">
-      <button class="home-tile" data-go="qian" style="--ac:#f0a54c">
-        <span class="art"><span class="ic" data-icon="qian"></span></span>
-        <b>古法灵签</b>
+      <button class="home-tile" data-go="ziwei" style="--ac:#a48bff">
+        <span class="art"><span class="ic" data-icon="ziwei"></span></span>
+        <b>紫微斗数</b>
       </button>
       <button class="home-tile" data-go="liuyao" style="--ac:#83b5ea">
         <span class="art"><span class="ic" data-icon="liuyao"></span></span>
@@ -97,14 +97,15 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
       <button class="seg-btn" data-cat="生活">生活</button>
       <button class="seg-btn" data-cat="其他">其他</button>
     </div>
-    <p class="cat-hint" id="spread-cat-hint">不知道选哪个就从这里开始，三个最通用的牌阵。</p>
+    <p class="cat-hint" id="spread-cat-hint">拿不准怎么选：1 张只看一件小事，3 张看走向，10 张是把整个局摊开。</p>
 
     <div id="spread-list">
       <button class="spread-card" data-spread="single" data-cats="默认,生活">
         <div class="icon">☽</div>
         <div class="info">
           <b>单张指引</b>
-          <span>只问一件事，只抽一张牌。适合日常小困惑和「今天该注意什么」。</span>
+          <span class="when">只想问一件小事，或今天该注意什么</span>
+          <span class="desc">一个问题一张牌，三十秒出结果，最轻的一档。</span>
         </div>
         <span class="cnt">1 牌</span>
         <span class="arrow">›</span>
@@ -113,7 +114,8 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <div class="icon">✦</div>
         <div class="info">
           <b>三牌 · 时间之流</b>
-          <span>过去 → 现在 → 未来。最通用的一副：看清一件事的来路与走向。</span>
+          <span class="when">想先看个大概走向，不想花太多时间</span>
+          <span class="desc">过去 → 现在 → 未来。最通用的一副，也是「先随便看看」时最该选的一副。</span>
         </div>
         <span class="cnt">3 牌</span>
         <span class="arrow">›</span>
@@ -122,7 +124,8 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <div class="icon">♡</div>
         <div class="info">
           <b>五牌 · 关系之镜</b>
-          <span>照见一段关系：双方各自的状态、联结的本质，以及会往哪走。</span>
+          <span class="when">三牌看完还不够，想把两个人各自的状态摊开看</span>
+          <span class="desc">双方状态、关系本质、盲点、走向。比三牌多一层「对方怎么想」。</span>
         </div>
         <span class="cnt">5 牌</span>
         <span class="arrow">›</span>
@@ -131,7 +134,8 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <div class="icon">◇</div>
         <div class="info">
           <b>三牌 · 抉择阵</b>
-          <span>两难时刻用：两条路各自的走向，加上你心里其实已经倾的那一边。</span>
+          <span class="when">正卡在两个选项之间，留还是走、接还是不接</span>
+          <span class="desc">两条路各自的走向，第三张照出你心里其实已经倾的那一边。</span>
         </div>
         <span class="cnt">3 牌</span>
         <span class="arrow">›</span>
@@ -140,7 +144,8 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <div class="icon">◈</div>
         <div class="info">
           <b>五牌 · 破局阵</b>
-          <span>事情卡住时用：现状、卡点、手里可用的资源、对策、出口。</span>
+          <span class="when">事情具体卡住了，要的是能落地的下一步</span>
+          <span class="desc">现状、卡点、手里的资源、对策、出口。从「卡在哪」一路指到「怎么动」。</span>
         </div>
         <span class="cnt">5 牌</span>
         <span class="arrow">›</span>
@@ -149,7 +154,8 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <div class="icon">✧</div>
         <div class="info">
           <b>三牌 · 身心灵</b>
-          <span>身体 / 情绪 / 方向，三个层面扫一遍此刻的自己。适合说不上来的累。</span>
+          <span class="when">说不上来哪里不对，就是觉得累、觉得堵</span>
+          <span class="desc">身体 / 情绪 / 方向，三层扫一遍此刻的自己，适合没有具体事件的时候。</span>
         </div>
         <span class="cnt">3 牌</span>
         <span class="arrow">›</span>
@@ -158,7 +164,8 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <div class="icon">❖</div>
         <div class="info">
           <b>七牌 · 马蹄阵</b>
-          <span>七张牌铺成一道弧：过去、现在、未来、自己、环境、阻力、结果。</span>
+          <span class="when">问题有点大，想一次看全，又不想到十张那么多</span>
+          <span class="desc">过去、现在、未来、自己、环境、阻力、结果。中间多了「环境」和「阻力」两格。</span>
         </div>
         <span class="cnt">7 牌</span>
         <span class="arrow">›</span>
@@ -167,7 +174,8 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <div class="icon">✚</div>
         <div class="info">
           <b>十牌 · 凯尔特十字</b>
-          <span>塔罗最经典的完整牌阵，一次看清一个局的全貌。牌多，慢慢看。</span>
+          <span class="when">想把一个局面彻底摊开，愿意坐下来慢慢读</span>
+          <span class="desc">塔罗最完整的牌阵，十张牌把一个局的里里外外都摆出来。</span>
         </div>
         <span class="cnt">10 牌</span>
         <span class="arrow">›</span>
@@ -276,7 +284,7 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
       <button class="back" data-to="home">‹</button>
       <span class="title">古法灵签</span>
     </div>
-    <p class="hint">默想一个问题，摇出一支签。签文是古人留下的劝善韵文，读的是心境，不是定论。</p>
+    <p class="hint">先写下你想问的事，再点击签筒摇出一支签。<br>问题越具体，签文才落得到实处。签文是古人留下的劝善韵文，读的是心境，不是定论。</p>
     <div class="input-wrap">
       <textarea id="qian-q" maxlength="60" placeholder="例如：这件事现在该推进还是再等等？"></textarea>
       <span class="counter" id="qian-counter">0/60</span>
@@ -294,7 +302,7 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <div class="body"><span>签</span></div>
       </div>
     </div>
-    <p class="status" id="qian-status">静心默想后，<b>点击签筒</b>摇出一支签</p>
+    <p class="status" id="qian-status">写下想问的事，再<b>点击签筒</b>摇出一支签</p>
 
     <div id="qian-result"></div>
 

@@ -71,29 +71,27 @@ body {
 .home-tile:active { transform: scale(.97); border-color: rgba(212,185,106,.55); }
 
 /* 图片区：主色氛围底 + 星点纹理 + 主体图形 */
+/* 图片区：一层很薄的斜向色纱 + 细边，不用「底部打光」那种光晕 */
 .home-tile .art {
   position: relative; display: flex; align-items: center; justify-content: center;
   width: 100%; border-radius: 11px; overflow: hidden;
-  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(0,0,0,.30));
-  border: 1px solid rgba(255,255,255,.09);
-  box-shadow: inset 0 0 26px -9px var(--ac);
+  background: rgba(255, 255, 255, .035);
+  border: 1px solid rgba(255, 255, 255, .08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
 }
 .home-tile .art::before {
-  content: ""; position: absolute; inset: 0; opacity: .45;
-  background: radial-gradient(66% 92% at 50% 126%, var(--ac), transparent 72%);
+  content: ""; position: absolute; inset: 0; opacity: .26;
+  background: linear-gradient(150deg, var(--ac), transparent 62%);
 }
 .home-tile .art::after {
-  content: ""; position: absolute; inset: 0; opacity: .45;
+  content: ""; position: absolute; inset: 0; opacity: .2;
   background-image:
     radial-gradient(1px 1px at 20% 30%, var(--ac) 50%, transparent 51%),
     radial-gradient(1px 1px at 79% 23%, var(--ac) 50%, transparent 51%),
-    radial-gradient(1.2px 1.2px at 64% 76%, var(--ac) 50%, transparent 51%),
+    radial-gradient(1px 1px at 64% 76%, var(--ac) 50%, transparent 51%),
     radial-gradient(1px 1px at 31% 79%, var(--ac) 50%, transparent 51%);
 }
-.home-tile .ic {
-  position: relative; z-index: 1; color: var(--ac); display: block;
-  filter: drop-shadow(0 0 5px rgba(0,0,0,.55));
-}
+.home-tile .ic { position: relative; z-index: 1; color: var(--ac); display: block; }
 .home-tile .ic svg { width: 100%; height: 100%; display: block; }
 .home-tile b { font-size: 14px; font-weight: 500; letter-spacing: .5px; }
 .home-tile .sub { font-size: 10.5px; color: var(--muted); letter-spacing: .3px; }
@@ -133,8 +131,12 @@ body {
   display: flex; align-items: center; justify-content: center; line-height: 1;
   border-radius: 12px; background: rgba(139,124,246,.14); border: 1px solid rgba(139,124,246,.35); }
 .spread-card .info { flex: 1; min-width: 0; }
-.spread-card b { display: block; font-size: 16px; color: var(--text); margin-bottom: 4px; font-weight: 500; }
+.spread-card b { display: block; font-size: 16px; color: var(--text); margin-bottom: 5px; font-weight: 500; }
 .spread-card span { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.spread-card .info > span { display: block; }
+/* 「什么时候用」这一行是选牌阵的关键，单独提亮 */
+.spread-card .when { font-size: 12.5px; color: var(--gold2); margin-bottom: 3px; }
+.spread-card .desc { font-size: 12px; color: var(--muted); }
 .spread-card .cnt {
   flex: none; margin-left: auto; font-size: 11px; color: var(--gold2);
   border: 1px solid rgba(212,185,106,.35); border-radius: 999px; padding: 3px 9px;

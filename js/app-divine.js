@@ -76,12 +76,19 @@
   var tube = $("qian-tube");
   tube.addEventListener("click", function () {
     if (tube.classList.contains("shaking")) return;
-    qianState.question = qianInput.value.trim();
+    var asked = qianInput.value.trim();
+    // 必须先写下问题：签文要落到具体的事上才读得懂，空手摇签只会得到一段泛泛的韵文
+    if (!asked) {
+      toast("先把想问的事写下来，再摇签");
+      try { qianInput.focus(); } catch (e) {}
+      return;
+    }
+    qianState.question = asked;
     qianState.saved = false;
     $("qian-result").innerHTML = "";
 
     tube.classList.add("shaking");
-    $("qian-status").innerHTML = "签筒摇动中…<b>静心默想你的问题</b>";
+    $("qian-status").innerHTML = "签筒摇动中…<b>想着你写下的那件事</b>";
 
     setTimeout(function () {
       tube.classList.remove("shaking");
@@ -122,7 +129,7 @@
     $("btn-qian-save").addEventListener("click", saveQian);
     $("btn-qian-again").addEventListener("click", function () {
       $("qian-result").innerHTML = "";
-      $("qian-status").innerHTML = "静心默想后，<b>点击签筒</b>摇出一支签";
+      $("qian-status").innerHTML = "写下想问的事，再<b>点击签筒</b>摇出一支签";
       window.scrollTo(0, 0);
     });
     // AI 解读：只上传签诗与解曰，不上传吉凶等级，避免模型据此下判定

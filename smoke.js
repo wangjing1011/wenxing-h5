@@ -76,7 +76,12 @@ const shown = () => ["home", "tarot", "question", "draw", "result", "history", "
   fire($('[data-go="qian"]'), "click");
   ok(shown().join() === "qian", "点击后进入灵签页（当前 " + shown().join() + "）");
 
-  // 2) 摇签
+  // 2) 摇签：必须先写下问题（与塔罗一致，空手摇签只会得到一段泛泛的韵文）
+  fire($("#qian-tube"), "click");
+  await sleep(300);
+  ok($("#qian-result").textContent.trim() === "", "未写问题时点签筒被拦下，不出签文");
+  ok(!$("#qian-tube").classList.contains("shaking"), "未写问题时签筒不进入摇动状态");
+
   $("#qian-q").value = "这件事该推进还是再等等？";
   fire($("#qian-q"), "input");
   ok($("#qian-counter").textContent === "12/60", "字数计数正确（" + $("#qian-counter").textContent + "）");

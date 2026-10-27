@@ -10,7 +10,7 @@
   // payload: { spread, spreadName, question, cards:[{position,name,orientation,keywords,gist}] }
   function interpret(payload) {
     var ctrl = new AbortController();
-    var to = setTimeout(function () { ctrl.abort(); }, 15000);
+    var to = setTimeout(function () { ctrl.abort(); }, 28000);
     var p;
     try {
       p = fetch(ENDPOINT, {

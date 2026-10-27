@@ -107,11 +107,11 @@ function callModel(messages) {
     model: process.env.AI_MODEL || "deepseek-chat",
     messages: messages,
     temperature: 0.9,
-    max_tokens: 600,
+    max_tokens: 1200,
     stream: false
   });
   var ctrl = new AbortController();
-  var timer = setTimeout(function () { ctrl.abort(); }, 20000);
+  var timer = setTimeout(function () { ctrl.abort(); }, 22000);
   return fetch(url, {
     method: "POST",
     headers: {
@@ -155,27 +155,61 @@ function mockInterpret(payload) {
 // 命盘离线 mock：基于结构化命盘给一段规则兜底（同样过红线过滤，且绝不含生辰）
 function mockChartInterpret(payload) {
   var c = payload.chart || {};
-  var head = payload.domain === "ziwei"
-    ? "这是一张由排盘工具算出的紫微命盘快照。"
-    : "这是一份由干支历法排盘工具算出的八字快照。";
-  var body;
   if (payload.domain === "ziwei") {
     var soul = c.soul || {};
     var stars = (soul.majorStars || []).join("、");
-    body = "命宫坐" + (stars ? stars : "空宫") +
+    return "这是一张由排盘工具算出的紫微命盘快照。" +
+      "命宫坐" + (stars ? stars : "空宫") +
       (stars ? "，是盘里最外显的一束气质；" : "，意味着这一宫需要借对宫星曜来参看；") +
-      "它更像一张关于你外显气质与内在取向的地图。";
-  } else {
-    var dm = c.dayMaster || {};
-    var wx = c.wuXing || {};
-    var dist = ["木", "火", "土", "金", "水"].map(function (w) { return w + (wx[w] || 0); }).join("、");
-    var sk = { "strong": "偏强", "weak": "偏弱", "balance": "中和" }[c.strength] || "";
-    body = "日主" + (dm.gan || "") + (dm.el ? "（" + dm.el + "）" : "") +
-      "，五行分布 " + dist + (sk ? "，整体" + sk : "") +
-      "。它只是你出生那一刻天地干支的排列，是一张能量与性格的地图，而不是锁死的人生剧本。";
+      "它更像一张关于你外显气质与内在取向的地图。" +
+      "你始终握有书写它的笔——命盘是帮你看清自己的镜子，不是替你定下结局的裁判。";
   }
-  var tail = "你始终握有书写它的笔——命盘是帮你看清自己的镜子，不是替你定下结局的裁判。";
-  return head + body + tail;
+
+  // 八字：按与 AI 版一致的五段结构做规则兜底。
+  // 模型超时或断网时用户看到的就是这段，所以不能缩成一句话。
+  var dm = c.dayMaster || {};
+  var wx = c.wuXing || {};
+  var ORD = ["木", "火", "土", "金", "水"];
+  var dist = ORD.map(function (w) { return w + (wx[w] || 0); }).join("、");
+  var sk = { "strong": "偏强", "weak": "偏弱", "balance": "中和" }[c.strength] || "";
+  var top = ORD.slice().sort(function (a, b) { return (wx[b] || 0) - (wx[a] || 0); })[0];
+  var miss = ORD.filter(function (w) { return !wx[w]; });
+  var P = [];
+
+  P.push("这份盘由干支历法排出，五行分布是 " + dist + "；日主" + (dm.gan || "") +
+    (dm.el ? "，属" + dm.el : "") + (sk ? "，整体" + sk : "") + (c.deLing ? "，生在得令的月份" : "") +
+    "。用白话说，" + (sk === "偏强"
+      ? "你的自我比较足，不太容易被别人的意见带走，做起事来先动再想"
+      : sk === "偏弱"
+        ? "你对外界的分寸更敏感，常先看别人的反应再定自己的位置"
+        : "你的力道收放比较均衡，既不硬顶也不一味退让") + "。");
+
+  var ss = c.shiShen || [];
+  if (ss.length) {
+    var cnt = {};
+    ss.forEach(function (s) { cnt[s] = (cnt[s] || 0) + 1; });
+    var rank = Object.keys(cnt).sort(function (a, b) { return cnt[b] - cnt[a]; });
+    P.push("十神里出现最多的是" + rank.slice(0, 3).map(function (k) { return k + "（" + cnt[k] + "）"; }).join("、") +
+      "。这一组配置通常落在这样的人身上：在意的事会自己先推一遍，不喜欢被安排；" +
+      "面对压力时先收一收、观察一阵，再决定要不要出声。");
+  } else {
+    P.push("这张盘只留下了四柱与五行，十神的信息不完整。仍可以看出一件事：你面对压力时更倾向于先收一收、观察一阵，再决定要不要出声。");
+  }
+
+  P.push("优势在于" + (top ? "「" + top + "」这一行比较足，" : "") +
+    "手里有资源时你能把事情真正推下去，不太需要外部一直给反馈。" +
+    "容易踩的坑是另一面：铺开的时候容易一次铺太宽，收尾全靠意志力硬扛；" +
+    (miss.length ? "五行里缺 " + miss.join("、") + "，对应到日常，往往是这一块的事你不太主动去碰，等到非碰不可时才补。" : "五行各有所在，反而不容易在某一块上过度用力。") );
+
+  if ((c.daYun || []).length) {
+    P.push("大运这一段是 " + c.daYun.length + " 步：" +
+      c.daYun.slice(0, 4).map(function (dy) { return dy.startAge + "岁起 " + dy.gz; }).join("，") +
+      (c.daYun.length > 4 ? "……" : "") +
+      "。整体看，每隔七八年像换一次挡，换挡前后的一两年通常最磨人，不是事情变难了，而是旧办法开始不灵了。");
+  }
+
+  P.push("命盘是帮你看清自己的镜子，不是替你定下结局的裁判。你始终握有书写它的笔。");
+  return P.join("\n\n");
 }
 
 // 签卦 / 起名离线 mock：按类型给一段规则兜底（同样过红线过滤，绝不下吉凶判断）
@@ -353,12 +387,17 @@ var server = http.createServer(function (req, res) {
   sendJson(res, 404, { error: "not found" });
 });
 
-server.listen(PORT, BIND_HOST, function () {
-  console.log("[ai-proxy] listening on http://" + (BIND_HOST === "0.0.0.0" ? "localhost" : BIND_HOST) + ":" + PORT +
-    (process.env.AI_KEY ? " (MODEL: " + (process.env.AI_MODEL || "deepseek-chat") + ")" : " (NO AI_KEY → mock mode)"));
-});
-// 监听失败要打出明确原因，否则托管平台只会报「端口未监听」，无从排查
-server.on("error", function (e) {
-  console.error("[ai-proxy] 监听失败 " + BIND_HOST + ":" + PORT + " -> " + (e.code || e.message));
-  process.exit(1);
-});
+// 直接运行时才监听；被测试 require 时只导出纯函数，方便单测离线兜底文案
+if (require.main === module) {
+  server.listen(PORT, BIND_HOST, function () {
+    console.log("[ai-proxy] listening on http://" + (BIND_HOST === "0.0.0.0" ? "localhost" : BIND_HOST) + ":" + PORT +
+      (process.env.AI_KEY ? " (MODEL: " + (process.env.AI_MODEL || "deepseek-chat") + ")" : " (NO AI_KEY → mock mode)"));
+  });
+  // 监听失败要打出明确原因，否则托管平台只会报「端口未监听」，无从排查
+  server.on("error", function (e) {
+    console.error("[ai-proxy] 监听失败 " + BIND_HOST + ":" + PORT + " -> " + (e.code || e.message));
+    process.exit(1);
+  });
+}
+
+module.exports = { mockChartInterpret: mockChartInterpret, mockOracleInterpret: mockOracleInterpret };
