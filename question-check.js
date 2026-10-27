@@ -76,7 +76,7 @@ const $$ = (s) => Array.prototype.slice.call(document.querySelectorAll(s));
 const log = [];
 const ok = (c, m) => { log.push((c ? "  ✓ " : "  ✗ ") + m); if (!c) errs.push(m); };
 
-const CATS = ["默认", "感情", "事业", "生活", "其他"];
+const CATS = ["通用排阵", "感情家庭", "事业财运", "生活人际"];
 const btns = $$("#spread-cats .seg-btn");
 const input = $("#question-input");
 const chipsBox = $("#q-chips");
@@ -84,6 +84,10 @@ const chipsBox = $("#q-chips");
 // 分类词汇表：用来抓「感情问句里冒出项目」「事业问句里冒出 TA」这类错配
 const WORK_WORDS = ["项目", "团队", "汇报", "职场", "晋升", "offer", "面试", "工作", "老板", "领导", "同事", "业务"];
 const LOVE_WORDS = ["TA", "ta", "他", "她", "我们之间", "这段关系", "在一起", "分手", "喜欢的人", "对方"];
+// 生活人际要有人味儿，但只到「朋友/相处/关系」这一层，不该出现伴侣向的词
+const PEOPLE_WORDS = ["人", "朋友", "相处", "关系", "大家", "身边"];
+// 牌数口径（与 app.js / spread-check.js 一致）
+const COUNTS = { single: 1, three: 3, soul: 3, choice: 3, relation: 5, break: 5, horseshoe: 7, celtic: 10 };
 
 function chipsNow() {
   return $$("#q-chips .chip").map((c) => c.textContent.trim());
@@ -122,29 +126,57 @@ CATS.forEach((cat) => {
   snapshot[cat] = { chips: chips, ph: input.placeholder };
 
   // ---------- ④ 词汇错配 ----------
-  if (cat === "感情") {
+  if (cat === "感情家庭") {
     const hit = chips.filter((c) => WORK_WORDS.some((w) => c.indexOf(w) >= 0));
-    ok(hit.length === 0, "感情：示例里没有职场词，越界 " + JSON.stringify(hit));
+    ok(hit.length === 0, "感情家庭：示例里没有职场词，越界 " + JSON.stringify(hit));
   }
-  if (cat === "事业") {
+  if (cat === "事业财运") {
     const hit = chips.filter((c) => LOVE_WORDS.some((w) => c.indexOf(w) >= 0));
-    ok(hit.length === 0, "事业：示例里没有感情词，越界 " + JSON.stringify(hit));
+    ok(hit.length === 0, "事业财运：示例里没有感情词，越界 " + JSON.stringify(hit));
+    ok(chips.some((c) => /收入|薪|钱|财运|奖金|涨薪/.test(c)), "事业财运：至少一条问收入/财运（不只是问工作）");
   }
-  if (cat === "生活") {
+  if (cat === "生活人际") {
     const hit = chips.filter((c) => WORK_WORDS.some((w) => c.indexOf(w) >= 0) ||
-      LOVE_WORDS.some((w) => w !== "他" && w !== "她" && c.indexOf(w) >= 0));
-    ok(hit.length === 0, "生活：示例里既不问项目也不问对方，越界 " + JSON.stringify(hit));
+      LOVE_WORDS.some((w) => c.indexOf(w) >= 0));
+    ok(hit.length === 0, "生活人际：示例里不问项目也不问伴侣，越界 " + JSON.stringify(hit));
+    ok(chips.some((c) => PEOPLE_WORDS.some((w) => c.indexOf(w) >= 0)), "生活人际：至少一条问人际相处");
   }
 });
 
 // ---------- ③ placeholder ----------
 const phs = CATS.map((c) => (snapshot[c] || {}).ph || "");
 ok(phs.every((p) => p && p.indexOf("例如") >= 0), "每类都有「例如：…」形式的 placeholder");
-ok(new Set(phs).size === phs.length, "五类 placeholder 各不相同，实得 " + new Set(phs).size + " 种");
+ok(new Set(phs).size === phs.length, "四类 placeholder 各不相同，实得 " + new Set(phs).size + " 种");
 
 // ---------- ② 跨类不重复 ----------
 const all = CATS.reduce((a, c) => a.concat((snapshot[c] || {}).chips || []), []);
 ok(new Set(all).size === all.length, "跨类别示例问题不重复（共 " + all.length + " 条，去重后 " + new Set(all).size + " 条）");
+
+// ---------- ⑦ 牌数顺序 ----------
+// 用户明确要求：感情家庭下按「三牌、三牌、五牌」排，先轻后重。
+const catCounts = (cat) => {
+  const btn = btns.find((b) => b.getAttribute("data-cat") === cat);
+  if (!btn) return [];
+  btn.click();
+  return shownCards().map((c) => COUNTS[c.getAttribute("data-spread")] || 0);
+};
+ok(catCounts("感情家庭").join(",") === "3,3,5",
+  "感情家庭：牌数顺序为 三牌 → 三牌 → 五牌，实得 " + catCounts("感情家庭").join(","));
+ok(catCounts("事业财运").join(",") === "3,3,5",
+  "事业财运：牌数顺序为 三牌 → 三牌 → 五牌，实得 " + catCounts("事业财运").join(","));
+ok(catCounts("通用排阵").join(",") === "1,3,7,10",
+  "通用排阵：按牌数由少到多 1 → 3 → 7 → 10，实得 " + catCounts("通用排阵").join(","));
+const lifeCounts = catCounts("生活人际");
+ok(lifeCounts.join(",") === lifeCounts.slice().sort((a, b) => a - b).join(","),
+  "生活人际：按牌数由少到多排列，实得 " + lifeCounts.join(","));
+// 「其他」类别已取消
+ok(!$('#spread-cats [data-cat="其他"]'), "「其他」分类已取消");
+const dangling = $$("#spread-list .spread-card").filter((c) => {
+  const cats = String(c.getAttribute("data-cats") || "").split(",");
+  return cats.some((x) => CATS.indexOf(x) < 0);
+});
+ok(dangling.length === 0,
+  "没有牌阵还挂在已删除的类别上，残留 " + JSON.stringify(dangling.map((c) => c.getAttribute("data-spread"))));
 
 // ---------- ⑤ 选分类后再点牌阵，示例仍属于该类 ----------
 // 这里是最容易回归的地方：点牌阵会调 applyCatQuestions(activeCat, key)，
@@ -163,12 +195,12 @@ function checkSpreadKeepsCat(cat, spreadKey) {
     cat + " 选 " + spreadKey + " 牌阵后示例问题仍是该类（实得 " + JSON.stringify(chipsNow()) + "）");
 }
 
-checkSpreadKeepsCat("感情", "relation");
-checkSpreadKeepsCat("事业", "three");
-checkSpreadKeepsCat("生活", "soul");
+checkSpreadKeepsCat("感情家庭", "relation");
+checkSpreadKeepsCat("事业财运", "break");
+checkSpreadKeepsCat("生活人际", "soul");
 
 // ---------- ⑥ 点示例填入输入框 ----------
-btns.find((b) => b.getAttribute("data-cat") === "感情").click();
+btns.find((b) => b.getAttribute("data-cat") === "感情家庭").click();
 $$("#spread-list .spread-card").find((c) => c.getAttribute("data-spread") === "relation").click();
 const firstChip = $("#q-chips .chip");
 if (firstChip) {

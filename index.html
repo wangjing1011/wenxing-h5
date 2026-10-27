@@ -89,18 +89,17 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
       <span class="title">塔罗牌阵</span>
     </div>
 
-    <!-- 分类筛选：把 8 个牌阵按使用场景归拢，一次只看到 3 个 -->
+    <!-- 分类筛选：把 8 个牌阵按使用场景归拢，一次只看到 3-5 个 -->
     <div class="seg seg-cat" id="spread-cats">
-      <button class="seg-btn on" data-cat="默认">默认</button>
-      <button class="seg-btn" data-cat="感情">感情</button>
-      <button class="seg-btn" data-cat="事业">事业</button>
-      <button class="seg-btn" data-cat="生活">生活</button>
-      <button class="seg-btn" data-cat="其他">其他</button>
+      <button class="seg-btn on" data-cat="通用排阵">通用排阵</button>
+      <button class="seg-btn" data-cat="感情家庭">感情家庭</button>
+      <button class="seg-btn" data-cat="事业财运">事业财运</button>
+      <button class="seg-btn" data-cat="生活人际">生活人际</button>
     </div>
-    <p class="cat-hint" id="spread-cat-hint">拿不准怎么选：1 张只看一件小事，3 张看走向，10 张是把整个局摊开。</p>
+    <p class="cat-hint" id="spread-cat-hint">看不准怎么选：1 张只看一件小事，3 张看走向，7 张多了环境与阻力，10 张是把整个局摊开。</p>
 
     <div id="spread-list">
-      <button class="spread-card" data-spread="single" data-cats="默认,生活">
+      <button class="spread-card" data-spread="single" data-cats="通用排阵,生活人际">
         <div class="thumb" data-n="1"></div>
         <div class="info">
           <div class="ttl"><b>单张指引</b></div>
@@ -111,7 +110,7 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <span class="cnt">1 牌</span>
         <span class="arrow">›</span>
       </button>
-      <button class="spread-card" data-spread="three" data-cats="默认,感情,事业,生活">
+      <button class="spread-card" data-spread="three" data-cats="通用排阵,感情家庭,事业财运,生活人际">
         <div class="thumb" data-n="3"></div>
         <div class="info">
           <div class="ttl"><b>三牌 · 时间之流</b><i class="badge hot">Hot</i></div>
@@ -122,18 +121,7 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <span class="cnt">3 牌</span>
         <span class="arrow">›</span>
       </button>
-      <button class="spread-card" data-spread="relation" data-cats="感情">
-        <div class="thumb" data-n="5"></div>
-        <div class="info">
-          <div class="ttl"><b>五牌 · 关系之镜</b><i class="badge hot">Hot</i></div>
-          <div class="tags"><span>感情</span><span>看双方</span><span>细节</span></div>
-          <span class="when">三牌不够？想把两个人的状态摊开看</span>
-          <span class="desc">双方状态、关系本质、盲点与走向，比三牌多一层「对方怎么想」。</span>
-        </div>
-        <span class="cnt">5 牌</span>
-        <span class="arrow">›</span>
-      </button>
-      <button class="spread-card" data-spread="choice" data-cats="感情,事业">
+      <button class="spread-card" data-spread="choice" data-cats="感情家庭,事业财运,生活人际">
         <div class="thumb" data-n="3"></div>
         <div class="info">
           <div class="ttl"><b>三牌 · 抉择阵</b></div>
@@ -144,18 +132,7 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <span class="cnt">3 牌</span>
         <span class="arrow">›</span>
       </button>
-      <button class="spread-card" data-spread="break" data-cats="事业,其他">
-        <div class="thumb" data-n="5"></div>
-        <div class="info">
-          <div class="ttl"><b>五牌 · 破局阵</b></div>
-          <div class="tags"><span>事业</span><span>找对策</span></div>
-          <span class="when">事情具体卡住了，要的是能落地的下一步</span>
-          <span class="desc">现状、卡点、资源、对策、出口，一路指到怎么动。</span>
-        </div>
-        <span class="cnt">5 牌</span>
-        <span class="arrow">›</span>
-      </button>
-      <button class="spread-card" data-spread="soul" data-cats="生活">
+      <button class="spread-card" data-spread="soul" data-cats="生活人际">
         <div class="thumb" data-n="3"></div>
         <div class="info">
           <div class="ttl"><b>三牌 · 身心灵</b></div>
@@ -166,7 +143,29 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <span class="cnt">3 牌</span>
         <span class="arrow">›</span>
       </button>
-      <button class="spread-card" data-spread="horseshoe" data-cats="其他">
+      <button class="spread-card" data-spread="relation" data-cats="感情家庭,生活人际">
+        <div class="thumb" data-n="5"></div>
+        <div class="info">
+          <div class="ttl"><b>五牌 · 关系之镜</b><i class="badge hot">Hot</i></div>
+          <div class="tags"><span>关系</span><span>看双方</span><span>细节</span></div>
+          <span class="when">三牌不够？想把两个人的状态摊开看</span>
+          <span class="desc">双方状态、关系本质、盲点与走向，比三牌多一层「对方怎么想」。</span>
+        </div>
+        <span class="cnt">5 牌</span>
+        <span class="arrow">›</span>
+      </button>
+      <button class="spread-card" data-spread="break" data-cats="事业财运">
+        <div class="thumb" data-n="5"></div>
+        <div class="info">
+          <div class="ttl"><b>五牌 · 破局阵</b></div>
+          <div class="tags"><span>事业</span><span>财运</span><span>找对策</span></div>
+          <span class="when">事情具体卡住了，要的是能落地的下一步</span>
+          <span class="desc">现状、卡点、资源、对策、出口，一路指到怎么动。</span>
+        </div>
+        <span class="cnt">5 牌</span>
+        <span class="arrow">›</span>
+      </button>
+      <button class="spread-card" data-spread="horseshoe" data-cats="通用排阵">
         <div class="thumb" data-n="7"></div>
         <div class="info">
           <div class="ttl"><b>七牌 · 马蹄阵</b></div>
@@ -177,7 +176,7 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <span class="cnt">7 牌</span>
         <span class="arrow">›</span>
       </button>
-      <button class="spread-card" data-spread="celtic" data-cats="默认,其他">
+      <button class="spread-card" data-spread="celtic" data-cats="通用排阵">
         <div class="thumb" data-n="10"></div>
         <div class="info">
           <div class="ttl"><b>十牌 · 凯尔特十字</b><i class="badge pro">Pro</i></div>

@@ -76,7 +76,7 @@ const COUNTS = { single: 1, three: 3, soul: 3, choice: 3, relation: 5, break: 5,
 
 // ---- A. 分类筛选 ----
 const visibleSpreads = () => $$("#spread-list .spread-card").filter((c) => c.style.display !== "none");
-const CATS = ["默认", "感情", "事业", "生活", "其他"];
+const CATS = ["通用排阵", "感情家庭", "事业财运", "生活人际"];
 const seen = {};
 let catNumOk = true, hintOk = true;
 CATS.forEach((cat) => {
@@ -84,18 +84,18 @@ CATS.forEach((cat) => {
   if (!tab) { ok(false, "缺少分类标签「" + cat + "」"); return; }
   click(tab);
   const vs = visibleSpreads();
-  if (vs.length < 2 || vs.length > 4) catNumOk = false;
+  if (vs.length < 2 || vs.length > 5) catNumOk = false;
   if (String($("#spread-cat-hint").textContent || "").length < 12) hintOk = false;
   vs.forEach((c) => { seen[c.getAttribute("data-spread")] = 1; });
   log.push("    · " + cat + "：" + vs.map((c) => c.getAttribute("data-spread")).join(" / "));
 });
-ok(catNumOk, "每个类别显示 2-4 个牌阵（不再一次摊开 8 个）");
+ok(catNumOk, "每个类别显示 2-5 个牌阵（不再一次摊开 8 个）");
 ok(hintOk, "每个类别都有说明文案");
-ok(Object.keys(seen).length === 8, "五个类别合起来覆盖全部 8 个牌阵，实得 " + Object.keys(seen).length);
+ok(Object.keys(seen).length === 8, "四个类别合起来覆盖全部 8 个牌阵，实得 " + Object.keys(seen).length);
 ok($$("#spread-cats .seg-btn.on").length === 1, "任意时刻只有一个分类处于选中态");
-// 切回默认，后续抽取链路从默认类别进入
-click($('#spread-cats [data-cat="默认"]'));
-ok(visibleSpreads().length === 3, "切回默认类别显示 3 个牌阵");
+// 切回通用排阵，后续抽取链路从通用类别进入
+click($('#spread-cats [data-cat="通用排阵"]'));
+ok(visibleSpreads().length === 4, "切回通用排阵显示 4 个牌阵");
 
 // ---- B. 综合提示分段 ----
 function drawSpread(key) {
