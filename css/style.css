@@ -71,25 +71,10 @@ body {
 .home-tile:active { transform: scale(.97); border-color: rgba(212,185,106,.55); }
 
 /* 图片区：主色氛围底 + 星点纹理 + 主体图形 */
-/* 图片区：一层很薄的斜向色纱 + 细边，不用「底部打光」那种光晕 */
+/* 图片区：只留图标，不加底色 / 光晕 / 纹理 */
 .home-tile .art {
   position: relative; display: flex; align-items: center; justify-content: center;
-  width: 100%; border-radius: 11px; overflow: hidden;
-  background: rgba(255, 255, 255, .035);
-  border: 1px solid rgba(255, 255, 255, .08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
-}
-.home-tile .art::before {
-  content: ""; position: absolute; inset: 0; opacity: .26;
-  background: linear-gradient(150deg, var(--ac), transparent 62%);
-}
-.home-tile .art::after {
-  content: ""; position: absolute; inset: 0; opacity: .2;
-  background-image:
-    radial-gradient(1px 1px at 20% 30%, var(--ac) 50%, transparent 51%),
-    radial-gradient(1px 1px at 79% 23%, var(--ac) 50%, transparent 51%),
-    radial-gradient(1px 1px at 64% 76%, var(--ac) 50%, transparent 51%),
-    radial-gradient(1px 1px at 31% 79%, var(--ac) 50%, transparent 51%);
+  width: 100%;
 }
 .home-tile .ic { position: relative; z-index: 1; color: var(--ac); display: block; }
 .home-tile .ic svg { width: 100%; height: 100%; display: block; }
@@ -97,16 +82,14 @@ body {
 .home-tile .sub { font-size: 10.5px; color: var(--muted); letter-spacing: .3px; }
 
 /* 常用工具（2×2）放大 */
-.tile-lg { padding: 9px 9px 14px; gap: 7px; }
-.tile-lg .art { height: 64px; }
-.tile-lg .ic { width: 41px; height: 41px; }
+.tile-lg { padding: 13px 9px 15px; gap: 7px; }
+.tile-lg .ic { width: 44px; height: 44px; }
 .tile-lg b { font-size: 15px; letter-spacing: 1px; }
 .tile-lg .sub { font-size: 10.5px; }
 
 /* 更多功能（3×3）紧凑 */
-.home-grid-3 .home-tile { padding: 7px 5px 11px; gap: 5px; border-radius: 12px; }
-.home-grid-3 .art { height: 42px; border-radius: 9px; }
-.home-grid-3 .ic { width: 25px; height: 25px; }
+.home-grid-3 .home-tile { padding: 11px 5px 13px; gap: 5px; border-radius: 12px; }
+.home-grid-3 .ic { width: 28px; height: 28px; }
 .home-grid-3 b { font-size: 12px; letter-spacing: 0; }
 
 .home-tile.locked { opacity: .5; }
@@ -120,28 +103,78 @@ body {
 }
 .home-links button:active { color: var(--gold2); border-color: var(--gold); }
 .spread-card {
-  display: flex; align-items: center; gap: 14px; width: 100%;
+  display: flex; align-items: flex-start; gap: 12px; width: 100%;
   background: linear-gradient(180deg, var(--panel2), var(--panel));
   border: 1px solid var(--line); border-radius: 14px;
-  padding: 16px; margin-bottom: 12px; cursor: pointer;
+  padding: 13px 12px; margin-bottom: 10px; cursor: pointer;
   transition: transform .15s ease, border-color .15s ease; text-align: left;
 }
 .spread-card:active { transform: scale(.98); border-color: rgba(212,185,106,.55); }
-.spread-card .icon { font-size: 20px; color: var(--gold2); width: 52px; height: 52px; flex: none;
-  display: flex; align-items: center; justify-content: center; line-height: 1;
-  border-radius: 12px; background: rgba(139,124,246,.14); border: 1px solid rgba(139,124,246,.35); }
+
+/* 牌阵缩略图：把牌一张张摆出来，形状就是牌阵本身 */
+.spread-card .thumb {
+  width: 58px; height: 62px; flex: none; border-radius: 12px;
+  background: rgba(139,124,246,.11); border: 1px solid rgba(139,124,246,.28);
+  display: grid; gap: 3px; place-content: center; justify-items: center;
+}
+.spread-card .thumb i {
+  display: block; border-radius: 2px;
+  background: linear-gradient(180deg, #f2e2b0, var(--gold));
+  box-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+.spread-card .thumb.tn1, .spread-card .thumb.sh1 { grid-template-columns: 1fr; }
+.spread-card .thumb.sh1 i { width: 17px; height: 23px; }
+.spread-card .thumb.tn3, .spread-card .thumb.sh3 { grid-template-columns: repeat(3, auto); }
+.spread-card .thumb.sh3 i { width: 11px; height: 16px; }
+/* 抉择阵：两条路各一张，第三张压在下面 */
+.spread-card .thumb.sh21 { grid-template-columns: repeat(2, auto); }
+.spread-card .thumb.sh21 i { width: 12px; height: 16px; }
+/* 身心灵：三层横向卡片，上下叠 */
+.spread-card .thumb.shcol { grid-template-columns: 1fr; }
+.spread-card .thumb.shcol i { width: 26px; height: 8px; }
+.spread-card .thumb.tn5, .spread-card .thumb.sh5 { grid-template-columns: repeat(5, auto); }
+.spread-card .thumb.sh5 i { width: 8px; height: 12px; }
+/* 破局阵：上三下二 */
+.spread-card .thumb.sh32 { grid-template-columns: repeat(3, auto); }
+.spread-card .thumb.sh32 i { width: 9px; height: 13px; }
+/* 马蹄阵：七张排成一道弧 */
+.spread-card .thumb.sharc { grid-template-columns: repeat(7, auto); gap: 2px; }
+.spread-card .thumb.sharc i { width: 5px; height: 9px; }
+.spread-card .thumb.sharc i:nth-child(1) { transform: translateY(5px); }
+.spread-card .thumb.sharc i:nth-child(2) { transform: translateY(1px); }
+.spread-card .thumb.sharc i:nth-child(3) { transform: translateY(-2px); }
+.spread-card .thumb.sharc i:nth-child(4) { transform: translateY(-4px); }
+.spread-card .thumb.sharc i:nth-child(5) { transform: translateY(-2px); }
+.spread-card .thumb.sharc i:nth-child(6) { transform: translateY(1px); }
+.spread-card .thumb.sharc i:nth-child(7) { transform: translateY(5px); }
+/* 凯尔特十字：五上五下 */
+.spread-card .thumb.tn10, .spread-card .thumb.sh52 { grid-template-columns: repeat(5, auto); }
+.spread-card .thumb.sh52 i { width: 7px; height: 10px; }
+
 .spread-card .info { flex: 1; min-width: 0; }
-.spread-card b { display: block; font-size: 16px; color: var(--text); margin-bottom: 5px; font-weight: 500; }
+.spread-card .ttl { display: flex; align-items: center; gap: 6px; }
+.spread-card b { font-size: 15px; color: var(--text); font-weight: 500; line-height: 1.3; }
+.spread-card .badge {
+  font-style: normal; font-size: 9px; line-height: 1; padding: 3px 5px;
+  border-radius: 4px; letter-spacing: .5px;
+}
+.spread-card .badge.hot { background: #d8594f; color: #fff; }
+.spread-card .badge.pro { background: linear-gradient(90deg, #b39bff, #8b6cf0); color: #fff; }
+.spread-card .tags { display: flex; flex-wrap: wrap; gap: 4px; margin: 5px 0 6px; }
+.spread-card .tags span {
+  font-size: 9.5px; line-height: 1; color: #b9b0e0; padding: 3px 5px; border-radius: 4px;
+  background: rgba(139,124,246,.14); border: 1px solid rgba(139,124,246,.26);
+}
 .spread-card span { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 .spread-card .info > span { display: block; }
 /* 「什么时候用」这一行是选牌阵的关键，单独提亮 */
-.spread-card .when { font-size: 12.5px; color: var(--gold2); margin-bottom: 3px; }
-.spread-card .desc { font-size: 12px; color: var(--muted); }
+.spread-card .when { font-size: 12px; color: var(--gold2); margin-bottom: 3px; }
+.spread-card .desc { font-size: 11.5px; color: var(--muted); }
 .spread-card .cnt {
-  flex: none; margin-left: auto; font-size: 11px; color: var(--gold2);
-  border: 1px solid rgba(212,185,106,.35); border-radius: 999px; padding: 3px 9px;
+  flex: none; align-self: flex-start; margin-top: 2px; font-size: 10px; color: var(--gold2);
+  border: 1px solid rgba(212,185,106,.35); border-radius: 999px; padding: 2px 7px; white-space: nowrap;
 }
-.spread-card .arrow { margin-left: 8px; color: var(--gold); font-size: 18px; }
+.spread-card .arrow { align-self: flex-start; margin-top: 3px; margin-left: 2px; color: var(--gold); font-size: 16px; }
 
 /* 牌阵分类切换：5 个标签等分一行 */
 .seg-cat { gap: 7px; margin-bottom: 9px; }
@@ -448,7 +481,9 @@ textarea:focus { border-color: rgba(212,185,106,.6); }
 
 /* ===== 古法灵签 ===== */
 .tube-wrap { text-align: center; padding: 18px 0 6px; }
-.qian-tube { width: 116px; height: 178px; margin: 0 auto; position: relative; cursor: pointer; }
+/* 静止时缓慢轻摇：告诉用户这个签筒是可以点的 */
+.qian-tube { width: 116px; height: 178px; margin: 0 auto; position: relative; cursor: pointer;
+  transform-origin: 50% 90%; animation: tubeIdle 3.6s ease-in-out infinite; }
 .qian-tube .sticks { position: absolute; left: 50%; top: -6px; transform: translateX(-50%); display: flex; gap: 4px; }
 .qian-tube .sticks i { display: block; width: 4px; height: 34px; border-radius: 3px; background: linear-gradient(180deg, #f3e6c0, #c9a95e); box-shadow: 0 1px 3px rgba(0,0,0,.35); }
 .qian-tube .sticks i:nth-child(1) { transform: rotate(-7deg); }
@@ -463,6 +498,14 @@ textarea:focus { border-color: rgba(212,185,106,.6); }
 }
 .qian-tube .body span { font-size: 30px; color: var(--gold2); letter-spacing: 2px; opacity: .9; }
 .qian-tube.shaking { animation: tubeShake .16s linear infinite; }
+.qian-tube.done { animation: none; }
+@keyframes tubeIdle {
+  0%, 100% { transform: rotate(-1.5deg) translateY(0); }
+  50% { transform: rotate(1.7deg) translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qian-tube { animation: none; }
+}
 @keyframes tubeShake {
   0% { transform: translate(0,0) rotate(0); }
   25% { transform: translate(-4px,-2px) rotate(-4deg); }
@@ -551,6 +594,58 @@ textarea:focus { border-color: rgba(212,185,106,.6); }
 .zw-keyrow > div { flex: 1; text-align: center; background: rgba(21,14,44,.55); border: 1px solid rgba(212,185,106,.16); border-radius: 10px; padding: 8px 4px; }
 .zw-keyrow span { display: block; font-size: 11px; color: var(--muted); }
 .zw-keyrow b { display: block; font-size: 14px; color: var(--text); margin-top: 4px; letter-spacing: 1px; }
+
+/* 十二宫命盘图（4×4 环形，中宫放基本信息） */
+.zw-chart-wrap { margin-top: 16px; }
+.zw-chart {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 3px; padding: 6px; border-radius: 14px;
+  background: rgba(21,14,44,.5); border: 1px solid rgba(212,185,106,.18);
+}
+.zwc {
+  min-height: 82px; border-radius: 7px; padding: 5px 3px;
+  background: rgba(255,255,255,.025);
+  border: 1px solid rgba(212,185,106,.1);
+  overflow: hidden; text-align: center;
+}
+.zwc.soul { border-color: rgba(212,185,106,.6); background: rgba(212,185,106,.1); }
+.zwc .ch { display: flex; align-items: center; justify-content: center; gap: 2px; flex-wrap: wrap; }
+.zwc .ch b { font-size: 10px; color: var(--gold2); font-weight: 500; }
+.zwc .ch i {
+  font-style: normal; font-size: 8px; color: #150e2c; background: var(--gold);
+  border-radius: 3px; padding: 0 2px; line-height: 1.3;
+}
+.zwc .ch s { text-decoration: none; display: block; width: 100%; font-size: 8px; color: #8f88ab; margin-top: 1px; }
+.zwc .cm { margin-top: 3px; display: flex; flex-wrap: wrap; justify-content: center; gap: 1px 3px; }
+.zwc .cst { font-size: 10px; color: #e6e1f7; line-height: 1.35; }
+.zwc .cst em { font-style: normal; font-size: 7.5px; color: #9a92b8; margin-left: 1px; }
+.zwc .cst i { font-style: normal; font-size: 8px; color: #ff9a9a; margin-left: 1px; }
+.zwc .cst.mu { color: #ffd9d9; }
+.zwc .cst.empty { color: #6f6889; font-size: 9px; }
+.zwc .cn { margin-top: 2px; font-size: 7.5px; color: #8a83a6; line-height: 1.3; }
+.zwc.center {
+  grid-row: 2 / span 2; grid-column: 2 / span 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 8px 4px;
+  background: rgba(139,124,246,.09); border-color: rgba(139,124,246,.26);
+}
+.zwc.center .cnm { font-size: 12px; color: var(--gold2); letter-spacing: 1px; }
+.zwc.center .cju { font-size: 15px; color: var(--text); letter-spacing: 2px; }
+.zwc.center .cdt { font-size: 8.5px; color: var(--muted); line-height: 1.55; text-align: center; }
+.zwc.center .clz { font-size: 9px; color: #b3aacd; }
+.zwc-note { font-size: 10.5px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+.zwc-note b { color: var(--gold2); font-weight: 500; }
+
+/* 排盘等待态 */
+.zw-loading { text-align: center; padding: 44px 0 34px; }
+.zw-loading .spin {
+  width: 34px; height: 34px; margin: 0 auto 14px; border-radius: 50%;
+  border: 2px solid rgba(212,185,106,.22); border-top-color: var(--gold);
+  animation: zwSpin .9s linear infinite;
+}
+.zw-loading p { font-size: 12.5px; color: var(--muted); letter-spacing: 1px; }
+@keyframes zwSpin { to { transform: rotate(360deg); } }
+.btn[disabled] { opacity: .65; }
 .zw-tip { margin-top: 12px; font-size: 12.5px; color: #c9c2ea; text-align: center; }
 .zw-block { background: rgba(139,124,246,.08); border: 1px solid rgba(139,124,246,.22); border-radius: 12px; padding: 12px 14px; margin-top: 10px; }
 .zw-block h4 { font-size: 12.5px; color: #c4bbff; letter-spacing: 2px; font-weight: 500; margin-bottom: 7px; }

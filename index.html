@@ -101,81 +101,89 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
 
     <div id="spread-list">
       <button class="spread-card" data-spread="single" data-cats="默认,生活">
-        <div class="icon">☽</div>
+        <div class="thumb" data-n="1"></div>
         <div class="info">
-          <b>单张指引</b>
+          <div class="ttl"><b>单张指引</b></div>
+          <div class="tags"><span>通用</span><span>快速</span><span>是非判断</span></div>
           <span class="when">只想问一件小事，或今天该注意什么</span>
-          <span class="desc">一个问题一张牌，三十秒出结果，最轻的一档。</span>
+          <span class="desc">一个问题一张牌，三十秒出结果。</span>
         </div>
         <span class="cnt">1 牌</span>
         <span class="arrow">›</span>
       </button>
       <button class="spread-card" data-spread="three" data-cats="默认,感情,事业,生活">
-        <div class="icon">✦</div>
+        <div class="thumb" data-n="3"></div>
         <div class="info">
-          <b>三牌 · 时间之流</b>
+          <div class="ttl"><b>三牌 · 时间之流</b><i class="badge hot">Hot</i></div>
+          <div class="tags"><span>通用</span><span>看走向</span><span>最常抽</span></div>
           <span class="when">想先看个大概走向，不想花太多时间</span>
-          <span class="desc">过去 → 现在 → 未来。最通用的一副，也是「先随便看看」时最该选的一副。</span>
+          <span class="desc">过去 → 现在 → 未来，最通用的一副。</span>
         </div>
         <span class="cnt">3 牌</span>
         <span class="arrow">›</span>
       </button>
       <button class="spread-card" data-spread="relation" data-cats="感情">
-        <div class="icon">♡</div>
+        <div class="thumb" data-n="5"></div>
         <div class="info">
-          <b>五牌 · 关系之镜</b>
-          <span class="when">三牌看完还不够，想把两个人各自的状态摊开看</span>
-          <span class="desc">双方状态、关系本质、盲点、走向。比三牌多一层「对方怎么想」。</span>
+          <div class="ttl"><b>五牌 · 关系之镜</b><i class="badge hot">Hot</i></div>
+          <div class="tags"><span>感情</span><span>看双方</span><span>细节</span></div>
+          <span class="when">三牌不够？想把两个人的状态摊开看</span>
+          <span class="desc">双方状态、关系本质、盲点与走向，比三牌多一层「对方怎么想」。</span>
         </div>
         <span class="cnt">5 牌</span>
         <span class="arrow">›</span>
       </button>
       <button class="spread-card" data-spread="choice" data-cats="感情,事业">
-        <div class="icon">◇</div>
+        <div class="thumb" data-n="3"></div>
         <div class="info">
-          <b>三牌 · 抉择阵</b>
-          <span class="when">正卡在两个选项之间，留还是走、接还是不接</span>
-          <span class="desc">两条路各自的走向，第三张照出你心里其实已经倾的那一边。</span>
+          <div class="ttl"><b>三牌 · 抉择阵</b></div>
+          <div class="tags"><span>抉择</span><span>两条路</span></div>
+          <span class="when">卡在两个选项之间，不知道选哪个</span>
+          <span class="desc">两条路各自的走向，加上你心里已经倾的那一边。</span>
         </div>
         <span class="cnt">3 牌</span>
         <span class="arrow">›</span>
       </button>
       <button class="spread-card" data-spread="break" data-cats="事业,其他">
-        <div class="icon">◈</div>
+        <div class="thumb" data-n="5"></div>
         <div class="info">
-          <b>五牌 · 破局阵</b>
+          <div class="ttl"><b>五牌 · 破局阵</b></div>
+          <div class="tags"><span>事业</span><span>找对策</span></div>
           <span class="when">事情具体卡住了，要的是能落地的下一步</span>
-          <span class="desc">现状、卡点、手里的资源、对策、出口。从「卡在哪」一路指到「怎么动」。</span>
+          <span class="desc">现状、卡点、资源、对策、出口，一路指到怎么动。</span>
         </div>
         <span class="cnt">5 牌</span>
         <span class="arrow">›</span>
       </button>
       <button class="spread-card" data-spread="soul" data-cats="生活">
-        <div class="icon">✧</div>
+        <div class="thumb" data-n="3"></div>
         <div class="info">
-          <b>三牌 · 身心灵</b>
+          <div class="ttl"><b>三牌 · 身心灵</b></div>
+          <div class="tags"><span>状态</span><span>身心</span></div>
           <span class="when">说不上来哪里不对，就是觉得累、觉得堵</span>
-          <span class="desc">身体 / 情绪 / 方向，三层扫一遍此刻的自己，适合没有具体事件的时候。</span>
+          <span class="desc">身体 / 情绪 / 方向，三层扫一遍此刻的自己。</span>
         </div>
         <span class="cnt">3 牌</span>
         <span class="arrow">›</span>
       </button>
       <button class="spread-card" data-spread="horseshoe" data-cats="其他">
-        <div class="icon">❖</div>
+        <div class="thumb" data-n="7"></div>
         <div class="info">
-          <b>七牌 · 马蹄阵</b>
-          <span class="when">问题有点大，想一次看全，又不想到十张那么多</span>
-          <span class="desc">过去、现在、未来、自己、环境、阻力、结果。中间多了「环境」和「阻力」两格。</span>
+          <div class="ttl"><b>七牌 · 马蹄阵</b></div>
+          <div class="tags"><span>全景</span><span>进阶</span></div>
+          <span class="when">问题有点大，想一次看全又不想到十张</span>
+          <span class="desc">中间多了「环境」和「阻力」两格。</span>
         </div>
         <span class="cnt">7 牌</span>
         <span class="arrow">›</span>
       </button>
       <button class="spread-card" data-spread="celtic" data-cats="默认,其他">
-        <div class="icon">✚</div>
+        <div class="thumb" data-n="10"></div>
         <div class="info">
-          <b>十牌 · 凯尔特十字</b>
-          <span class="when">想把一个局面彻底摊开，愿意坐下来慢慢读</span>
-          <span class="desc">塔罗最完整的牌阵，十张牌把一个局的里里外外都摆出来。</span>
+          <div class="ttl"><b>十牌 · 凯尔特十字</b><i class="badge pro">Pro</i></div>
+          <div class="tags"><span>全景</span><span>深度</span><span>慢慢读</span></div>
+          <span class="when">想把一个局面彻底摊开，愿意坐下来细看</span>
+          <span class="desc">塔罗最完整的牌阵，里里外外都摆出来。</span>
         </div>
         <span class="cnt">10 牌</span>
         <span class="arrow">›</span>
@@ -191,15 +199,15 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
     </div>
     <p class="hint" id="q-hint">写下你想问的事，再开始抽牌。<br>问题越具体，解读越有针对性。</p>
     <div class="input-wrap">
-      <textarea id="question-input" maxlength="60" placeholder="例如：我该不该接受这个新的工作机会？"></textarea>
+      <textarea id="question-input" maxlength="60" placeholder="例如：这件事接下来会怎么发展？"></textarea>
       <span class="counter" id="q-counter">0/60</span>
     </div>
     <div class="section-title">或者试试这些</div>
-    <div class="chips">
+    <div class="chips" id="q-chips">
       <span class="chip">我近期该注意什么？</span>
-      <span class="chip">这段关系将如何发展？</span>
+      <span class="chip">这件事接下来会怎么发展？</span>
+      <span class="chip">我该不该接受这个新机会？</span>
       <span class="chip">我为什么总是拖延？</span>
-      <span class="chip">这个决定现在成熟了吗？</span>
     </div>
     <button class="btn gold" id="btn-start-draw">开始抽牌</button>
   </section>

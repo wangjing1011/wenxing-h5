@@ -206,7 +206,8 @@
       var sp = SPREADS[key];
       $("q-title").textContent = "提出你的问题 · " + sp.name;
       $("q-hint").innerHTML = sp.hint;
-      $("question-input").placeholder = sp.ph;
+      // 提问示例跟着当前类别走（感情不问项目、事业不问感情）
+      applyCatQuestions(activeCat, key);
       showView("question");
     });
   });
@@ -225,7 +226,45 @@
     "生活": "一张看当下该注意什么，三张看整体状态；没具体事件时用身心灵。",
     "其他": "牌越多看到的面越多，也更需要耐心。第一次来建议先试七牌。"
   };
+
+  // 提问示例按类别走：感情下面不该冒出「这个项目怎么推进」
+  var CAT_QUESTIONS = {
+    "默认": {
+      ph: "例如：这件事接下来会怎么发展？",
+      chips: ["我近期该注意什么？", "这件事接下来会怎么发展？", "我该不该接受这个新机会？", "我为什么总是拖延？"]
+    },
+    "感情": {
+      ph: "例如：我和 TA 还有可能吗？",
+      chips: ["我和 TA 还有可能吗？", "TA 现在是怎么想的？", "这段关系该继续还是放下？", "我们之间的问题出在哪？"]
+    },
+    "事业": {
+      ph: "例如：这个项目该推进还是先放一放？",
+      chips: ["这个项目接下来会顺利吗？", "该留在现在的团队吗？", "这次调整对我意味着什么？", "我该主动争取还是再等等？"]
+    },
+    "生活": {
+      ph: "例如：我最近为什么总是没精神？",
+      chips: ["我最近为什么这么累？", "现在最该把重心放在哪？", "这个决定算成熟了吗？", "我该先改掉哪个习惯？"]
+    },
+    "其他": {
+      ph: "例如：我正处在一个什么样的局面里？",
+      chips: ["我正处在怎样的处境？", "这件事的全貌是什么？", "接下来半年的大方向在哪？", "我一直卡着的地方是什么？"]
+    }
+  };
+  var activeCat = "默认";
+
+  function applyCatQuestions(catKey, spreadKey) {
+    var cfg = CAT_QUESTIONS[catKey] || CAT_QUESTIONS["默认"];
+    var sp = SPREADS[spreadKey];
+    $("question-input").placeholder = (cfg && cfg.ph) || (sp && sp.ph) || "";
+    var box = $("q-chips");
+    if (!box) return;
+    box.innerHTML = ((cfg && cfg.chips) || []).map(function (t) {
+      return '<span class="chip">' + esc(t) + "</span>";
+    }).join("");
+  }
+
   function filterSpreads(cat) {
+    activeCat = cat;
     Array.prototype.forEach.call(document.querySelectorAll("#spread-cats .seg-btn"), function (b) {
       if (b.getAttribute("data-cat") === cat) b.classList.add("on");
       else b.classList.remove("on");
@@ -242,6 +281,29 @@
   });
   filterSpreads("默认");
 
+  // 牌阵缩略图：按牌数摆出这个牌阵的形状（横排 / 2+1 / 竖叠 / 弧形 / 5+5），
+  // 比九个一模一样的符号更容易分辨是哪个牌阵。
+  var THUMB_SHAPES = {
+    single: [1, "sh1"],
+    three: [3, "sh3"],
+    choice: [3, "sh21"],
+    soul: [3, "shcol"],
+    relation: [5, "sh5"],
+    break: [5, "sh32"],
+    horseshoe: [7, "sharc"],
+    celtic: [10, "sh52"]
+  };
+  Array.prototype.forEach.call(document.querySelectorAll("#spread-list .spread-card"), function (card) {
+    var t = card.querySelector(".thumb");
+    if (!t) return;
+    var key = card.getAttribute("data-spread");
+    var cfg = THUMB_SHAPES[key] || [1, "sh1"];
+    var html = "";
+    for (var i = 0; i < cfg[0]; i++) html += "<i></i>";
+    t.className = "thumb " + cfg[1];
+    t.innerHTML = html;
+  });
+
   // ---------- 源码入口（AGPL-3.0 合规）----------
   // 上线前在 index.html 顶部把 window.WX_SOURCE_URL 填成仓库地址；留空则链接隐藏
   (function bindSourceLinks() {
@@ -257,11 +319,12 @@
   qInput.addEventListener("input", function () {
     $("q-counter").textContent = qInput.value.length + "/60";
   });
-  Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (chip) {
-    chip.addEventListener("click", function () {
-      qInput.value = chip.textContent.replace("？", "") + "？";
-      qInput.dispatchEvent(new Event("input"));
-    });
+  // 示例问题会被按类别整块重绘，所以用事件委托而不是逐个绑定
+  $("q-chips").addEventListener("click", function (e) {
+    var chip = e.target;
+    if (!chip || String(chip.className || "").indexOf("chip") < 0) return;
+    qInput.value = chip.textContent.replace("？", "") + "？";
+    qInput.dispatchEvent(new Event("input"));
   });
   $("btn-start-draw").addEventListener("click", function () {
     var q = qInput.value.trim();

@@ -91,6 +91,12 @@ const shown = () => ["home", "tarot", "question", "draw", "result", "history", "
   ok(/第\s*\d+\s*签/.test(qr), "摇出签文（" + (qr.match(/第\s*\d+\s*签/) || ["-"])[0] + "）");
   ok(qr.includes("解 曰") && qr.includes("提 示"), "签文含解曰与提示");
   ok(/上上|上吉|中吉|中平|下下/.test(qr), "签文含吉凶等级");
+  // 签筒静止时轻摇（tubeIdle），出签后加 .done 停下，否则结果页一直在动
+  ok($("#qian-tube").classList.contains("done"), "出签后签筒停掉静止轻摇（.done）");
+  const cssText = require("fs").readFileSync(require("path").join(__dirname, "css/style.css"), "utf8");
+  ok(/@keyframes\s+tubeIdle/.test(cssText), "样式表里有 tubeIdle 关键帧（签筒轻摇）");
+  ok(/prefers-reduced-motion[\s\S]{0,200}\.qian-tube\s*\{\s*animation:\s*none/.test(cssText),
+    "用户开启「减少动态效果」时签筒不摇");
 
   fire($("#btn-qian-save"), "click");
   const qh = JSON.parse(store["wenxing_qian_history"] || "[]");
@@ -172,6 +178,17 @@ const shown = () => ["home", "tarot", "question", "draw", "result", "history", "
   ok(zr.includes("紫微") && zr.includes("七杀"), "命宫主星为紫微/七杀");
   ok(zr.includes("十二宫"), "输出十二宫");
   ok(document.querySelectorAll(".zw-pal").length === 12, "十二宫共 12 行");
+  // 命盘图：外圈 12 宫按地支固定方位摆位（巳午未申 / 辰酉 / 卯戌 / 寅丑子亥），中宫放基本信息
+  const zwc = Array.prototype.slice.call(document.querySelectorAll("#ziwei-result .zwc"));
+  ok(zwc.length === 13, "命盘图共 13 格（12 宫 + 中宫），实得 " + zwc.length);
+  ok(zwc.filter((c) => c.classList.contains("center")).length === 1, "命盘图有 1 个中宫");
+  const soulCell = zwc.filter((c) => c.classList.contains("soul"));
+  ok(soulCell.length === 1, "命宫在图上高亮，实得 " + soulCell.length + " 个");
+  ok(soulCell[0] && soulCell[0].textContent.indexOf("命宫") === 0, "高亮的格子就是命宫");
+  const first = document.querySelector("#ziwei-result .zw-chart .zwc");
+  ok(first && /巳/.test(first.textContent), "左上格是巳宫（按方位摆位，不是按数组顺序）");
+  const centerTxt = (document.querySelector("#ziwei-result .zwc.center") || {}).textContent || "";
+  ok(centerTxt.includes("土五局") && /男|女/.test(centerTxt), "中宫显示性别与五行局");
   ok(zr.includes("四化速览"), "输出四化速览");
   fire($("#btn-zw-save"), "click");
   const zh = JSON.parse(store["wenxing_ziwei_history"] || "[]");

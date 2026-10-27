@@ -126,10 +126,13 @@
       "</div>";
 
     $("qian-status").innerHTML = "签已落定 · <b>第 " + q.n + " 签</b>";
+    // 出签后停掉静止轻摇，不然结果页一直在动
+    tube.classList.add("done");
     $("btn-qian-save").addEventListener("click", saveQian);
     $("btn-qian-again").addEventListener("click", function () {
       $("qian-result").innerHTML = "";
       $("qian-status").innerHTML = "写下想问的事，再<b>点击签筒</b>摇出一支签";
+      tube.classList.remove("done");
       window.scrollTo(0, 0);
     });
     // AI 解读：只上传签诗与解曰，不上传吉凶等级，避免模型据此下判定

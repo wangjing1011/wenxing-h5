@@ -54,7 +54,9 @@
     };
     s.onerror = function () {
       $("ziwei-status").innerHTML = "<b style='color:#e79a9a'>排盘算法载入失败，请检查网络后重试</b>";
+      $("ziwei-result").innerHTML = "";
       pendings.length = 0;
+      restoreZiweiBtn();
       toast("排盘算法载入失败");
     };
     document.head.appendChild(s);
@@ -82,9 +84,26 @@
     run();
   });
 
+  function restoreZiweiBtn() {
+    var b = $("btn-ziwei-go");
+    if (b) { b.disabled = false; b.textContent = "开始排盘"; }
+  }
+
   function run() {
+    var btn = $("btn-ziwei-go");
+    // 排盘要等 1MB 的排盘引擎载入 + 计算十二宫，期间必须给即时反馈，否则点下去像没反应
+    btn.disabled = true;
+    btn.textContent = "排盘中…";
+    $("ziwei-status").innerHTML = "正在准备排盘引擎…";
+    $("ziwei-result").innerHTML =
+      '<div class="zw-loading"><div class="spin"></div><p>正在排盘，稍等…</p></div>';
+    try { $("ziwei-result").scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
+
+    function restore() { restoreZiweiBtn(); }
+
     ensureIztro(function () {
-      if (!window.iztro) return;
+      if (!window.iztro) { restore(); return; }
+      $("ziwei-status").innerHTML = "正在计算十二宫与主星…";
       var date = $("zw-date").value;
       var h = parseInt($("zw-hour").value, 10);
       if (!isFinite(h)) h = 12;                      // 取值异常时兜底为午时
@@ -94,14 +113,19 @@
       try {
         a = window.iztro.astro.bySolar(date, timeIndex, gender, true, "zh-CN");
       } catch (e) {
+        $("ziwei-result").innerHTML = "";
+        $("ziwei-status").innerHTML = "";
         toast("排盘失败：" + e.message);
+        restore();
         return;
       }
       zwState.res = a;
       zwState.date = date;
       zwState.hour = h;
       zwState.name = $("zw-name").value.trim();
+      $("ziwei-status").innerHTML = "";
       render(a);
+      restore();
     });
   }
 
@@ -141,6 +165,54 @@
         '<div><span>主星</span><b>' + esc(soul.majorStars.map(function (s) { return s.name; }).join("、") || "空宫") + "</b></div>" +
       "</div>" +
       '<div class="zw-tip">' + esc(JU[a.fiveElementsClass] || "") + "</div></div>";
+
+    // 十二宫命盘图：4×4 环形排布，中间留白放基本信息。
+    // 地支方位是固定的（巳午未申 / 辰酉 / 卯戌 / 寅丑子亥），所以用固定格子摆，不按数组顺序。
+    var GRID = [
+      ["巳", "午", "未", "申"],
+      ["辰", "", "", "酉"],
+      ["卯", "", "", "戌"],
+      ["寅", "丑", "子", "亥"]
+    ];
+    var cells = "";
+    for (var gr = 0; gr < 4; gr++) {
+      for (var gc = 0; gc < 4; gc++) {
+        var br = GRID[gr][gc];
+        if (!br) continue;
+        var pp = byBranch[br];
+        if (!pp) continue;
+        var maj = pp.majorStars.length
+          ? pp.majorStars.map(function (s) {
+              return '<span class="cst' + (s.mutagen ? " mu" : "") + '">' + esc(s.name) +
+                (s.mutagen ? "<i>" + esc(s.mutagen) + "</i>" : "") +
+                (s.brightness ? "<em>" + esc(s.brightness) + "</em>" : "") + "</span>";
+            }).join("")
+          : '<span class="cst empty">空宫</span>';
+        var min = (pp.minorStars || []).slice(0, 4).map(function (s) { return esc(s.name); }).join(" ");
+        cells += '<div class="zwc' + (pp.name === "命宫" ? " soul" : "") + (pp.isBodyPalace ? " body" : "") +
+          '" style="grid-row:' + (gr + 1) + ";grid-column:" + (gc + 1) + '">' +
+          '<div class="ch"><b>' + esc(pp.name) + "</b>" +
+            (pp.isBodyPalace ? "<i>身</i>" : "") +
+            "<s>" + esc(pp.heavenlyStem + pp.earthlyBranch) + "</s></div>" +
+          '<div class="cm">' + maj + "</div>" +
+          (min ? '<div class="cn">' + min + "</div>" : "") +
+          "</div>";
+      }
+    }
+    var chartHtml =
+      '<div class="zw-chart-wrap">' +
+        '<div class="section-title">命 盘</div>' +
+        '<div class="zw-chart">' + cells +
+          '<div class="zwc center">' +
+            '<div class="cnm">' + (zwState.name ? esc(zwState.name) + " · " : "") +
+              (zwState.gender === 1 ? "男" : "女") + "命盘</div>" +
+            '<div class="cju">' + esc(a.fiveElementsClass) + "</div>" +
+            '<div class="cdt">' + esc(a.solarDate) + "<br>" + esc(a.lunarDate) + "</div>" +
+            '<div class="clz">命主 ' + esc(a.soul || "-") + "　身主 " + esc(a.body || "-") + "</div>" +
+          "</div>" +
+        "</div>" +
+        '<p class="zwc-note">外圈按地支方位固定摆位，<b>命宫</b>高亮；星名后的小字是庙旺、红字是生年四化</p>' +
+      "</div>";
 
     // 命宫主星解读
     var soulHtml = "";
@@ -219,7 +291,7 @@
       siHua: sihua.map(function (x) { return { star: x.name, type: x.mu, palace: x.palace }; })
     };
 
-    $("ziwei-result").innerHTML = head + soulHtml +
+    $("ziwei-result").innerHTML = head + chartHtml + soulHtml +
       '<div class="section-title" style="margin-top:16px">十二宫 · 自命宫起顺时针</div>' + rows +
       shHtml +
       '<div class="ly-note" style="margin-top:12px"><h4>— 说 明 —</h4>' + esc(summary) + "</div>" +
