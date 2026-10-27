@@ -155,7 +155,7 @@
   }
 
   // ---------- 视图路由 ----------
-  var VIEWS = ["home", "tarot", "question", "draw", "result", "history", "huangli", "bazi", "qian", "liuyao", "meihua", "ziwei", "name"];
+  var VIEWS = ["home", "tarot", "question", "draw", "result", "pair", "history", "huangli", "bazi", "qian", "liuyao", "meihua", "ziwei", "name"];
   function showView(name) {
     VIEWS.forEach(function (v) {
       $("view-" + v).style.display = (v === name) ? "flex" : "none";
@@ -403,7 +403,44 @@
     });
   });
 
-  $("btn-to-result").addEventListener("click", renderResult);
+  $("btn-to-result").addEventListener("click", function () {
+    // 合盘加入者抽完后走「合并到房间」，不进普通结果页
+    if (window.WenxingPair && window.WenxingPair.consumeJoin()) return;
+    renderResult();
+  });
+
+  // ---------- 供合盘模块复用抽牌流程 ----------
+  // 合盘要「双方各抽一次同一个牌阵」，没必要把抽牌页再写一遍，
+  // 直接把当前洗牌/点击抽牌那套借出去，加个 drawFor 入口即可。
+  window.AppTarot = {
+    spreads: SPREADS,
+    all: ALL,
+    state: state,
+    drawFor: function (spreadKey, question, title) {
+      state.spread = spreadKey;
+      state.question = question || "";
+      $("q-title").textContent = title || ("双人合盘 · " + (SPREADS[spreadKey] || {}).name);
+      $("q-hint").innerHTML = "同一个问题，你从自己的角度看。<br>抽完就能合盘。";
+      initDraw();
+    },
+    pickedNow: function () {
+      var sp = SPREADS[state.spread];
+      return state.picked.map(function (p, i) {
+        return {
+          position: sp.positions[i] ? sp.positions[i].label : ("第" + (i + 1) + "张"),
+          name: p.card.name,
+          n: p.card.n,
+          orientation: p.reversed ? "reversed" : "upright",
+          keywords: (p.reversed ? p.card.keywordsR : p.card.keywordsU).slice(0, 4),
+          gist: p.reversed ? p.card.reversed : p.card.upright
+        };
+      });
+    },
+    imageOf: function (n) {
+      return window.tarotImageOf ? window.tarotImageOf(n) : "";
+    },
+    toHome: function () { showView("home"); }
+  };
 
   // ---------- AI 解读（仅单张 / 三牌 PoC） ----------
   $("btn-ai").addEventListener("click", function () {
@@ -518,6 +555,16 @@
     $("r-summary").innerHTML = summaryHtml(buildSummary());
     $("btn-save").disabled = false;
     $("btn-save").textContent = "存入历史";
+
+    // 合盘入口：只有「关系之镜」这类双方牌阵才显示（合盘要双方各抽一次）
+    if (window.WenxingPair) {
+      window.WenxingPair.mountResult({
+        spreadKey: state.spread,
+        spreadName: sp.name,
+        question: state.question,
+        picked: window.AppTarot.pickedNow()
+      });
+    }
 
     // AI 解读入口：所有牌阵统一开放（后端按牌数自适应组装，只传牌面、不传生辰）
     var aiBtn = $("btn-ai");

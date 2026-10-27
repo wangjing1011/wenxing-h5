@@ -209,6 +209,21 @@ var SYSTEM_ROLE_ORACLE = [
   "8. 长度适中（中文 200-320 字）。最后一句柔和、留白，不要写「结论」「综上」「总的来说」。"
 ].join("\n");
 
+// 双人合盘单独一套角色：难点是「不站队」，既不能说谁对谁错，也不能预测关系结局。
+var SYSTEM_ROLE_PAIR = [
+  "你是一位擅长关系视角的塔罗读者，帮两个人把各自抽到的牌并排看一遍。",
+  "你收到的是一次双人合盘：同一件事，两个人各自抽了一组牌。你不知道他们是谁，也不需要任何个人信息。",
+  "",
+  "严格要求：",
+  "1. 只描述牌面呈现的两种视角，绝不站队。不说「谁对谁错」「谁更爱谁」，也不预测分手、复合、结婚、怀孕这类结果。",
+  "2. 不出现「注定」「必然」「一定会」这类判定；用「你这边可能更在意…」「TA 那边看起来更想…」这种并置的说法。",
+  "3. 不替他们做决定，不给心理咨询、法律、医疗结论。若议题涉及家暴、自伤等风险，温和建议寻求现实中的专业帮助。",
+  "4. 行文温和克制，像朋友把两叠牌摊在桌上一起看。禁止 emoji，禁止「首先/其次/最后」式罗列。",
+  "5. 必须分段：第一段一到两句直接回应他们问的那件事；第二段讲「你」这边的牌；第三段讲「TA」那边；第四段说两边怎么互相作用。段与段之间空一行，每段 2 到 3 句。",
+  "6. 牌名、正逆位出现时用一句白话解释它在说什么，不堆术语；避免「能量场」「频率」「课题」「显化」「高我」这类空泛词。",
+  "7. 中文 280-400 字。最后一句留白，不要写「结论」「综上」「总的来说」。"
+].join("\n");
+
 function serializeOracle(p) {
   var d = p.data || {};
   var kind = p.kind;
@@ -248,6 +263,19 @@ function serializeOracle(p) {
           (n.meaning ? "　字义：" + n.meaning : ""));
       });
     }
+  } else if (kind === "pair") {
+    L.push("【占问形式】塔罗双人合盘（同一个问题，双方各抽一次，a 为提问者、b 为对方）");
+    var fmtSide = function (list, who) {
+      if (!list || !list.length) return;
+      L.push("【" + who + "抽到的牌】");
+      list.forEach(function (c, i) {
+        L.push((i + 1) + ". " + c.name + "（" + (c.orientation === "reversed" ? "逆位" : "正位") + "）" +
+          (c.keywords && c.keywords.length ? "　关键词：" + c.keywords.join("、") : "") +
+          (c.gist ? "　牌义：" + c.gist : ""));
+      });
+    };
+    fmtSide(d.a, "你");
+    fmtSide(d.b, "对方");
   }
 
   if (p.question) {
@@ -256,15 +284,20 @@ function serializeOracle(p) {
     L.push("【用户所问】（未写下问题，凭心意起卦，请基于结果做开放式阐释）");
   }
   L.push("");
-  L.push("请先用一到两句直接回应用户问的那件具体事，再结合上面的内容展开；" +
-    "分段书写、段间空一行，用日常白话讲清楚，不堆术语，不替用户做决定。");
+  if (kind === "pair") {
+    L.push("请先一到两句回应用户问的那件事，然后分别讲「你」与「对方」两边各看到什么，" +
+      "最后说这两组牌放在一起时怎么互相作用。分段书写、段间空一行，不站队、不预测结局、不替他们做决定。");
+  } else {
+    L.push("请先用一到两句直接回应用户问的那件具体事，再结合上面的内容展开；" +
+      "分段书写、段间空一行，用日常白话讲清楚，不堆术语，不替用户做决定。");
+  }
 
   return L.join("\n");
 }
 
 function buildOracleMessages(p) {
   return [
-    { role: "system", content: SYSTEM_ROLE_ORACLE },
+    { role: "system", content: p.kind === "pair" ? SYSTEM_ROLE_PAIR : SYSTEM_ROLE_ORACLE },
     { role: "user", content: serializeOracle(p) }
   ];
 }
@@ -276,5 +309,6 @@ module.exports = {
   SYSTEM_ROLE_CHART: SYSTEM_ROLE_CHART,
   SYSTEM_ROLE_BAZI: SYSTEM_ROLE_BAZI,
   buildOracleMessages: buildOracleMessages,
-  SYSTEM_ROLE_ORACLE: SYSTEM_ROLE_ORACLE
+  SYSTEM_ROLE_ORACLE: SYSTEM_ROLE_ORACLE,
+  SYSTEM_ROLE_PAIR: SYSTEM_ROLE_PAIR
 };

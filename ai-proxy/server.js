@@ -19,14 +19,21 @@
 //   POST /interpret
 //     · 塔罗： {spread, spreadName, question, cards:[{position,name,orientation,keywords,gist}]}
 //     · 命盘： {type:"chart", domain:"bazi"|"ziwei", chart:{...结构化命盘，不含任何生辰/姓名}}
+//     · 四板块： {type:"oracle", kind:"qian"|"liuyao"|"meihua"|"name", ...}
+//     · 双人合盘： {type:"oracle", kind:"pair", question, a:[...], b:[...]}
 //     resp: {text, mock:false}
 //   GET  /health       {ok:true}
+//   双人合盘房间（只存问题与牌面，24 小时过期，不存 IP/UA）：
+//   POST /pair/create  {spread, spreadName, question, cards:[...]}  -> {ok, code, expiresAt}
+//   POST /pair/join    {code, cards:[...]}                          -> {ok, room}
+//   GET  /pair/state?code=XXXXXX                                   -> {found, room}
 
 "use strict";
 var http = require("http");
 var fs = require("fs");
 var path = require("path");
 var crypto = require("crypto");
+var pair = require("./pair.js");
 
 var prompt = require("./prompt");
 var redwords = require("./redwords");
@@ -219,7 +226,8 @@ function mockOracleInterpret(p) {
     qian: "这是一支从传统签诗中抽出的签。",
     liuyao: "这是一组由六爻起出的卦象。",
     meihua: "这是一组以梅花易数起出的卦象。",
-    name: "这是几个按笔画与五行搭配出的名字备选。"
+    name: "这是几个按笔画与五行搭配出的名字备选。",
+    pair: "这是一次双人合盘：同一个问题，两个人各抽了一组牌。"
   }[p.kind] || "";
   var body;
   if (p.kind === "qian") {
@@ -233,6 +241,12 @@ function mockOracleInterpret(p) {
       "它更像一面照见当下处境的镜子，照见的是你在局中的位置，而不是结局。";
   } else if (p.kind === "name") {
     body = "名字的好，很少在于笔画算得多准。读音顺不顺口、写出来好不好看、家里人念着喜不喜欢，这些比任何格子都更实在。";
+  } else if (p.kind === "pair") {
+    var an = (d.a || [])[0], bn = (d.b || [])[0];
+    var kw = function (c) { return (c && c.keywords && c.keywords.length) ? c.keywords.slice(0, 2).join("、") : "各自的关键词"; };
+    body = (an ? "你这边第一张是「" + an.name + "」，落在「" + kw(an) + "」；" : "") +
+      (bn ? "TA 那边第一张是「" + bn.name + "」，落在「" + kw(bn) + "」；" : "") +
+      "两组牌摆在一起看，分歧常常不在方向，而在两个人看这件事的入口不一样。";
   } else {
     body = "这些符号更像一面镜子，映出的是你此刻的心境。";
   }
@@ -270,7 +284,7 @@ function handleInterpret(req, res) {
 
     // 签卦 / 起名解读：结构化占问结果（同样不含生辰与身份信息）
     if (payload.type === "oracle") {
-      var OKINDS = { qian: 1, liuyao: 1, meihua: 1, name: 1 };
+      var OKINDS = { qian: 1, liuyao: 1, meihua: 1, name: 1, pair: 1 };
       if (!payload.kind || !OKINDS[payload.kind] || !payload.data) {
         return sendJson(res, 400, { error: "invalid oracle payload: kind & data required" });
       }
@@ -370,6 +384,36 @@ function sendJson(res, code, obj) {
   res.end(body);
 }
 
+// ---------------- 双人合盘房间 ----------------
+function handlePairCreate(req, res) {
+  readJson(req).then(function (body) {
+    var r = pair.createRoom(body);
+    if (r.error) return sendJson(res, 400, { error: r.error });
+    sendJson(res, 200, r);
+  }).catch(function () { sendJson(res, 400, { error: "请求格式不对" }); });
+}
+
+function handlePairJoin(req, res) {
+  readJson(req).then(function (body) {
+    var r = pair.joinRoom(body.code, body);
+    if (r.error) return sendJson(res, 400, { error: r.error });
+    sendJson(res, 200, r);
+  }).catch(function () { sendJson(res, 400, { error: "请求格式不对" }); });
+}
+
+function handlePairState(req, res, u) {
+  var code = "";
+  var qi = u.indexOf("?");
+  if (qi >= 0) {
+    u.slice(qi + 1).split("&").forEach(function (kv) {
+      var p = kv.split("=");
+      if (p[0] === "code") code = decodeURIComponent(p[1] || "");
+    });
+  }
+  var full = u.indexOf("full=1") >= 0;
+  sendJson(res, 200, pair.getRoom(code, full));
+}
+
 // ---------------- 路由 ----------------
 var server = http.createServer(function (req, res) {
   if (req.method === "OPTIONS") { sendJson(res, 204, {}); return; }
@@ -378,8 +422,21 @@ var server = http.createServer(function (req, res) {
   if (u.indexOf("/interpret") === 0 && req.method === "POST") {
     return handleInterpret(req, res);
   }
+  if (u.indexOf("/pair/create") === 0 && req.method === "POST") {
+    return handlePairCreate(req, res);
+  }
+  if (u.indexOf("/pair/join") === 0 && req.method === "POST") {
+    return handlePairJoin(req, res);
+  }
+  if (u.indexOf("/pair/state") === 0) {
+    return handlePairState(req, res, u);
+  }
   if (u.indexOf("/health") === 0) {
-    return sendJson(res, 200, { ok: true, key: !!process.env.AI_KEY });
+    return sendJson(res, 200, {
+      ok: true,
+      key: !!process.env.AI_KEY,
+      pair: { rooms: pair._rooms.size, ttlHours: pair._ttl / 3600000 }
+    });
   }
   if (SERVE_STATIC) {
     return serveStatic(req, res, u);

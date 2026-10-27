@@ -77,7 +77,7 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
       <button id="btn-about">说明与声明</button>
     </div>
     <footer class="legal">
-      <p>本产品为传统历法研究与娱乐测评内容，结果不构成任何决策、医疗或心理建议。<br>您的所有记录仅保存在本机浏览器，我们不收集、不上传任何个人信息。</p>
+      <p>本产品为传统历法研究与娱乐测评内容，结果不构成任何决策、医疗或心理建议。<br>您的记录默认仅保存在本机浏览器；AI 解读与双人合盘的数据处理方式见「说明与声明」。</p>
       <p class="cp">© 2026 问星 · 内容由算法生成，仅供娱乐与自我探索<br>塔罗牌面为 1909 年 Rider-Waite 公版图案（Pamela Colman Smith）</p>
     </footer>
   </section>
@@ -242,16 +242,21 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
       <h3>— 综合提示 —</h3>
       <div id="r-summary"></div>
     </div>
+    <div class="pair-block" id="pair-block" style="display:none"></div>
     <div class="result-actions">
       <button class="btn ai-btn" id="btn-ai" style="display:none">AI 解读（灵感视角）</button>
     </div>
     <div class="ai-box" id="ai-box" style="display:none"></div>
-    <div class="result-actions" style="margin-top:14px">
+    <div class="result-actions row2" style="margin-top:14px">
       <button class="btn gold" id="btn-save">存入历史</button>
+      <button class="btn ghost" id="btn-share">分享卡片</button>
       <button class="btn ghost" id="btn-again">再测一次</button>
     </div>
     <p class="gen-note">解读由牌义库规则生成 · 仅供娱乐与自我探索</p>
   </section>
+
+  <!-- 双人合盘（邀请 / 合盘结果都在这里渲染） -->
+  <section class="view" id="view-pair" style="display:none"></section>
 
   <!-- 历史 -->
   <section class="view" id="view-history" style="display:none">
@@ -582,7 +587,7 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
   <div class="sheet">
     <h3>说明与声明</h3>
     <p><b style="color:#d4b96a">关于内容：</b>问星提供塔罗牌义、八字干支与黄历宜忌查询，内容为传统历法研究与娱乐测评性质，不构成任何决策、医疗、心理或投资建议。</p>
-    <p><b style="color:#d4b96a">关于数据：</b>您的提问、抽牌记录与生辰信息仅保存在本机浏览器（localStorage），我们不上传、不收集、不共享任何个人信息，您可以随时删除。</p>
+    <p><b style="color:#d4b96a">关于数据：</b>您的提问、抽牌记录与生辰信息默认仅保存在本机浏览器（localStorage），不上传、不共享，您可以随时删除。以下两项功能需要用到服务器，一并说明：<br>· <b style="color:#d4b96a">AI 解读</b>：只发送结构化信息（牌名与正逆位，或干支、五行、十神、星曜），不含姓名，也不含出生日期；<br>· <b style="color:#d4b96a">双人合盘</b>：您填写的问题与双方牌面需暂存服务器 <b style="color:#d4b96a">24 小时</b>，否则对方打开邀请链接时无法拼合出结果；到期自动清除。</p>
     <p><b style="color:#d4b96a">关于解读：</b>解读基于规则库生成，同一结果在不同处境下含义不同，请结合自身情况参考。</p>
     <p><b style="color:#d4b96a">关于开源：</b>本站前端源码公开托管于 GitHub；八字排盘引擎命语（mingyu-core）以 <b style="color:#d4b96a">AGPL-3.0</b> 许可发布，我们据此开放对应源码。<a class="src-link" data-source-link href="#" target="_blank" rel="noopener noreferrer" hidden>查看源码 →</a></p>
     <button class="btn ghost" id="sheet-close">我知道了</button>
@@ -613,14 +618,17 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
 <script src="js/ziwei-meanings.js"></script>
 <script src="js/name-data.js"></script>
 <script src="js/icons.js"></script>
+<script src="js/qr.js"></script>
 <script src="js/ai.js"></script>
 <script src="js/ai-oracle.js"></script>
+<script src="js/share-card.js"></script>
 <script src="js/app.js"></script>
 <script src="js/app-fortune.js"></script>
 <script src="js/app-divine.js"></script>
 <script src="js/app-meihua.js"></script>
 <script src="js/app-ziwei.js"></script>
 <script src="js/app-name.js"></script>
+<script src="js/app-pair.js"></script>
 <!-- 注：js/vendor/iztro.js 由 app-ziwei.js 按需载入，不放进首屏 -->
 </body>
 </html>

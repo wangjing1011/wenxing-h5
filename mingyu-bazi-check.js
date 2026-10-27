@@ -16,7 +16,17 @@ function ok(name, cond, extra) {
 function section(t) { console.log("\n== " + t + " =="); }
 
 // ---- 最小浏览器沙箱，加载 bundle ----
-const bundlePath = path.join(__dirname, "__mingyu-build", "mingyu-bazi.js");
+// 产物就是 js/vendor/mingyu-bazi.js（页面懒加载的那一份），不要再指向 __mingyu-build 之类的临时目录：
+// 那些带 __ 前缀的目录按约定会被清理，校验脚本会跟着一起失效。
+const CANDIDATES = [
+  path.join(__dirname, "js", "vendor", "mingyu-bazi.js"),
+  path.join(__dirname, "__mingyu-build", "mingyu-bazi.js")
+];
+const bundlePath = CANDIDATES.find(function (p) { return fs.existsSync(p); });
+if (!bundlePath) {
+  console.error("找不到 mingyu-bazi.js 产物，先在 build/mingyu 下重新构建");
+  process.exit(2);
+}
 const bundleSrc = fs.readFileSync(bundlePath, "utf8");
 const sandbox = { console, setTimeout, clearTimeout };
 sandbox.window = sandbox;
