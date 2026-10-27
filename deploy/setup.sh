@@ -131,11 +131,17 @@ systemctl restart "$SERVICE"
 
 # ---------- 6. 反向代理 + 证书 ----------
 echo "==> [6/6] 配置 Caddy（自动申请 HTTPS 证书）"
-# 主域名与 www 一起纳入证书；若传入的已是 www 开头则不再叠加
+# 主域名与 www 一起纳入证书；若传入的已是 www 开头则不再叠加。
+# 关键：www 若没做 A 记录，证书验证会失败并拖住整个签发流程，故先探测解析再决定。
 if [ "${DOMAIN#www.}" != "$DOMAIN" ]; then
   CADDY_HOSTS="$DOMAIN"
-else
+elif getent hosts "www.$DOMAIN" >/dev/null 2>&1; then
   CADDY_HOSTS="$DOMAIN, www.$DOMAIN"
+  echo "     已检测到 www.$DOMAIN 解析，一并签证书"
+else
+  CADDY_HOSTS="$DOMAIN"
+  echo "     未检测到 www.$DOMAIN 解析，本次只为 $DOMAIN 签证书"
+  echo "     （之后补了 www 的 A 记录，重跑本脚本即可加上）"
 fi
 cat > /etc/caddy/Caddyfile <<EOF
 # 由 deploy/setup.sh 生成
