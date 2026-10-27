@@ -52,38 +52,68 @@ body {
 
 .section-title { font-size: 12px; color: var(--muted); letter-spacing: 2px; margin: 4px 0 10px; }
 
-/* 首页功能网格 */
+/* 首页功能网格
+   每个功能有自己的主色（--ac，写在 index.html 的行内 style 里），
+   靠「主色 + 主体图形」双重区分，避免九个金色线框图标看起来一模一样。 */
 .home-grid { display: grid; gap: 10px; }
 .home-grid-2 { grid-template-columns: 1fr 1fr; }
 .home-grid-3 { grid-template-columns: repeat(3, 1fr); gap: 9px; }
 
 .home-tile {
+  --ac: #d4b96a;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 6px; width: 100%; cursor: pointer; text-align: center;
   background: linear-gradient(180deg, var(--panel2), var(--panel));
   border: 1px solid var(--line); border-radius: 14px;
-  padding: 13px 8px; transition: transform .15s ease, border-color .15s ease;
+  padding: 9px 8px 13px; transition: transform .15s ease, border-color .15s ease;
   color: var(--text);
 }
 .home-tile:active { transform: scale(.97); border-color: rgba(212,185,106,.55); }
-.home-tile .ic { width: 30px; height: 30px; color: var(--gold); display: block; }
+
+/* 图片区：主色氛围底 + 星点纹理 + 主体图形 */
+.home-tile .art {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  width: 100%; border-radius: 11px; overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(0,0,0,.30));
+  border: 1px solid rgba(255,255,255,.09);
+  box-shadow: inset 0 0 26px -9px var(--ac);
+}
+.home-tile .art::before {
+  content: ""; position: absolute; inset: 0; opacity: .45;
+  background: radial-gradient(66% 92% at 50% 126%, var(--ac), transparent 72%);
+}
+.home-tile .art::after {
+  content: ""; position: absolute; inset: 0; opacity: .45;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, var(--ac) 50%, transparent 51%),
+    radial-gradient(1px 1px at 79% 23%, var(--ac) 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 64% 76%, var(--ac) 50%, transparent 51%),
+    radial-gradient(1px 1px at 31% 79%, var(--ac) 50%, transparent 51%);
+}
+.home-tile .ic {
+  position: relative; z-index: 1; color: var(--ac); display: block;
+  filter: drop-shadow(0 0 5px rgba(0,0,0,.55));
+}
 .home-tile .ic svg { width: 100%; height: 100%; display: block; }
 .home-tile b { font-size: 14px; font-weight: 500; letter-spacing: .5px; }
-.home-tile .sub { font-size: 10.5px; color: var(--muted); letter-spacing: .5px; }
+.home-tile .sub { font-size: 10.5px; color: var(--muted); letter-spacing: .3px; }
 
 /* 常用工具（2×2）放大 */
-.tile-lg { padding: 16px 8px; gap: 8px; }
-.tile-lg .ic { width: 38px; height: 38px; }
+.tile-lg { padding: 9px 9px 14px; gap: 7px; }
+.tile-lg .art { height: 64px; }
+.tile-lg .ic { width: 41px; height: 41px; }
 .tile-lg b { font-size: 15px; letter-spacing: 1px; }
-.tile-lg .sub { font-size: 11px; }
+.tile-lg .sub { font-size: 10.5px; }
 
 /* 更多功能（3×3）紧凑 */
-.home-grid-3 .home-tile { padding: 12px 4px; gap: 5px; border-radius: 12px; }
-.home-grid-3 .ic { width: 26px; height: 26px; }
+.home-grid-3 .home-tile { padding: 7px 5px 11px; gap: 5px; border-radius: 12px; }
+.home-grid-3 .art { height: 42px; border-radius: 9px; }
+.home-grid-3 .ic { width: 25px; height: 25px; }
 .home-grid-3 b { font-size: 12px; letter-spacing: 0; }
 
 .home-tile.locked { opacity: .5; }
 .home-tile.locked:active { transform: none; border-color: var(--line); }
+
 
 .home-links { display: flex; gap: 10px; margin-top: 18px; }
 .home-links button {
@@ -99,8 +129,8 @@ body {
   transition: transform .15s ease, border-color .15s ease; text-align: left;
 }
 .spread-card:active { transform: scale(.98); border-color: rgba(212,185,106,.55); }
-.spread-card .icon { font-size: 24px; width: 52px; height: 52px; flex: none;
-  display: flex; align-items: center; justify-content: center;
+.spread-card .icon { font-size: 20px; color: var(--gold2); width: 52px; height: 52px; flex: none;
+  display: flex; align-items: center; justify-content: center; line-height: 1;
   border-radius: 12px; background: rgba(139,124,246,.14); border: 1px solid rgba(139,124,246,.35); }
 .spread-card .info { flex: 1; min-width: 0; }
 .spread-card b { display: block; font-size: 16px; color: var(--text); margin-bottom: 4px; font-weight: 500; }
@@ -110,6 +140,11 @@ body {
   border: 1px solid rgba(212,185,106,.35); border-radius: 999px; padding: 3px 9px;
 }
 .spread-card .arrow { margin-left: 8px; color: var(--gold); font-size: 18px; }
+
+/* 牌阵分类切换：5 个标签等分一行 */
+.seg-cat { gap: 7px; margin-bottom: 9px; }
+.seg-cat .seg-btn { padding: 9px 2px; font-size: 13px; letter-spacing: 0; border-radius: 9px; }
+.cat-hint { font-size: 12px; line-height: 1.7; color: var(--muted); margin: 0 0 14px; min-height: 20px; }
 
 .home-links { display: flex; gap: 10px; margin-top: 18px; }
 .home-links button {
@@ -274,6 +309,7 @@ textarea:focus { border-color: rgba(212,185,106,.6); }
 .summary { background: rgba(139,124,246,.1); border: 1px solid rgba(139,124,246,.3); border-radius: 16px; padding: 18px 16px; margin: 16px 0; }
 .summary h3 { font-size: 13px; color: #c4bbff; letter-spacing: 3px; font-weight: 500; margin-bottom: 10px; }
 .summary p { font-size: 13.5px; line-height: 1.9; color: #d9d4ef; }
+.summary .para-tag { font-weight: 500; color: var(--gold2); }
 .result-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
 .gen-note { text-align: center; font-size: 11px; color: var(--muted); margin-top: 14px; }
 

@@ -215,6 +215,33 @@
   $("sheet-close").addEventListener("click", function () { $("sheet-mask").classList.remove("show"); });
   $("sheet-mask").addEventListener("click", function (e) { if (e.target === this) this.classList.remove("show"); });
 
+  // ---------- 牌阵分类 ----------
+  // 八个牌阵平铺太多，按「问什么事」归类，一次只显示 3 个左右；
+  // 牌阵允许同时属于多个类别（时间之流既在默认也在感情/事业/生活）。
+  var CAT_HINTS = {
+    "默认": "不知道选哪个就从这里开始，三个最通用的牌阵。",
+    "感情": "适合问一段关系、一次心动，或者某个还没放下的人。",
+    "事业": "适合问工作、项目、合作与选择：卡住的事、要不要动、怎么破。",
+    "生活": "适合问自己的状态：为什么累、最近该注意什么、心里在纠结什么。",
+    "其他": "局面复杂、想看得更深时用。牌多、信息量大，建议安静时坐下来抽。"
+  };
+  function filterSpreads(cat) {
+    Array.prototype.forEach.call(document.querySelectorAll("#spread-cats .seg-btn"), function (b) {
+      if (b.getAttribute("data-cat") === cat) b.classList.add("on");
+      else b.classList.remove("on");
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#spread-list .spread-card"), function (card) {
+      var cats = String(card.getAttribute("data-cats") || "").split(",");
+      card.style.display = cats.indexOf(cat) >= 0 ? "" : "none";
+    });
+    var hint = $("spread-cat-hint");
+    if (hint) hint.textContent = CAT_HINTS[cat] || "";
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("#spread-cats .seg-btn"), function (b) {
+    b.addEventListener("click", function () { filterSpreads(b.getAttribute("data-cat")); });
+  });
+  filterSpreads("默认");
+
   // ---------- 源码入口（AGPL-3.0 合规）----------
   // 上线前在 index.html 顶部把 window.WX_SOURCE_URL 填成仓库地址；留空则链接隐藏
   (function bindSourceLinks() {
@@ -369,6 +396,14 @@
     return '<p class="ai-text">' + esc(text).replace(/\n/g, "<br>") + "</p>";
   }
 
+  // 综合提示专用：在分段基础上把每段开头的位置名「现状」「卡点」加粗，长牌阵里方便扫读
+  function summaryHtml(text) {
+    return aiParagraphs(text).replace(
+      /<p class="ai-text">「([^」]{1,8})」/g,
+      '<p class="ai-text"><b class="para-tag">「$1」</b>'
+    );
+  }
+
   // AI 不可用时的降级：用规则综合提示（与红线词基调一致）
   function renderAiFallback(box, btn) {
     state.aiText = buildSummary();
@@ -422,7 +457,7 @@
       setTimeout(function () { el.querySelector(".flip").classList.add("flipped"); }, flipDelay);
     });
 
-    $("r-summary").textContent = buildSummary();
+    $("r-summary").innerHTML = summaryHtml(buildSummary());
     $("btn-save").disabled = false;
     $("btn-save").textContent = "存入历史";
 
@@ -440,54 +475,72 @@
   }
 
   // ---------- 综合提示 ----------
+  // 输出按「空行」分段，再由 ai.js 的公共段落渲染器转成 <p>。
+  // 十张牌如果串成一大段，手机上根本读不下去，所以一段只讲一件事：
+  // 开场交代整体 → 逐张说位置与关键词 → 指出最该看的位置 → 收尾。
   function buildSummary() {
     var sp = SPREADS[state.spread];
-    var P = state.picked.map(function (p) { return p.card; });
-    var kw = function (i) {
-      var k = state.picked[i].reversed ? P[i].keywordsR : P[i].keywordsU;
-      return k.slice(0, 2).join("、");
-    };
-    var ori = function (i) { return state.picked[i].reversed ? "（逆位）" : ""; };
+    var picked = state.picked;
+    var P = picked.map(function (p) { return p.card; });
+    var total = picked.length;
+    if (!total) return "";
 
-    var s;
-    if (state.spread === "single") {
-      var openers = [
-        "此刻递到你手里的镜子是",
-        "当下最想对你说的话藏在",
-        "今天的功课写在"
-      ];
-      s = openers[Math.floor(Math.random() * openers.length)] + "「" + P[0].name + "」" + ori(0) +
-        "里——关键词是「" + kw(0) + "」。";
-      s += state.picked[0].reversed ? P[0].reversed : P[0].upright;
-    } else if (state.spread === "three") {
-      s = "回看来路，「" + P[0].name + "」" + ori(0) + "提示「" + kw(0) + "」的印记仍在暗中发挥作用；" +
-        "此刻你正处在「" + P[1].name + "」" + ori(1) + "的能量里，主题是「" + kw(1) + "」；" +
-        "若保持现有节奏，事情会朝着「" + P[2].name + "」" + ori(2) + "所象征的「" + kw(2) + "」流动。" +
-        "未来牌想补充一句：" + (state.picked[2].reversed ? P[2].reversed : P[2].upright);
+    var revCount = picked.filter(function (p) { return p.reversed; }).length;
+    var kw = function (i) {
+      var k = picked[i].reversed ? P[i].keywordsR : P[i].keywordsU;
+      return k.slice(0, 3).join("、");
+    };
+    var ori = function (i) { return picked[i].reversed ? "逆位" : "正位"; };
+
+    var trend;
+    if (revCount === 0) {
+      trend = "牌面全是正位，事情是顺的，适合顺着现在这股势头往前推一步。";
+    } else if (revCount >= Math.ceil(total * 0.6)) {
+      trend = "逆位偏多，这一段更像收尾和整理，不用急着扩张，慢一点反而稳。";
     } else {
-      // 通用牌阵：位置串联 + 整体正逆位趋势 + 关键位置提示
-      var parts = sp.positions.map(function (pos, i) {
-        return "「" + pos.label + "」" + P[i].name + (state.picked[i].reversed ? "逆位" : "正位");
-      });
-      var revCount = state.picked.filter(function (p) { return p.reversed; }).length;
-      var trend;
-      if (revCount === 0) {
-        trend = "整体全部正位，能量是顺畅的，适合顺势推进手头的事";
-      } else if (revCount >= Math.ceil(P.length * 0.6)) {
-        trend = "整体逆位偏多，这是一段收束、调整、向内看的时期——慢即是稳";
-      } else {
-        trend = "正逆位交错，局面有进有退，在关键处保持灵活";
-      }
-      var kp = P[sp.keyPos];
-      var kpReversed = state.picked[sp.keyPos].reversed;
-      var kLabel = sp.positions[sp.keyPos].label;
-      s = sp.intro + parts.join("；") + "。" +
-        "整体来看，" + trend + "。" +
-        "把最多的注意力放在「" + kLabel + "」上——" + kp.name + (kpReversed ? "（逆位）" : "（正位）") +
-        "，关键词「" + (kpReversed ? kp.keywordsR : kp.keywordsU).slice(0, 2).join("、") + "」。";
+      trend = "正逆位交错，有推得动的部分，也有暂时推不动的部分，先分清现在能动的是哪一头。";
     }
-    s += "\u3000塔罗是帮你看清自己的镜子，而非替你做决定的裁判——答案始终在你手里。";
-    return s;
+
+    var blocks = [];
+
+    if (total === 1) {
+      blocks.push("只抽一张牌，只回答一件事。今天这张是「" + P[0].name + "」（" + ori(0) +
+        "），关键词是「" + kw(0) + "」。");
+      // 单牌没有位置之间的呼应，就把牌义本身说完整
+      blocks.push("这张牌想说的是：" + (picked[0].reversed ? P[0].reversed : P[0].upright));
+    } else {
+      // ① 开场：这组牌在看什么，整体偏顺还是偏堵
+      blocks.push("这组牌从「" + sp.positions[0].label + "」一路看到「" + sp.positions[total - 1].label +
+        "」，一共 " + total + " 张，其中 " + (total - revCount) + " 张正位、" + revCount + " 张逆位。" + trend);
+
+      // ② 逐张：位置本来是什么意思 + 这张牌落在这里给出的词
+      // 三个句式轮换，避免十张牌全是同一句模板
+      for (var i = 0; i < total; i++) {
+        var pos = sp.positions[i];
+        var cz = P[i].name + "」（" + ori(i) + "），";
+        var cw = "「" + kw(i) + "」。";
+        var line;
+        if (i % 3 === 0) {
+          line = "「" + pos.label + "」讲的是" + pos.meaning + "；这里落的是「" + cz + "给出的词是" + cw;
+        } else if (i % 3 === 1) {
+          line = "「" + pos.label + "」——" + pos.meaning + "。这张「" + cz + "给的词是" + cw;
+        } else {
+          line = "「" + pos.label + "」位上坐着「" + cz + "说的是" + cw.replace(/。$/, "；") +
+            "这一位原本要看的，是" + pos.meaning + "。";
+        }
+        blocks.push(line);
+      }
+
+      // ③ 重点：只抓一个位置，免得看完不知道从哪下手
+      var kp = sp.keyPos;
+      blocks.push("如果只看一件事，就看「" + sp.positions[kp].label + "」——「" + P[kp].name + "」（" +
+        ori(kp) + "）在这一位上分量最重。先把「" + kw(kp) + "」这件事想清楚，下一步往哪里走也就清楚了。");
+    }
+
+    // ④ 收尾：把决定权交回用户手里
+    blocks.push("塔罗是一面镜子，不是判决书。看完之后，挑一件今天就能动的小事去做，比反复琢磨牌面有用得多。");
+
+    return blocks.join("\n\n");
   }
 
   // ---------- 保存 / 历史 ----------

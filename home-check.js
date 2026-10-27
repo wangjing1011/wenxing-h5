@@ -119,6 +119,18 @@ if (window.WX_ICONS) {
   ok(false, "window.WX_ICONS 未挂载");
 }
 
+// ---- B2. 图片区与主色区分（避免九个图标长得一样）----
+const artTiles = $$("#view-home .home-tile .art");
+ok(artTiles.length === 9, "9 个功能位都有独立图片区 .art，实得 " + artTiles.length);
+const artsNestedIcon = $$("#view-home .home-tile .art .ic[data-icon]");
+ok(artsNestedIcon.length === 9, "图标均嵌在图片区内，实得 " + artsNestedIcon.length);
+
+const accents = allTiles.map((t) => (t.getAttribute("style") || "").replace(/\s/g, ""));
+const noAccent = accents.filter((s) => !/--ac:#[0-9a-fA-F]{6}/.test(s));
+ok(noAccent.length === 0, "每个功能位都声明了主色 --ac" + (noAccent.length ? "（缺失 " + noAccent.length + " 个）" : ""));
+const accentVals = accents.map((s) => (s.match(/--ac:(#[0-9a-fA-F]{6})/) || [])[1] || "");
+ok(new Set(accentVals.filter(Boolean)).size === 9, "9 个主色互不相同，实得 " + new Set(accentVals.filter(Boolean)).size + " 种");
+
 // ---- C. 交互 ----
 let goThrew = false;
 try { $("[data-go=tarot]").click(); } catch (e) { goThrew = true; errs.push("点击塔罗抛错 → " + e.message); }
