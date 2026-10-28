@@ -255,7 +255,7 @@ function mockOracleInterpret(p) {
 
 // ---------------- /interpret 处理 ----------------
 function handleInterpret(req, res) {
-  readJson(req).then(function (payload) {
+  readJson(req, res).then(function (payload) {
     if (!payload) return sendJson(res, 400, { error: "invalid payload" });
 
     // 命盘解读：结构化盘（不含生辰）交给模型
@@ -329,6 +329,7 @@ function handleInterpret(req, res) {
       return sendJson(res, 200, { text: text, mock: mock });
     });
   }).catch(function (e) {
+    if (e && e.statusCode === 413) return sendJson(res, 413, { error: "payload too large" });
     console.error("[ai-proxy] interpret error:", e && e.message);
     return sendJson(res, 500, { error: "internal error" });
   });
@@ -349,44 +350,139 @@ var MIME = {
   ".txt": "text/plain; charset=utf-8",
   ".map": "application/json; charset=utf-8"
 };
+
+// 静态托管的禁区：本服务自身目录（含 .env 密钥与运行期房间数据）、依赖、部署脚本
+// 之前只防了「越出根目录」，结果 /ai-proxy/.env、/.git/config 都能直接下——必须按目录挡
+var DENY_PREFIX = ["/ai-proxy", "/node_modules", "/deploy", "/.git"];
+
+function isBlockedPath(rel) {
+  var low = rel.toLowerCase();
+  for (var i = 0; i < DENY_PREFIX.length; i++) {
+    if (low === DENY_PREFIX[i] || low.indexOf(DENY_PREFIX[i] + "/") === 0) return true;
+  }
+  // 任何以 . 开头的路径段（.env / .git / .DS_Store …）
+  var segs = low.split("/");
+  for (var j = 0; j < segs.length; j++) {
+    if (segs[j].charAt(0) === ".") return true;
+  }
+  return false;
+}
+
 function serveStatic(req, res, urlPath) {
-  var rel = decodeURIComponent(urlPath.split("?")[0]);
+  var rel;
+  try {
+    rel = decodeURIComponent(urlPath.split("?")[0].split("#")[0]);
+  } catch (e) {
+    // 畸形转义（如 /%）以前会抛 URIError 把整个进程带崩，这里必须兜住
+    res.writeHead(400, { "Content-Type": "text/plain; charset=utf-8", "X-Content-Type-Options": "nosniff" });
+    res.end("bad request");
+    return;
+  }
+  if (rel.indexOf("\0") >= 0) { res.writeHead(400); res.end("bad request"); return; }
   if (rel === "/" || rel === "") rel = "/index.html";
+  if (isBlockedPath(rel)) { res.writeHead(403); res.end("forbidden"); return; }
+
   var filePath = path.normalize(path.join(ROOT, rel));
-  if (filePath.indexOf(ROOT) !== 0) { // 防目录穿越
+  // 必须带分隔符比较，否则同名前缀的兄弟目录（tarot-h5-evil）也能通过
+  if (filePath !== ROOT && filePath.indexOf(ROOT + path.sep) !== 0) {
     res.writeHead(403); res.end("forbidden"); return;
   }
   fs.readFile(filePath, function (err, data) {
     if (err) { res.writeHead(404); res.end("not found"); return; }
     var ext = path.extname(filePath).toLowerCase();
-    res.writeHead(200, { "Content-Type": MIME[ext] || "application/octet-stream" });
+    var head = {
+      "Content-Type": MIME[ext] || "application/octet-stream",
+      "X-Content-Type-Options": "nosniff",
+      "Cache-Control": ext === ".html" ? "no-cache" : "public, max-age=600"
+    };
+    if (ext === ".html") head["Content-Security-Policy"] = CSP;
+    res.writeHead(200, head);
     res.end(data);
   });
 }
 
+// 前端没有外链资源、只有一处内联配置脚本，所以 script-src/style-src 需要 unsafe-inline；
+// 关键是 object-src none / base-uri self / frame-ancestors self 这几条，能挡住注入挂载与点击劫持
+var CSP = "default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; " +
+  "script-src 'self' 'unsafe-inline'; connect-src 'self'; font-src 'self' data:; " +
+  "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'";
+
 // ---------------- 工具 ----------------
-function readJson(req) {
+var MAX_BODY = 128 * 1024; // 128KB：正常载荷都在几 KB（最大的是八字深度盘），之前按「块数」算，实际能收几十 MB
+function readJson(req, res) {
   return new Promise(function (resolve, reject) {
-    var buf = [];
-    req.on("data", function (c) { buf.push(c); if (buf.length > 1e6) req.destroy(); });
-    req.on("end", function () { try { resolve(buf.length ? JSON.parse(Buffer.concat(buf).toString("utf8")) : {}); } catch (e) { reject(e); } });
+    var buf = [], size = 0, aborted = false;
+    req.on("data", function (c) {
+      if (aborted) return;
+      size += c.length;
+      if (size > MAX_BODY) {
+        aborted = true;
+        var e = new Error("payload too large");
+        e.statusCode = 413;
+        if (res) sendJson(res, 413, { error: "payload too large" }); // 先把话说完，再断连接
+        req.destroy();
+        reject(e);
+        return;
+      }
+      buf.push(c);
+    });
+    req.on("end", function () {
+      if (aborted) return;
+      try { resolve(buf.length ? JSON.parse(Buffer.concat(buf).toString("utf8")) : {}); }
+      catch (e) { reject(e); }
+    });
     req.on("error", reject);
   });
 }
 function sendJson(res, code, obj) {
+  if (res.headersSent) return; // 已经回过（比如 413 先回了），别写第二次
   var body = JSON.stringify(obj);
   res.writeHead(code, {
     "Content-Type": "application/json; charset=utf-8",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type"
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer",
+    "X-Frame-Options": "SAMEORIGIN"
+    // 不设 Access-Control-Allow-Origin：前端与接口同源，放开 * 等于把自己的模型额度借给任何网站
   });
   res.end(body);
 }
 
+// ---------------- 简易限流（按 IP 滑动窗口） ----------------
+// 目的：即使密钥泄露或被人拿到接口，也不至于被刷成账单炸弹；同时挡住房间码穷举
+var RL = new Map();
+function clientIp(req) {
+  var xf = req.headers["x-forwarded-for"];
+  // 取最后一段：Caddy 反代是把真实客户端 IP 追加到末尾，首段可被客户端自己伪造（伪造即绕过限流）
+  if (xf) {
+    var parts = String(xf).split(",");
+    var last = parts[parts.length - 1].trim();
+    if (last) return last;
+  }
+  return (req.socket && (req.socket.remoteAddress || "")) || "unknown";
+}
+function rateLimit(req, res, name, limit, windowMs) {
+  // 桶按「IP + 用途 + 限额」分开：只按 limit/window 分的话，同限额的两个接口会共用一个桶
+  // （/pair/create 与 /interpret 都是 20/分钟，实测互相吃掉额度）
+  var k = clientIp(req) + "|" + name + "|" + limit + "|" + windowMs;
+  var now = Date.now();
+  var rec = RL.get(k);
+  if (!rec || now - rec.t > windowMs) { RL.set(k, { n: 1, t: now }); return true; }
+  rec.n++;
+  if (rec.n > limit) {
+    sendJson(res, 429, { error: "请求过于频繁，请稍后再试" });
+    return false;
+  }
+  return true;
+}
+setInterval(function () {
+  if (RL.size < 5000) return;
+  var cutoff = Date.now() - 3600000;
+  RL.forEach(function (v, k) { if (v.t < cutoff) RL.delete(k); });
+}, 600000).unref();
+
 // ---------------- 双人合盘房间 ----------------
 function handlePairCreate(req, res) {
-  readJson(req).then(function (body) {
+  readJson(req, res).then(function (body) {
     var r = pair.createRoom(body);
     if (r.error) return sendJson(res, 400, { error: r.error });
     sendJson(res, 200, r);
@@ -394,7 +490,7 @@ function handlePairCreate(req, res) {
 }
 
 function handlePairJoin(req, res) {
-  readJson(req).then(function (body) {
+  readJson(req, res).then(function (body) {
     var r = pair.joinRoom(body.code, body);
     if (r.error) return sendJson(res, 400, { error: r.error });
     sendJson(res, 200, r);
@@ -402,12 +498,14 @@ function handlePairJoin(req, res) {
 }
 
 function handlePairState(req, res, u) {
+  if (!rateLimit(req, res, "pair-state", 60, 60000)) return; // 挡房间码穷举
   var code = "";
   var qi = u.indexOf("?");
   if (qi >= 0) {
     u.slice(qi + 1).split("&").forEach(function (kv) {
       var p = kv.split("=");
-      if (p[0] === "code") code = decodeURIComponent(p[1] || "");
+      if (p[0] !== "code") return;
+      try { code = decodeURIComponent(p[1] || ""); } catch (e) { code = ""; }
     });
   }
   var full = u.indexOf("full=1") >= 0;
@@ -416,16 +514,22 @@ function handlePairState(req, res, u) {
 
 // ---------------- 路由 ----------------
 var server = http.createServer(function (req, res) {
-  if (req.method === "OPTIONS") { sendJson(res, 204, {}); return; }
+  if (req.method === "OPTIONS") { res.writeHead(204); res.end(); return; }
   var u = req.url || "/";
 
-  if (u.indexOf("/interpret") === 0 && req.method === "POST") {
+  if (u.indexOf("/interpret") === 0) {
+    if (req.method !== "POST") return sendJson(res, 405, { error: "method not allowed" });
+    if (!rateLimit(req, res, "interpret-m", 20, 60000) || !rateLimit(req, res, "interpret-h", 120, 3600000)) return;
     return handleInterpret(req, res);
   }
-  if (u.indexOf("/pair/create") === 0 && req.method === "POST") {
+  if (u.indexOf("/pair/create") === 0) {
+    if (req.method !== "POST") return sendJson(res, 405, { error: "method not allowed" });
+    if (!rateLimit(req, res, "pair-create", 20, 60000)) return;
     return handlePairCreate(req, res);
   }
-  if (u.indexOf("/pair/join") === 0 && req.method === "POST") {
+  if (u.indexOf("/pair/join") === 0) {
+    if (req.method !== "POST") return sendJson(res, 405, { error: "method not allowed" });
+    if (!rateLimit(req, res, "pair-join", 30, 60000)) return;
     return handlePairJoin(req, res);
   }
   if (u.indexOf("/pair/state") === 0) {
@@ -439,6 +543,9 @@ var server = http.createServer(function (req, res) {
     });
   }
   if (SERVE_STATIC) {
+    if (req.method !== "GET" && req.method !== "HEAD") {
+      return sendJson(res, 405, { error: "method not allowed" });
+    }
     return serveStatic(req, res, u);
   }
   sendJson(res, 404, { error: "not found" });
