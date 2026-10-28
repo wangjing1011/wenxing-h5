@@ -178,16 +178,24 @@ const shown = () => ["home", "tarot", "question", "draw", "result", "history", "
   ok(zr.includes("紫微") && zr.includes("七杀"), "命宫主星为紫微/七杀");
   ok(zr.includes("十二宫"), "输出十二宫");
   ok(document.querySelectorAll(".zw-pal").length === 12, "十二宫共 12 行");
-  // 命盘图：外圈 12 宫按地支固定方位摆位（巳午未申 / 辰酉 / 卯戌 / 寅丑子亥），中宫放基本信息
-  const zwc = Array.prototype.slice.call(document.querySelectorAll("#ziwei-result .zwc"));
-  ok(zwc.length === 13, "命盘图共 13 格（12 宫 + 中宫），实得 " + zwc.length);
-  ok(zwc.filter((c) => c.classList.contains("center")).length === 1, "命盘图有 1 个中宫");
-  const soulCell = zwc.filter((c) => c.classList.contains("soul"));
-  ok(soulCell.length === 1, "命宫在图上高亮，实得 " + soulCell.length + " 个");
-  ok(soulCell[0] && soulCell[0].textContent.indexOf("命宫") === 0, "高亮的格子就是命宫");
-  const first = document.querySelector("#ziwei-result .zw-chart .zwc");
-  ok(first && /巳/.test(first.textContent), "左上格是巳宫（按方位摆位，不是按数组顺序）");
-  const centerTxt = (document.querySelector("#ziwei-result .zwc.center") || {}).textContent || "";
+  // 命盘图：圆形 SVG，12 个扇形按地支方位环绕（子居下、顺时针），中宫放基本信息
+  const zwSvg = document.querySelector("#ziwei-result svg.zw-circle");
+  ok(!!zwSvg, "命盘图渲染为圆形 SVG");
+  ok(document.querySelectorAll("#ziwei-result svg.zw-circle path").length === 12,
+    "命盘共 12 个扇形，实得 " + document.querySelectorAll("#ziwei-result svg.zw-circle path").length);
+  ok(document.querySelectorAll('#ziwei-result svg.zw-circle path[stroke-width="1.6"]').length === 1,
+    "命宫扇形单独高亮");
+  const segs = {};
+  Array.prototype.forEach.call(document.querySelectorAll("#ziwei-result svg.zw-circle g"), (g) => {
+    const m = (g.getAttribute("transform") || "").match(/translate\(([-\d.]+),([-\d.]+)\)/);
+    if (m) segs[(g.textContent || "").slice(0, 2)] = { x: +m[1], y: +m[2] };
+  });
+  ok(Object.keys(segs).length === 12, "12 个宫位都排到了位上，实得 " + Object.keys(segs).length);
+  ok(segs["疾厄"] && segs["疾厄"].y < 160, "午宫（疾厄）在正上方");
+  ok(segs["父母"] && segs["父母"].y > 200, "子宫（父母）在正下方");
+  ok(segs["官禄"] && segs["官禄"].x < 160, "卯宫（官禄）在左侧");
+  ok(segs["夫妻"] && segs["夫妻"].x > 200, "酉宫（夫妻）在右侧");
+  const centerTxt = (document.querySelector("#ziwei-result svg.zw-circle") || {}).textContent || "";
   ok(centerTxt.includes("土五局") && /男|女/.test(centerTxt), "中宫显示性别与五行局");
   ok(zr.includes("四化速览"), "输出四化速览");
   fire($("#btn-zw-save"), "click");

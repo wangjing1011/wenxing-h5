@@ -305,7 +305,7 @@
     var ug = an.usefulGod || {};
     var cl = deep.climate || {};
     var lk = deep.luckInfo || {};
-    var html = '<div class="bz-sec my-deep"><h4>深度解读 <span class="my-tag">命语</span></h4>';
+    var html = '<div class="bz-sec my-deep">';
 
     // 1) 格局
     if (mg.pattern) {
@@ -497,6 +497,12 @@
   }
 
   // 结果卡片渲染：基础四柱 + 派生分析 + （可选）命语深度解读
+  // 可折叠小节：默认收起，减少首屏长度与视觉噪音
+  function foldSec(title, inner) {
+    return '<details class="bz-fold"><summary>' + esc(title) + "</summary>" +
+      '<div class="bz-fold-body">' + inner + "</div></details>";
+  }
+
   function renderBaziHtml(m, ctx, deep) {
     var html = '<div class="bz-card">' +
       '<div class="bz-title">' + esc(ctx.name ? ctx.name + " 的命盘" : "您的命盘") + "</div>" +
@@ -511,53 +517,63 @@
       }).join("") +
       "</div>" +
       '<div class="bz-sec"><h4>五行分布</h4>' +
-        WX_LIST.map(function (w) {
-          var c = m.cnt[w] || 0;
-          var pct = Math.round(c / 8 * 100);
-          return '<div class="wx-row"><span class="n">' + w + '</span><span class="track"><span class="fill" style="width:' +
-            Math.max(pct, 4) + "%;background:" + WX_COLOR[w] + '"></span></span><span class="c">' + c + "</span></div>";
-        }).join("") +
+        '<div class="wx-bar">' +
+          WX_LIST.filter(function (w) { return (m.cnt[w] || 0) > 0; }).map(function (w) {
+            var c = m.cnt[w] || 0;
+            return '<i style="width:' + (c / 8 * 100).toFixed(2) + "%;background:" + WX_COLOR[w] + '" title="' + w + c + '"></i>';
+          }).join("") +
+        "</div>" +
+        '<div class="wx-legend">' +
+          WX_LIST.map(function (w) {
+            var c = m.cnt[w] || 0;
+            return '<span' + (c ? "" : ' class="zero"') + '><i style="background:' + WX_COLOR[w] + '"></i>' +
+              w + " <b>" + c + "</b></span>";
+          }).join("") +
+        "</div>" +
       "</div>" +
       '<div class="bz-sec"><h4>日主 · ' + esc(m.dmGan) + (m.dm.el ? "（" + esc(m.dm.el) + "）" : "") + "</h4>" +
-        '<div class="bz-item"><b>气质</b><p>' + esc(m.dm.trait) + "</p></div>" +
-        '<div class="bz-item"><b>提醒</b><p>' + esc(m.dm.tip) + "</p></div>" +
-        '<div class="bz-item"><b>强弱参考</b><p>' + esc(window.BAZI_LIB.strength[m.strengthKey]) +
-        (m.deLing ? "日主得月令，先天底气较足。" : "日主不得月令，更依赖后天的环境与积累。") + "</p></div>" +
-      "</div>" +
-      '<div class="bz-sec"><h4>十神速览</h4>' +
-        (m.ssSet.length ? m.ssSet.slice(0, 6).map(function (s) {
-          var d = window.BAZI_LIB.shiShen[s];
-          return d ? '<div class="bz-item"><b>' + esc(s) + "</b><p>" + esc(d) + "</p></div>" : "";
-        }).join("") : '<div class="bz-item"><p>未取到十神信息</p></div>') +
-      "</div>" +
-      '<div class="bz-sec"><h4>五行提示</h4>' +
-        WX_LIST.filter(function (w) { return (m.cnt[w] || 0) >= 3 || (m.cnt[w] || 0) === 0; }).map(function (w) {
-          var t = window.BAZI_LIB.wuXing[w];
-          return '<div class="bz-item"><b>' + esc(w) + "（" + (m.cnt[w] || 0) + "）</b><p>" +
-            esc((m.cnt[w] || 0) === 0 ? t.few : t.many) + "</p></div>";
-        }).join("") +
+        '<div class="bz-dm">' +
+          '<div class="row"><span class="k">气质</span><span class="v">' + esc(m.dm.trait) + "</span></div>" +
+          '<div class="row"><span class="k">提醒</span><span class="v">' + esc(m.dm.tip) + "</span></div>" +
+          '<div class="row"><span class="k">强弱参考</span><span class="v">' + esc(window.BAZI_LIB.strength[m.strengthKey]) +
+          (m.deLing ? "日主得月令，先天底气较足。" : "日主不得月令，更依赖后天的环境与积累。") + "</span></div>" +
+        "</div>" +
       "</div>";
 
-    // 大运
+    // 十神速览（折叠）
+    var shiInner = m.ssSet.length ? m.ssSet.slice(0, 6).map(function (s) {
+      var d = window.BAZI_LIB.shiShen[s];
+      return d ? '<div class="bz-item"><b>' + esc(s) + "</b><p>" + esc(d) + "</p></div>" : "";
+    }).join("") : '<div class="bz-item"><p>未取到十神信息</p></div>';
+    html += foldSec("十神速览", shiInner);
+
+    // 五行提示（折叠）
+    var wxInner = WX_LIST.filter(function (w) { return (m.cnt[w] || 0) >= 3 || (m.cnt[w] || 0) === 0; }).map(function (w) {
+      var t = window.BAZI_LIB.wuXing[w];
+      return '<div class="bz-item"><b>' + esc(w) + "（" + (m.cnt[w] || 0) + "）</b><p>" +
+        esc((m.cnt[w] || 0) === 0 ? t.few : t.many) + "</p></div>";
+    }).join("") || '<div class="bz-item"><p>五行分布较均衡，暂无特别需要补的。</p></div>';
+    html += foldSec("五行提示", wxInner);
+
+    // 大运（折叠）
     if (m.daYun.length) {
-      html += '<div class="bz-sec"><h4>大运</h4>' +
-        (m.yunStart ? '<div class="bz-item"><b>起运</b><p>' + esc(m.yunStart) + "</p></div>" : "") +
+      var dyInner = (m.yunStart ? '<div class="bz-item"><b>起运</b><p>' + esc(m.yunStart) + "</p></div>" : "") +
         m.daYun.map(function (d) {
           return '<div class="dy-row"><span class="gz">' + esc(d.gz) + '</span><span class="age">' +
             esc(d.age !== "" && d.age != null ? d.age + " 岁起" : "") +
             (d.year ? " · " + esc(d.year) : "") + "</span></div>";
         }).join("") +
-        '<div class="bz-item" style="margin-top:10px"><p>' + esc(window.BAZI_LIB.daYunNote) + "</p></div>" +
-        "</div>";
+        '<div class="bz-item" style="margin-top:10px"><p>' + esc(window.BAZI_LIB.daYunNote) + "</p></div>";
+      html += foldSec("大运", dyInner);
     }
 
-    html += '<div class="bz-sec"><h4>其他</h4>' +
+    // 其他（折叠）
+    html += foldSec("其他（胎元 · 命宫）",
       '<div class="dy-row"><span class="gz">胎元</span><span class="age">' + esc(m.taiYuan) + "</span></div>" +
-      '<div class="dy-row"><span class="gz">命宫</span><span class="age">' + esc(m.mingGong) + "</span></div>" +
-      "</div>";
+      '<div class="dy-row"><span class="gz">命宫</span><span class="age">' + esc(m.mingGong) + "</span></div>");
 
-    // 命语深度解读：与基础四柱同源（同一次 calculateBazi 的结果）
-    if (deep) html += renderMingyuDeep(deep);
+    // 命语深度解读（折叠，内容较长默认收起）
+    if (deep) html += foldSec("深度解读（命语）", renderMingyuDeep(deep));
 
     html += '<p class="gen-note" style="margin-top:14px">' + esc(window.BAZI_LIB.note) + "</p>" +
       '<div class="result-actions" style="margin-top:12px"><button class="btn ai-btn" id="btn-bazi-ai">AI 解读（灵感视角）</button></div>' +

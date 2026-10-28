@@ -155,6 +155,82 @@
       (b ? '<em>' + esc(b) + "</em>" : "") + "</span>";
   }
 
+  // 圆形十二宫命盘：SVG 环形，子居下、顺时针排列；中宫展示基本信息
+  // 星曜按字数自动折行（最多两行），避免长串冲出扇形
+  function wrapStars(tokens, maxLen) {
+    var lines = [], cur = "";
+    tokens.forEach(function (t) {
+      var cand = cur ? cur + "·" + t : t;
+      if (cur && cand.length > maxLen) { lines.push(cur); cur = t; }
+      else cur = cand;
+    });
+    if (cur) lines.push(cur);
+    if (lines.length > 2) {                       // 超出两行就并到第二行，宁可略挤也不溢出
+      lines = [lines[0], lines.slice(1).join("·")];
+    }
+    return lines;
+  }
+
+  function buildCircularChart(a, byBranch) {
+    var CX = 180, CY = 180, R_OUT = 168, R_IN = 101, R_MID = 137, GAP = 1.1;
+    var parts = [];
+    function xy(r, deg) {
+      var rad = deg * Math.PI / 180;
+      return [(CX + r * Math.cos(rad)).toFixed(2), (CY + r * Math.sin(rad)).toFixed(2)];
+    }
+    // 外圈装饰环
+    parts.push('<circle cx="' + CX + '" cy="' + CY + '" r="172" fill="none" stroke="rgba(212,185,106,.28)" stroke-width="1"/>');
+    for (var i = 0; i < 12; i++) {
+      var p = byBranch[ZHI[i]];
+      if (!p) continue;
+      var mid = 90 + i * 30;                       // 子:90°(下) 卯:180°(左) 午:270°(上) 酉:0°(右)
+      var a0 = mid - 15 + GAP, a1 = mid + 15 - GAP;
+      var o0 = xy(R_OUT, a0), o1 = xy(R_OUT, a1);
+      var i0 = xy(R_IN, a0), i1 = xy(R_IN, a1);
+      var d = "M" + o0[0] + " " + o0[1] +
+        " A" + R_OUT + " " + R_OUT + " 0 0 1 " + o1[0] + " " + o1[1] +
+        " L" + i1[0] + " " + i1[1] +
+        " A" + R_IN + " " + R_IN + " 0 0 0 " + i0[0] + " " + i0[1] + " Z";
+      var isSoul = p.name === "命宫";
+      var fill = isSoul ? "rgba(212,185,106,.2)" : (i % 2 ? "rgba(139,124,246,.1)" : "rgba(255,255,255,.028)");
+      var stroke = isSoul ? "rgba(242,217,138,.85)" : "rgba(212,185,106,.18)";
+      parts.push('<path d="' + d + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="' + (isSoul ? 1.6 : 1) + '"/>');
+
+      var mx = CX + R_MID * Math.cos(mid * Math.PI / 180);
+      var my = CY + R_MID * Math.sin(mid * Math.PI / 180);
+      var rot = mid + 90;                          // 文字沿环切向排列，并归一到 ±90° 保证不倒着写
+      var flip = 1;                                // 归一过程中若翻转过 180°，局部 -y 就指向圆心，径向偏移要取反
+      while (rot > 90) { rot -= 180; flip = -flip; }
+      while (rot <= -90) { rot += 180; flip = -flip; }
+      var nm = p.name + (p.isBodyPalace ? " ·身" : "");
+      var body = '<text text-anchor="middle" y="' + (-25 * flip) + '" font-size="11" font-weight="' + (isSoul ? "700" : "500") +
+          '" fill="' + (isSoul ? "#f2d98a" : "#d9d4ef") + '" letter-spacing=".5">' + esc(nm) + "</text>" +
+        '<text text-anchor="middle" y="' + (-13 * flip) + '" font-size="7.5" fill="#8b84a8">' + esc(p.heavenlyStem + p.earthlyBranch) + "</text>";
+      if (p.majorStars.length) {
+        var ls = wrapStars(p.majorStars.map(function (s) {
+          return s.name + (s.mutagen ? "化" + s.mutagen : "");
+        }), 4);
+        ls.forEach(function (t, k) {
+          body += '<text text-anchor="middle" y="' + ((1 + k * 13) * flip) + '" font-size="8.5" fill="' +
+            (/化/.test(t) ? "#e8b9b9" : "#e9e5f8") + '">' + esc(t) + "</text>";
+        });
+      } else {
+        body += '<text text-anchor="middle" y="' + (2 * flip) + '" font-size="8.5" fill="#6f6889">空宫</text>';
+      }
+      parts.push('<g transform="translate(' + mx.toFixed(1) + ',' + my.toFixed(1) + ') rotate(' + rot.toFixed(1) + ')">' + body + "</g>");
+    }
+    // 中宫
+    parts.push('<circle cx="' + CX + '" cy="' + CY + '" r="' + (R_IN - 5) + '" fill="rgba(18,12,38,.94)" stroke="rgba(212,185,106,.3)" stroke-width="1.1"/>');
+    var cName = (zwState.name ? zwState.name + " · " : "") + (zwState.gender === 1 ? "男" : "女") + "命盘";
+    parts.push('<text x="' + CX + '" y="134" text-anchor="middle" font-size="11.5" fill="#f2d98a" letter-spacing="1.5">' + esc(cName) + "</text>");
+    parts.push('<text x="' + CX + '" y="163" text-anchor="middle" font-size="17" fill="#ece8f7" letter-spacing="2">' + esc(a.fiveElementsClass) + "</text>");
+    parts.push('<text x="' + CX + '" y="183" text-anchor="middle" font-size="8.5" fill="#9a93b8">' + esc(a.solarDate) + "</text>");
+    parts.push('<text x="' + CX + '" y="196" text-anchor="middle" font-size="8.5" fill="#9a93b8">' + esc(a.lunarDate) + "</text>");
+    parts.push('<line x1="' + (CX - 34) + '" y1="209" x2="' + (CX + 34) + '" y2="209" stroke="rgba(212,185,106,.22)" stroke-dasharray="3 3"/>');
+    parts.push('<text x="' + CX + '" y="226" text-anchor="middle" font-size="9" fill="#b3aacd">命主 ' + esc(a.soul || "-") + "　身主 " + esc(a.body || "-") + "</text>");
+    return '<svg class="zw-circle" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="紫微命盘十二宫">' + parts.join("") + "</svg>";
+  }
+
   function render(a) {
     var soul = null, byBranch = {};
     a.palaces.forEach(function (p) {
@@ -177,52 +253,12 @@
       "</div>" +
       '<div class="zw-tip">' + esc(JU[a.fiveElementsClass] || "") + "</div></div>";
 
-    // 十二宫命盘图：4×4 环形排布，中间留白放基本信息。
-    // 地支方位是固定的（巳午未申 / 辰酉 / 卯戌 / 寅丑子亥），所以用固定格子摆，不按数组顺序。
-    var GRID = [
-      ["巳", "午", "未", "申"],
-      ["辰", "", "", "酉"],
-      ["卯", "", "", "戌"],
-      ["寅", "丑", "子", "亥"]
-    ];
-    var cells = "";
-    for (var gr = 0; gr < 4; gr++) {
-      for (var gc = 0; gc < 4; gc++) {
-        var br = GRID[gr][gc];
-        if (!br) continue;
-        var pp = byBranch[br];
-        if (!pp) continue;
-        var maj = pp.majorStars.length
-          ? pp.majorStars.map(function (s) {
-              return '<span class="cst' + (s.mutagen ? " mu" : "") + '">' + esc(s.name) +
-                (s.mutagen ? "<i>" + esc(s.mutagen) + "</i>" : "") +
-                (s.brightness ? "<em>" + esc(s.brightness) + "</em>" : "") + "</span>";
-            }).join("")
-          : '<span class="cst empty">空宫</span>';
-        var min = (pp.minorStars || []).slice(0, 4).map(function (s) { return esc(s.name); }).join(" ");
-        cells += '<div class="zwc' + (pp.name === "命宫" ? " soul" : "") + (pp.isBodyPalace ? " body" : "") +
-          '" style="grid-row:' + (gr + 1) + ";grid-column:" + (gc + 1) + '">' +
-          '<div class="ch"><b>' + esc(pp.name) + "</b>" +
-            (pp.isBodyPalace ? "<i>身</i>" : "") +
-            "<s>" + esc(pp.heavenlyStem + pp.earthlyBranch) + "</s></div>" +
-          '<div class="cm">' + maj + "</div>" +
-          (min ? '<div class="cn">' + min + "</div>" : "") +
-          "</div>";
-      }
-    }
+    // 十二宫命盘图：圆形环形排布（子居下、顺时针），中宫放基本信息
     var chartHtml =
       '<div class="zw-chart-wrap">' +
         '<div class="section-title">命 盘</div>' +
-        '<div class="zw-chart">' + cells +
-          '<div class="zwc center">' +
-            '<div class="cnm">' + (zwState.name ? esc(zwState.name) + " · " : "") +
-              (zwState.gender === 1 ? "男" : "女") + "命盘</div>" +
-            '<div class="cju">' + esc(a.fiveElementsClass) + "</div>" +
-            '<div class="cdt">' + esc(a.solarDate) + "<br>" + esc(a.lunarDate) + "</div>" +
-            '<div class="clz">命主 ' + esc(a.soul || "-") + "　身主 " + esc(a.body || "-") + "</div>" +
-          "</div>" +
-        "</div>" +
-        '<p class="zwc-note">外圈按地支方位固定摆位，<b>命宫</b>高亮；星名后的小字是庙旺、红字是生年四化</p>' +
+        buildCircularChart(a, byBranch) +
+        '<p class="zwc-note">子居下、顺时针排布；<b>命宫</b>高亮，带「身」即身宫，红字为生年四化。</p>' +
       "</div>";
 
     // 命宫主星解读

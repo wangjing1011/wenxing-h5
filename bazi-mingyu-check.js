@@ -147,8 +147,8 @@ ok(/海中金/.test(nyText), "纳音取自命语（海中金）");
 
 // 五行分布应跟随 stub 干支（甲=木×4，子=水×4）
 const wx = {};
-Array.prototype.forEach.call(document.querySelectorAll("#bazi-result .wx-row"), (r) => {
-  wx[r.querySelector(".n").textContent] = r.querySelector(".c").textContent;
+Array.prototype.forEach.call(document.querySelectorAll("#bazi-result .wx-legend span"), (el) => {
+  wx[el.textContent.trim().charAt(0)] = el.querySelector("b").textContent;
 });
 ok(wx["木"] === "4" && wx["水"] === "4",
   "五行分布按命语干支统计（木4 水4），实际=" + JSON.stringify(wx));
