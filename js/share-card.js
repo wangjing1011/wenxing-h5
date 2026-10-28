@@ -270,6 +270,7 @@
         '<div class="share-body" id="share-body"></div>' +
         '<p class="share-tip">手机里<b>长按图片</b>即可保存；电脑上点「下载图片」。</p>' +
         '<p class="share-tip" id="share-wx-tip" style="display:none">请点击右上角 <b>···</b> 分享给朋友或朋友圈</p>' +
+        '<p class="share-tip" id="share-fallback-tip" style="display:none"></p>' +
         '<div class="share-actions">' +
           '<button class="btn gold" id="share-share">分享</button>' +
           '<button class="btn ghost" id="share-download">下载图片</button>' +
@@ -317,7 +318,16 @@
         return;
       }
     } catch (e) {}
-    if (window.toast) window.toast("当前环境不支持直接分享，请长按图片保存后转发");
+    // 全局 toast 在多数文件里是 IIFE 内的局部函数，window.toast 一般不存在，
+    // 所以这里用弹层内的兜底提示，保证「分享」不可用时用户有反馈，而不是静默无反应。
+    showShareFallback("当前环境不支持直接分享，请点「下载图片」保存后转发");
+  }
+
+  function showShareFallback(msg) {
+    var el = document.getElementById("share-fallback-tip");
+    if (el) { el.textContent = msg; el.style.display = "block"; return; }
+    if (window.toast) { window.toast(msg); return; }
+    if (typeof alert === "function") alert(msg);
   }
 
   function download() {
