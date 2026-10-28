@@ -377,6 +377,9 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
       </div>
       <div class="form-label">出生日期（公历）</div>
       <input type="date" id="zw-date" class="form-input">
+      <div class="form-label">出生日期（农历，选填）</div>
+      <input type="text" id="zw-lunar" class="form-input" placeholder="如 1990年八月初五">
+      <p class="hint-inline">公历 / 农历 二选一填写即可，填了哪个用哪个（都填以公历为准）。</p>
       <div class="form-label">出生时辰</div>
       <select id="zw-hour" class="form-input">
         <option value="-1">不确定（按午时排）</option>
@@ -393,6 +396,9 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <option value="20">戌时 19:00-21:00</option>
         <option value="22">亥时 21:00-23:00</option>
       </select>
+      <div class="form-label">出生地 / 城市（选填）</div>
+      <input type="text" id="zw-city" class="form-input" list="city-list" placeholder="如 北京 / 成都 / 乌鲁木齐">
+      <label class="chk"><input type="checkbox" id="zw-truesun"> 使用真太阳时校正（按出生地经度重排时辰）</label>
       <div class="form-label">称呼（选填，可留空）</div>
       <input type="text" id="zw-name" class="form-input" maxlength="12" placeholder="仅用于显示，不上传">
       <button class="btn gold" id="btn-ziwei-go" style="margin-top:16px">开始排盘</button>
@@ -443,6 +449,9 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
       </div>
       <div class="form-label">出生日期（选填）</div>
       <input type="date" id="nm-date" class="form-input">
+      <div class="form-label">出生日期（农历，选填）</div>
+      <input type="text" id="nm-lunar" class="form-input" placeholder="如 1990年八月初五">
+      <p class="hint-inline">公历 / 农历 二选一填写即可，填了哪个用哪个（都填以公历为准）。</p>
       <div class="form-label">出生时辰（选填）</div>
       <select id="nm-hour" class="form-input">
         <option value="-1">不确定（按午时算）</option>
@@ -544,6 +553,9 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
       </div>
       <div class="form-label">出生日期（公历）</div>
       <input type="date" id="bz-date" class="form-input">
+      <div class="form-label">出生日期（农历，选填）</div>
+      <input type="text" id="bz-lunar" class="form-input" placeholder="如 1990年八月初五">
+      <p class="hint-inline">公历 / 农历 二选一填写即可，填了哪个用哪个（都填以公历为准）。</p>
       <div class="form-label">出生时辰</div>
       <select id="bz-hour" class="form-input">
         <option value="-1">不确定（按午时排）</option>
@@ -560,10 +572,26 @@ window.WX_SOURCE_URL = "https://github.com/wangjing1011/wenxing-h5";
         <option value="20">戌时 19:00-21:00</option>
         <option value="22">亥时 21:00-23:00</option>
       </select>
+      <div class="form-label">出生地 / 城市（选填）</div>
+      <input type="text" id="bz-city" class="form-input" list="city-list" placeholder="如 北京 / 成都 / 乌鲁木齐">
+      <label class="chk"><input type="checkbox" id="bz-truesun"> 使用真太阳时校正（按出生地经度重排时辰）</label>
       <div class="form-label">称呼（选填，可留空）</div>
       <input type="text" id="bz-name" class="form-input" maxlength="12" placeholder="仅用于显示，不上传">
       <button class="btn gold" id="btn-bazi-go" style="margin-top:16px">开始排盘</button>
     </div>
+
+    <datalist id="city-list">
+      <option value="北京"><option value="上海"><option value="广州"><option value="深圳"><option value="成都"><option value="重庆">
+      <option value="杭州"><option value="武汉"><option value="西安"><option value="南京"><option value="天津"><option value="苏州">
+      <option value="郑州"><option value="长沙"><option value="沈阳"><option value="哈尔滨"><option value="大连"><option value="济南">
+      <option value="青岛"><option value="厦门"><option value="福州"><option value="昆明"><option value="贵阳"><option value="南宁">
+      <option value="兰州"><option value="太原"><option value="石家庄"><option value="合肥"><option value="南昌"><option value="海口">
+      <option value="三亚"><option value="乌鲁木齐"><option value="拉萨"><option value="呼和浩特"><option value="银川"><option value="西宁">
+      <option value="香港"><option value="澳门"><option value="台北"><option value="桂林"><option value="泉州"><option value="温州">
+      <option value="宁波"><option value="无锡"><option value="常州"><option value="佛山"><option value="东莞"><option value="唐山">
+      <option value="徐州"><option value="绍兴"><option value="嘉兴"><option value="南通"><option value="保定"><option value="洛阳">
+      <option value="烟台"><option value="潍坊"><option value="临沂"><option value="淄博">
+    </datalist>
 
     <div id="bazi-result"></div>
 

@@ -384,10 +384,18 @@
     if (!surname) { toast("请先填写姓氏"); return; }
     if (surname.length > 2) { toast("姓氏请填 1-2 个字"); return; }
 
-    var dateStr = ($("nm-date").value || "").trim();
+    var solarVal = ($("nm-date").value || "").trim();
+    var lunarVal = ($("nm-lunar").value || "").trim();
+    var rd = window.BirthUtil ? window.BirthUtil.resolveDate(solarVal, lunarVal) : { error: "生辰工具未就绪" };
+    var dateStr = "";
     var h = parseInt($("nm-hour").value, 10);
     if (!isFinite(h)) h = 12;
-    var hasBirth = !!dateStr;
+    var hasBirth = !!solarVal || !!lunarVal;
+    if (hasBirth) {
+      if (solarVal && !lunarVal) dateStr = solarVal;
+      else if (rd && !rd.error) dateStr = rd.y + "-" + rd.m + "-" + rd.d;
+      else { toast(rd.error || "日期无效"); return; }
+    }
 
     if (hasBirth && localStorage.getItem(CONSENT_KEY) !== "1") {
       window.__consentCb = function () { go(reshuffle); };

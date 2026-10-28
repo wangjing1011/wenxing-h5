@@ -101,14 +101,25 @@
 
     function restore() { restoreZiweiBtn(); }
 
+    // —— 解析公历/农历 + 真太阳时（在引擎加载前算好，回调内直接复用）——
+    var solarVal = $("zw-date").value;
+    var lunarVal = ($("zw-lunar").value || "").trim();
+    var city = ($("zw-city").value || "").trim();
+    var useTrueSun = $("zw-truesun") && $("zw-truesun").checked;
+    var rd = window.BirthUtil ? window.BirthUtil.resolveDate(solarVal, lunarVal) : { error: "生辰工具未就绪" };
+    if (rd.error) { restore(); toast(rd.error); return; }
+    var h0 = parseInt($("zw-hour").value, 10);
+    if (!isFinite(h0)) h0 = 12;
+    var adj = window.BirthUtil.trueSolarAdjust(rd.y, rd.m, rd.d, h0, city, useTrueSun);
+    if (useTrueSun && adj.noCity) toast("未找到「" + city + "」的经度，已按北京时间排盘");
+    var cy = adj.y, cm = adj.m, cd = adj.d, ch = adj.h;
+    var date = cy + "-" + pad(cm) + "-" + pad(cd);
+    var timeIndex = ch < 0 ? 6 : Math.floor(ch / 2); // 子0 丑1 … 亥11；不确定按午时
+    var gender = zwState.gender === 1 ? "male" : "female";
+
     ensureIztro(function () {
       if (!window.iztro) { restore(); return; }
       $("ziwei-status").innerHTML = "正在计算十二宫与主星…";
-      var date = $("zw-date").value;
-      var h = parseInt($("zw-hour").value, 10);
-      if (!isFinite(h)) h = 12;                      // 取值异常时兜底为午时
-      var timeIndex = h < 0 ? 6 : Math.floor(h / 2); // 子0 丑1 … 亥11；不确定按午时
-      var gender = zwState.gender === 1 ? "male" : "female";
       var a;
       try {
         a = window.iztro.astro.bySolar(date, timeIndex, gender, true, "zh-CN");
@@ -121,7 +132,7 @@
       }
       zwState.res = a;
       zwState.date = date;
-      zwState.hour = h;
+      zwState.hour = ch;
       zwState.name = $("zw-name").value.trim();
       $("ziwei-status").innerHTML = "";
       render(a);

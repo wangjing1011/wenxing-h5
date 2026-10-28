@@ -36,6 +36,157 @@
   function toast(m) { if (window.AppView && window.AppView.toast) window.AppView.toast(m); }
   function showView(n) { if (window.AppView) window.AppView.show(n); }
 
+  // ================= 生辰工具：农历解析 / 公历农历互转 / 真太阳时 =================
+  // 暴露为 window.BirthUtil，供八字、紫微、起名共用（生辰只在本机计算，不外传）
+  var CN_NUM = { "一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9, "十": 10 };
+  function cnMonthToNum(s) {
+    if (s === "十") return 10;
+    if (s === "十一") return 11;
+    if (s === "十二") return 12;
+    if (s === "冬") return 11;
+    if (s === "腊") return 12;
+    return CN_NUM[s] || null;
+  }
+  function cnDayToNum(s) {
+    if (s === "卅" || s === "三十") return 30;
+    if (s === "十") return 10;
+    if (/^初/.test(s)) s = s.slice(1);
+    if (/^十/.test(s)) return 10 + (CN_NUM[s.slice(1)] || 0);     // 十一..十九
+    if (/^廿/.test(s)) return 20 + (CN_NUM[s.slice(1)] || 0);      // 廿一..廿九
+    if (/^二十/.test(s)) return 20 + (CN_NUM[s.slice(2)] || 0);    // 二十..二十九
+    if (/^三十/.test(s)) return 30;                               // 三十
+    return CN_NUM[s] || null;
+  }
+  // 解析农历文本：支持「1990年八月初五」「1990年闰八月初五」「1990-08-05」「1990年8月5日」
+  function parseLunar(raw) {
+    if (!raw) return null;
+    var s = String(raw).trim().replace(/[号]/g, "日").replace(/[年日\/\-\.\s]/g, "");
+    var ym = s.match(/(\d{4})/);
+    if (!ym) return null;
+    var y = +ym[1];
+    var rest = s.slice(ym.index + 4);
+    var isLeap = /闰/.test(rest);
+    rest = rest.replace(/闰/g, "");
+    var m = null, d = null;
+    // 月：阿拉伯「数字月」优先，否则中文月（月字可省）
+    var mm = rest.match(/(\d{1,2})月/);
+    if (mm) { m = +mm[1]; rest = rest.slice(rest.indexOf(mm[0]) + mm[0].length); }
+    else {
+      var cm = rest.match(/([正一二三四五六七八九十冬腊]+)/);
+      if (cm) { m = cnMonthToNum(cm[1]); rest = rest.slice(cm.index + cm[0].length); }
+    }
+    if (!m || m < 1 || m > 12) {
+      var dd = rest.match(/^(\d{1,2})(\d{1,2})$/);   // 兜底：纯数字 MMDD（如 0805）
+      if (dd) { m = +dd[1]; d = +dd[2]; }
+      else return null;
+    }
+    rest = rest.replace(/月/g, "");
+    if (d == null) {
+      var dm = rest.match(/(\d{1,2})/);
+      if (dm) d = +dm[1];
+    }
+    if (!d || d < 1 || d > 30) {
+      var cd = rest.match(/(初[一二三四五六七八九十]+|十[一二三四五六七八九]?|二十[一二三四五六七八九]?|廿[一二三四五六七八九]?|三十|卅)/);
+      if (cd) d = cnDayToNum(cd[0]);
+    }
+    if (!d || d < 1 || d > 30) return null;
+    return { y: y, m: m, d: d, isLeap: isLeap };
+  }
+  // 公历 / 农历 二选一 → 统一返回公历 y/m/d（农历先转公历再喂排盘引擎）
+  function resolveDate(solarVal, lunarVal) {
+    if (solarVal) {
+      var p = String(solarVal).split("-");
+      if (p.length < 3 || !p[0] || !p[1] || !p[2]) return { error: "公历日期格式不正确" };
+      return { y: +p[0], m: +p[1], d: +p[2], from: "solar" };
+    }
+    if (lunarVal) {
+      var lp = parseLunar(lunarVal);
+      if (!lp) return { error: "农历日期无法识别，请按「1990年八月初五」或「1990-08-05」格式填写" };
+      try {
+        var lu = window.Lunar.fromYmd(lp.y, lp.m, lp.d, lp.isLeap);
+        var so = lu.getSolar();
+        return { y: so.getYear(), m: so.getMonth(), d: so.getDay(), from: "lunar", lunar: lp };
+      } catch (e) {
+        try {
+          var lu2 = window.Lunar.fromYmd(lp.y, lp.m, lp.d);
+          var so2 = lu2.getSolar();
+          return { y: so2.getYear(), m: so2.getMonth(), d: so2.getDay(), from: "lunar", lunar: lp };
+        } catch (e2) { return { error: "农历日期无效（可能为不存在的闰月或日期）" }; }
+      }
+    }
+    return { error: "请填写公历或农历出生日期" };
+  }
+  // 主要城市经度表（东经为正，单位：度），用于真太阳时校正
+  var CITY_LNG = {
+    "北京": 116.41, "上海": 121.47, "广州": 113.26, "深圳": 114.06, "成都": 104.07, "重庆": 106.55,
+    "杭州": 120.15, "武汉": 114.30, "西安": 108.95, "南京": 118.80, "天津": 117.20, "苏州": 120.62,
+    "郑州": 113.65, "长沙": 112.94, "沈阳": 123.43, "哈尔滨": 126.63, "大连": 121.62, "济南": 117.00,
+    "青岛": 120.38, "厦门": 118.09, "福州": 119.30, "昆明": 102.71, "贵阳": 106.71, "南宁": 108.37,
+    "兰州": 103.83, "太原": 112.55, "石家庄": 114.51, "合肥": 117.27, "南昌": 115.86, "海口": 110.33,
+    "三亚": 109.51, "乌鲁木齐": 87.62, "拉萨": 91.11, "呼和浩特": 111.75, "银川": 106.27, "西宁": 101.78,
+    "香港": 114.17, "澳门": 113.55, "台北": 121.56, "桂林": 110.29, "泉州": 118.68, "温州": 120.65,
+    "宁波": 121.55, "无锡": 120.30, "常州": 119.95, "佛山": 113.12, "东莞": 113.75, "唐山": 118.18,
+    "徐州": 117.18, "绍兴": 120.58, "嘉兴": 120.76, "南通": 120.86, "保定": 115.46, "洛阳": 112.45,
+    "烟台": 121.39, "潍坊": 119.10, "临沂": 118.35, "淄博": 118.05, "昆明": 102.71
+  };
+  function normalizeCity(s) {
+    return String(s || "").replace(/[市省县区州特别行政区\s]/g, "");
+  }
+  function lookupLng(city) {
+    if (!city) return null;
+    var n = normalizeCity(city);
+    if (CITY_LNG[n] != null) return CITY_LNG[n];
+    for (var k in CITY_LNG) { if (n.indexOf(k) >= 0 || k.indexOf(n) >= 0) return CITY_LNG[k]; }
+    return null;
+  }
+  function dayOfYear(y, m, d) {
+    var start = new Date(y, 0, 1);
+    var cur = new Date(y, m - 1, d);
+    return Math.floor((cur - start) / 86400000) + 1;
+  }
+  // 均时差近似（分钟）：真太阳时 = 平太阳时 + 均时差
+  function equationOfTime(doy) {
+    var B = 360 / 365 * (doy - 81) * Math.PI / 180;
+    return 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+  }
+  // 校正后的钟点 → 时辰对应的偶数 hour 值（与表单一致：0子 2丑 … 22亥）
+  function hourToEven(h) {
+    if (h === 23 || h === 0) return 0;
+    if (h === 1 || h === 2) return 2;
+    if (h === 3 || h === 4) return 4;
+    if (h === 5 || h === 6) return 6;
+    if (h === 7 || h === 8) return 8;
+    if (h === 9 || h === 10) return 10;
+    if (h === 11 || h === 12) return 12;
+    if (h === 13 || h === 14) return 14;
+    if (h === 15 || h === 16) return 16;
+    if (h === 17 || h === 18) return 18;
+    if (h === 19 || h === 20) return 20;
+    if (h === 21 || h === 22) return 22;
+    return 0;
+  }
+  // 真太阳时校正：以所选时辰中心代表钟点，按出生地经度重排（含跨日）
+  function trueSolarAdjust(y, m, d, evenHour, city, useTrueSun) {
+    if (!useTrueSun) return { y: y, m: m, d: d, h: evenHour, shifted: false };
+    var lng = lookupLng(city);
+    if (lng == null) return { y: y, m: m, d: d, h: evenHour, shifted: false, noCity: true };
+    var baseMin = evenHour * 60;                 // 时辰中心代表分钟
+    var doy = dayOfYear(y, m, d);
+    var eot = equationOfTime(doy);               // 均时差（分钟）
+    var tst = baseMin - (120 - lng) * 4 + eot;   // 真太阳时（分钟，东经120°为基准）
+    var dd = new Date(y, m - 1, d);
+    var dayDelta = Math.floor(tst / 1440);
+    var rem = ((tst % 1440) + 1440) % 1440;
+    dd.setDate(dd.getDate() + dayDelta);
+    var ch = Math.floor(rem / 60);
+    return { y: dd.getFullYear(), m: dd.getMonth() + 1, d: dd.getDate(), h: hourToEven(ch), shifted: true, lng: lng };
+  }
+  window.BirthUtil = {
+    parseLunar: parseLunar, resolveDate: resolveDate, lookupLng: lookupLng,
+    trueSolarAdjust: trueSolarAdjust, CITY_LNG: CITY_LNG,
+    dayOfYear: dayOfYear, equationOfTime: equationOfTime
+  };
+
   // ================= 黄历查询 =================
   function todayStr() { var d = new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
   function shiftStr(s, days) {
@@ -468,15 +619,28 @@
   }
 
   function doBazi() {
-    var dateStr = $("bz-date").value;
-    if (!dateStr) { toast("请先选择出生日期"); return; }
+    var solarVal = $("bz-date").value;
+    var lunarVal = ($("bz-lunar").value || "").trim();
+    var city = ($("bz-city").value || "").trim();
+    var useTrueSun = $("bz-truesun") && $("bz-truesun").checked;
+
+    // 公历 / 农历 二选一 → 统一公历年月日
+    var rd = window.BirthUtil.resolveDate(solarVal, lunarVal);
+    if (rd.error) { toast(rd.error); return; }
+
     var hourVal = parseInt($("bz-hour").value, 10);
     var unknown = !(hourVal >= 0);   // -1（时辰待定）或取值异常，都按午时兜底
     var h = unknown ? 12 : hourVal;
-    var ctx = { name: $("bz-name").value.trim(), dateStr: dateStr, h: h, unknown: unknown, gender: gender };
-    var p = dateStr.split("-");
 
-    var solar = Solar.fromYmdHms(+p[0], +p[1], +p[2], h, 0, 0);
+    // 真太阳时校正（勾选且能识别出生地时生效；识别不到城市仍按北京时间，提示但不阻断）
+    var adj = window.BirthUtil.trueSolarAdjust(rd.y, rd.m, rd.d, h, city, useTrueSun);
+    if (useTrueSun && adj.noCity) toast("未找到「" + city + "」的经度，已按北京时间排盘");
+
+    var cy = adj.y, cm = adj.m, cd = adj.d, ch = adj.h;
+    var dateStr = cy + "-" + pad(cm) + "-" + pad(cd);
+    var ctx = { name: $("bz-name").value.trim(), dateStr: dateStr + (adj.shifted ? "（真太阳时）" : ""), h: ch, unknown: unknown, gender: gender };
+
+    var solar = Solar.fromYmdHms(cy, cm, cd, ch, 0, 0);
     var lunar = Lunar.fromSolar(solar);
     var ec = safe(function () { return lunar.getEightChar(); }, null);
     if (!ec) { toast("排盘失败，请检查日期"); return; }
@@ -489,8 +653,8 @@
     // ② 命语就绪后原地升级：四柱与深度解读同源（同一次 calculateBazi）
     var upgrade = function (MY) {
       var deep = MY.calculateBazi({
-        year: +p[0], month: +p[1], day: +p[2],
-        timeIndex: hourToTimeIndex(h),
+        year: cy, month: cm, day: cd,
+        timeIndex: hourToTimeIndex(ch),
         gender: gender === 1 ? "male" : "female"
       });
       mingyuDeep = deep;
