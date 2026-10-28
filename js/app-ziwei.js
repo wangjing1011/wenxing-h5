@@ -171,6 +171,21 @@
     return lines;
   }
 
+  // 生年四化用单字缩写（禄/权/科/忌）跟在星名后，比「化权」省一个字，扇形里放得下
+  var MUT_CH = "禄权科忌";
+  function starTspans(text) {
+    var out = "", buf = "";
+    for (var i = 0; i < text.length; i++) {
+      var ch = text.charAt(i);
+      if (MUT_CH.indexOf(ch) >= 0) {
+        if (buf) { out += '<tspan fill="#e9e5f8">' + esc(buf) + "</tspan>"; buf = ""; }
+        out += '<tspan fill="#e2a3a3">' + esc(ch) + "</tspan>";
+      } else buf += ch;
+    }
+    if (buf) out += '<tspan fill="#e9e5f8">' + esc(buf) + "</tspan>";
+    return out;
+  }
+
   function buildCircularChart(a, byBranch) {
     var CX = 180, CY = 180, R_OUT = 168, R_IN = 101, R_MID = 137, GAP = 1.1;
     var parts = [];
@@ -196,28 +211,25 @@
       var stroke = isSoul ? "rgba(242,217,138,.85)" : "rgba(212,185,106,.18)";
       parts.push('<path d="' + d + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="' + (isSoul ? 1.6 : 1) + '"/>');
 
+      // 文字一律水平排：宫名永远朝外（下半圈整体镜像），倾斜排字在手机上几乎没法读
       var mx = CX + R_MID * Math.cos(mid * Math.PI / 180);
       var my = CY + R_MID * Math.sin(mid * Math.PI / 180);
-      var rot = mid + 90;                          // 文字沿环切向排列，并归一到 ±90° 保证不倒着写
-      var flip = 1;                                // 归一过程中若翻转过 180°，局部 -y 就指向圆心，径向偏移要取反
-      while (rot > 90) { rot -= 180; flip = -flip; }
-      while (rot <= -90) { rot += 180; flip = -flip; }
-      var nm = p.name + (p.isBodyPalace ? " ·身" : "");
-      var body = '<text text-anchor="middle" y="' + (-25 * flip) + '" font-size="11" font-weight="' + (isSoul ? "700" : "500") +
+      var dir = my - CY > 0.5 ? -1 : 1;            // 下半圈把行序翻过来，让宫名仍在外侧（正左正右保持宫名在上）
+      var nm = p.name + (p.isBodyPalace ? "·身" : "");
+      var body = '<text text-anchor="middle" y="' + (-18 * dir) + '" font-size="10.5" font-weight="' + (isSoul ? "700" : "500") +
           '" fill="' + (isSoul ? "#f2d98a" : "#d9d4ef") + '" letter-spacing=".5">' + esc(nm) + "</text>" +
-        '<text text-anchor="middle" y="' + (-13 * flip) + '" font-size="7.5" fill="#8b84a8">' + esc(p.heavenlyStem + p.earthlyBranch) + "</text>";
+        '<text text-anchor="middle" y="' + (-6 * dir) + '" font-size="7.5" fill="#847da2">' + esc(p.heavenlyStem + p.earthlyBranch) + "</text>";
       if (p.majorStars.length) {
         var ls = wrapStars(p.majorStars.map(function (s) {
-          return s.name + (s.mutagen ? "化" + s.mutagen : "");
+          return s.name + (s.mutagen || "");
         }), 4);
         ls.forEach(function (t, k) {
-          body += '<text text-anchor="middle" y="' + ((1 + k * 13) * flip) + '" font-size="8.5" fill="' +
-            (/化/.test(t) ? "#e8b9b9" : "#e9e5f8") + '">' + esc(t) + "</text>";
+          body += '<text text-anchor="middle" y="' + ((7 + k * 13) * dir) + '" font-size="9">' + starTspans(t) + "</text>";
         });
       } else {
-        body += '<text text-anchor="middle" y="' + (2 * flip) + '" font-size="8.5" fill="#6f6889">空宫</text>';
+        body += '<text text-anchor="middle" y="' + (7 * dir) + '" font-size="8.5" fill="#6f6889">空宫</text>';
       }
-      parts.push('<g transform="translate(' + mx.toFixed(1) + ',' + my.toFixed(1) + ') rotate(' + rot.toFixed(1) + ')">' + body + "</g>");
+      parts.push('<g transform="translate(' + mx.toFixed(1) + ',' + my.toFixed(1) + ')">' + body + "</g>");
     }
     // 中宫
     parts.push('<circle cx="' + CX + '" cy="' + CY + '" r="' + (R_IN - 5) + '" fill="rgba(18,12,38,.94)" stroke="rgba(212,185,106,.3)" stroke-width="1.1"/>');
@@ -258,7 +270,7 @@
       '<div class="zw-chart-wrap">' +
         '<div class="section-title">命 盘</div>' +
         buildCircularChart(a, byBranch) +
-        '<p class="zwc-note">子居下、顺时针排布；<b>命宫</b>高亮，带「身」即身宫，红字为生年四化。</p>' +
+        '<p class="zwc-note">子居下、顺时针排布；<b>命宫</b>高亮，带「身」即身宫，星名后的红字为生年四化（禄权科忌）。</p>' +
       "</div>";
 
     // 命宫主星解读
