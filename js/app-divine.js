@@ -49,13 +49,20 @@
   // =========================================================
   // 一、古法灵签
   // =========================================================
-  var LEVEL_TEXT = {
-    "上上": "签面极好，气势正盛。好签给的是底气，不是免考证——趁着这股劲把事推起来，才不辜负它。",
-    "上吉": "大方向是顺的，可放心往前走。顺境里最容易松懈，保持节奏比猛冲更重要。",
-    "中吉": "事情可为，但需要你主动推一把。等不来结果，做了才有下文。",
-    "中平": "平顺之签，无大起也无大落。此时守常即是进，把手里的事做扎实就够。",
-    "下下": "签面偏沉，是在提醒你慢下来。此时宜守不宜攻，避开硬碰，等局面松动再动。"
-  };
+  // 把解曰按句末标点拆成「解曰 + 提示」：前半讲是什么，最后一句作行动提示。
+  // 每签的解曰都独一无二，这样「提示」就不会再按吉凶等级套同一句模板。
+  function splitJie(j) {
+    var s = String(j || "").trim();
+    if (!s) return { jie: "", tip: "" };
+    var parts = (s.match(/[^。！？!?]+[。！？!?]?/g) || [s])
+      .map(function (x) { return x.trim(); })
+      .filter(Boolean);
+    if (parts.length <= 1) return { jie: s, tip: "" };
+    var tip = parts[parts.length - 1];
+    var jie = parts.slice(0, parts.length - 1).join("");
+    if (tip.length < 6) return { jie: s, tip: "" };   // 尾句太短不适合当提示，退回整段
+    return { jie: jie, tip: tip };
+  }
   var LEVEL_CLASS = { "上上": "", "上吉": "", "中吉": "lv-mid", "中平": "lv-mid", "下下": "lv-bad" };
 
   var qianState = { question: "", n: 0, q: null, saved: false };
@@ -104,6 +111,7 @@
     var box = $("qian-result");
     var lines = q.p.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("");
     var lvCls = LEVEL_CLASS[q.l] || "";
+    var sp = splitJie(q.j);
     box.innerHTML =
       '<div class="qian-card">' +
         '<div class="qhead">' +
@@ -112,8 +120,8 @@
           '<div class="topic">主题 · ' + esc(q.t) + "</div>" +
         "</div>" +
         '<div class="qian-poem">' + lines + "</div>" +
-        '<div class="jie"><h4>— 解 曰 —</h4>' + esc(q.j) + "</div>" +
-        '<div class="jie" style="margin-top:10px"><h4>— 提 示 —</h4>' + esc(LEVEL_TEXT[q.l] || "") + "</div>" +
+        '<div class="jie"><h4>— 解 曰 —</h4>' + esc(sp.jie || q.j) + "</div>" +
+        (sp.tip ? '<div class="jie" style="margin-top:10px"><h4>— 提 示 —</h4>' + esc(sp.tip) + "</div>" : "") +
         '<div class="result-actions" style="margin-top:12px">' +
           '<button class="btn ai-btn" id="btn-qian-ai">AI 解读（灵感视角）</button>' +
         "</div>" +
@@ -145,7 +153,7 @@
         data: function () {
           return { no: q.n, topic: q.t, poem: q.p, note: q.j };
         },
-        fallback: (q.j || "") + " " + (LEVEL_TEXT[q.l] || "")
+        fallback: q.j || ""
       });
     }
     box.scrollIntoView({ behavior: "smooth", block: "start" });
