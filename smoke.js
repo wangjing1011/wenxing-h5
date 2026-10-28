@@ -246,6 +246,19 @@ const shown = () => ["home", "tarot", "question", "draw", "result", "history", "
   // 8) 回归：塔罗与排盘入口不报错
   fire($('[data-go="huangli"]'), "click");
   ok(shown().join() === "huangli", "黄历入口正常");
+  // 穿衣颜色：以当日日干五行为「我」，生我=贵人、同我=助力、我克=财、我生=泄气、克我=忌
+  const hlDate = $("#hl-date");
+  const wearHeads = () =>
+    Array.prototype.map.call(document.querySelectorAll("#hl-result .hl-wear .wr"),
+      (r) => r.querySelectorAll(".cchip")[0].textContent);
+  hlDate.value = "2026-10-28"; fire(hlDate, "change");   // 乙亥日，日干乙（木）
+  ok(/乙（木）/.test($("#hl-result").textContent), "穿衣颜色按日干取五行（乙·木）");
+  ok(wearHeads().join("") === "黑绿黄红白",
+    "乙木日：水为贵人、木为助力、土为财、火为泄气、金为忌，实得 " + wearHeads().join(""));
+  hlDate.value = "2026-10-29"; fire(hlDate, "change");   // 丙子日，日干丙（火）
+  ok(wearHeads().join("") === "绿红白黄黑",
+    "丙火日：木为贵人、火为助力、金为财、土为泄气、水为忌，实得 " + wearHeads().join(""));
+  ok(document.querySelectorAll("#hl-result .hl-wear .cchip").length === 15, "每档 3 个色块，共 15 个");
   fire($("#view-huangli .nav-top .back"), "click");
   fire($('[data-go="bazi"]'), "click");
   ok(shown().join() === "bazi", "八字入口正常");

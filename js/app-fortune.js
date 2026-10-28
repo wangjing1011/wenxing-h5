@@ -204,6 +204,58 @@
     return "凶煞略多，今天更适合稳：把手头的事做好，避开冲动决策和高风险操作。";
   }
 
+  // ---- 今日穿衣颜色：以当日「日干五行」为参照，按五行生克分吉忌 ----
+  // 生我者（贵人）、同我者（助力）宜穿；我克者（财）平；我生者（泄气）、克我者（相冲）少穿
+  var STEM_WX = { "甲": "木", "乙": "木", "丙": "火", "丁": "火", "戊": "土", "己": "土", "庚": "金", "辛": "金", "壬": "水", "癸": "水" };
+  var WX_SHENG = { "木": "火", "火": "土", "土": "金", "金": "水", "水": "木" };  // 我生
+  var WX_KE = { "木": "土", "土": "水", "水": "火", "火": "金", "金": "木" };     // 我克
+  var WX_COLOR = {
+    "木": [["绿", "#4e9d68", 0], ["青", "#4f9d97", 0], ["翠", "#2f9e6e", 0]],
+    "火": [["红", "#c74b4b", 0], ["橙", "#cf7440", 0], ["紫", "#8f63bf", 0]],
+    "土": [["黄", "#c9a44e", 1], ["棕", "#8a6a4a", 0], ["米", "#cdbb98", 1]],
+    "金": [["白", "#e9e5da", 1], ["银", "#b9bcc6", 1], ["金", "#d4b96a", 1]],
+    "水": [["黑", "#3b3b47", 0], ["蓝", "#4a72ad", 0], ["灰蓝", "#6d8199", 0]]
+  };
+  function revWx(map, v) { for (var k in map) { if (map[k] === v) return k; } return ""; }
+
+  function renderWear(dayGZ) {
+    var stem = String(dayGZ || "").charAt(0);
+    var me = STEM_WX[stem];
+    if (!me) return "";
+    var guiRen = revWx(WX_SHENG, me);   // 生我 → 贵人色
+    var tongQi = me;                    // 同我 → 助力色
+    var caiSe = WX_KE[me];              // 我克 → 财色（得财但费力）
+    var haoQi = WX_SHENG[me];           // 我生 → 泄气色
+    var chong = revWx(WX_KE, me);       // 克我 → 相冲色
+
+    function chips(el) {
+      return (WX_COLOR[el] || []).map(function (c) {
+        return '<span class="cchip' + (c[2] ? " dark" : "") + '" style="background:' + c[1] + ";color:" +
+          (c[2] ? "#2b2440" : "#fff") + '">' + esc(c[0]) + "</span>";
+      }).join("");
+    }
+    var rows = [
+      ["g1", "大吉 · 贵人色", guiRen],
+      ["g2", "次吉 · 助力色", tongQi],
+      ["mid", "平 · 财色", caiSe],
+      ["b1", "少穿 · 泄气色", haoQi],
+      ["b2", "忌 · 相冲色", chong]
+    ];
+
+    return '<div class="hl-sec"><h4>穿衣颜色</h4>' +
+      '<div class="hl-wear">' +
+        rows.map(function (r) {
+          return '<div class="wr"><span class="wl ' + r[0] + '">' + esc(r[1]) + "</span>" +
+            '<span class="wc">' + chips(r[2]) + "</span></div>";
+        }).join("") +
+      "</div>" +
+      '<p class="hl-wear-note">以今日日干 <b>' + esc(stem) + "（" + esc(me) + "）</b> 为「我」：" +
+        esc(guiRen) + "生" + esc(me) + "为大吉，" + esc(me) + "同气为助力，" +
+        esc(me) + "克" + esc(caiSe) + "为财、" + esc(me) + "生" + esc(haoQi) + "为泄气，" +
+        esc(chong) + "克" + esc(me) + "为相冲。颜色是给心情用的，不必为它换掉整柜衣服。</p>" +
+      "</div>";
+  }
+
   function renderHuangLi() {
     var v = $("hl-date").value || todayStr();
     var p = v.split("-");
@@ -235,7 +287,8 @@
       "</div></div>" +
       '<div class="hl-sec"><h4>忌</h4><div class="tag-wall">' +
         (ji.length ? ji.map(function (t) { return '<span class="tag ji">' + esc(t) + "</span>"; }).join("") : '<span class="tag yi">无</span>') +
-      "</div></div>";
+      "</div></div>" +
+      renderWear(safe(function () { return lunar.getDayInGanZhi(); }, ""));
 
     var rows = [];
     if (jq) rows.push(["节气", jq]);

@@ -444,6 +444,21 @@ textarea:focus { border-color: rgba(212,185,106,.6); }
 .hl-row .k { color: var(--muted); flex: none; }
 .hl-row .v { color: var(--text); text-align: right; }
 .hl-tip { margin-top: 14px; background: rgba(139,124,246,.1); border: 1px solid rgba(139,124,246,.3); border-radius: 12px; padding: 14px; font-size: 13px; line-height: 1.9; color: #d9d4ef; }
+/* 穿衣颜色：一行一档，色块直接显示颜色名 */
+.hl-wear { border: 1px solid rgba(212,185,106,.14); border-radius: 12px; background: rgba(21,14,44,.45); padding: 3px 12px; }
+.hl-wear .wr { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px dashed rgba(212,185,106,.1); }
+.hl-wear .wr:last-child { border-bottom: 0; }
+.hl-wear .wl { flex: none; width: 92px; font-size: 11.5px; letter-spacing: .5px; }
+.hl-wear .wl.g1 { color: #7fd8b6; }
+.hl-wear .wl.g2 { color: #a8d8bd; }
+.hl-wear .wl.mid { color: var(--muted); }
+.hl-wear .wl.b1 { color: #d5a86e; }
+.hl-wear .wl.b2 { color: #e79a9a; }
+.hl-wear .wc { display: flex; flex-wrap: wrap; gap: 6px; }
+.cchip { font-size: 11px; line-height: 1; padding: 5px 9px; border-radius: 8px; border: 1px solid rgba(255,255,255,.16); }
+.cchip.dark { border-color: rgba(0,0,0,.2); }
+.hl-wear-note { margin-top: 9px; font-size: 11px; line-height: 1.75; color: var(--muted); }
+.hl-wear-note b { color: var(--gold2); font-weight: 500; }
 
 /* ===== 八字 ===== */
 .bz-card { background: linear-gradient(180deg, var(--panel2), var(--panel)); border: 1px solid var(--line); border-radius: 16px; padding: 18px 14px; margin-top: 14px; animation: rise .45s ease both; }
