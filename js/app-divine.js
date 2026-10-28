@@ -97,7 +97,7 @@
       qianState.n = n;
       qianState.q = q;
       renderQian(q);
-    }, 1500);
+    }, 800);
   });
 
   function renderQian(q) {

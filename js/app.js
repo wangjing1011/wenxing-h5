@@ -336,6 +336,60 @@
   });
 
   // ---------- 抽牌页 ----------
+  // 扇形摊开：把一摞牌按位置均分平移 + 微旋转，形成「摊开」的手牌弧线
+  function layoutFan(deck, n) {
+    var avail = deck.clientWidth || (document.documentElement.clientWidth - 48);
+    var gap = Math.min(48, (avail - 24) / n);
+    var step = Math.min(8, 36 / n);
+    Array.prototype.forEach.call(deck.children, function (t, i) {
+      var off = i - (n - 1) / 2;
+      t.style.transform = "translateX(" + (off * gap).toFixed(1) + "px) translateY(" + (Math.abs(off) * 7).toFixed(1) + "px) rotate(" + (off * step).toFixed(2) + "deg)";
+      t.style.zIndex = String(i);
+    });
+  }
+
+  function bindDrawClick(cb) {
+    cb.addEventListener("click", function () {
+      if (state.pool.length === 0) return;
+      var sp = SPREADS[state.spread];
+      if (state.picked.length >= sp.count) return;
+      if (cb.classList.contains("chosen")) return;
+
+      var card = state.pool.pop();
+      var reversed = Math.random() < REV_RATE;
+      var idx = state.picked.length;
+      state.picked.push({ card: card, reversed: reversed });
+
+      cb.classList.add("chosen");
+      cb.style.pointerEvents = "none";
+      var tcard = cb.parentNode;
+      // 抽中的牌缩淡「飞出」，其余牌保持摊开
+      (window.requestAnimationFrame || function (f) { return setTimeout(f, 0); })(function () {
+        tcard.style.opacity = "0";
+        tcard.style.transform += " scale(.5)";
+      });
+
+      var slotBox = $("slots").children[idx];
+      var slot = slotBox.querySelector(".slot");
+      slot.classList.add("filled");
+      slot.style.border = "1.5px solid rgba(212,185,106,.6)";
+      slot.style.background = "linear-gradient(160deg, #3a2a7a, #1b1246)";
+      slot.innerHTML = '<span class="pick-no">' + (idx + 1) + "</span>";
+
+      var left = sp.count - state.picked.length;
+      if (left > 0) {
+        $("draw-status").innerHTML = "已抽 <b>" + state.picked.length + "</b> 张 · 再抽 <b>" + left + "</b> 张";
+      } else {
+        $("draw-status").innerHTML = "牌已抽好，<b>查看解读</b>";
+        $("btn-to-result").style.display = "block";
+        $("deck").style.pointerEvents = "none";
+        Array.prototype.forEach.call(document.querySelectorAll("#deck .tcard"), function (t) {
+          if (!t.querySelector(".cardback.chosen")) t.style.opacity = ".28";
+        });
+      }
+    });
+  }
+
   function initDraw() {
     state.pool = shuffle(ALL);
     state.picked = [];
@@ -354,54 +408,38 @@
       slots.appendChild(box);
     });
 
+    // 造一副牌堆：先叠成一摞，洗牌抖动，再把牌扇形摊开
     var deck = $("deck");
-    deck.classList.remove("shuffle");
+    deck.className = "deck";
+    deck.innerHTML = "";
     deck.style.pointerEvents = "none";
-    Array.prototype.forEach.call(deck.querySelectorAll(".cardback"), function (b) {
-      b.classList.remove("chosen");
-      b.style.opacity = "";
-    });
-    void deck.offsetWidth; // 重置动画
-    deck.classList.add("shuffle");
-    setTimeout(function () { deck.style.pointerEvents = ""; }, 1100);
+    var n = Math.min(Math.max(sp.count + 3, 7), 12);
+    for (var i = 0; i < n; i++) {
+      var t = document.createElement("div");
+      t.className = "tcard";
+      // 初始叠成一摞（轻微错位 + 随机倾角，像手里的一叠牌）
+      var stackOff = i - (n - 1) / 2;
+      t.style.transform = "translateX(" + (stackOff * 2).toFixed(1) + "px) translateY(" + (Math.abs(stackOff) * 1.4).toFixed(1) + "px) rotate(" + ((i % 2 ? 1 : -1) * (1 + Math.random() * 1.5)).toFixed(2) + "deg)";
+      t.style.zIndex = String(i);
+      var cb = document.createElement("div");
+      cb.className = "cardback";
+      t.appendChild(cb);
+      deck.appendChild(t);
+      bindDrawClick(cb);
+    }
+
+    // 洗牌动效 1 秒，再扇形摊开
+    deck.classList.add("shuffling");
+    setTimeout(function () {
+      deck.classList.remove("shuffling");
+      (window.requestAnimationFrame || function (f) { return setTimeout(f, 0); })(function () {
+        layoutFan(deck, n);
+        deck.style.pointerEvents = "";
+      });
+    }, 1000);
 
     showView("draw");
   }
-
-  Array.prototype.forEach.call(document.querySelectorAll("#deck .cardback"), function (back) {
-    back.addEventListener("click", function () {
-      if (state.pool.length === 0) return;
-      var sp = SPREADS[state.spread];
-      if (state.picked.length >= sp.count) return;
-
-      var card = state.pool.pop();
-      var reversed = Math.random() < REV_RATE;
-      var idx = state.picked.length;
-      state.picked.push({ card: card, reversed: reversed });
-
-      back.classList.add("chosen");
-      setTimeout(function () { back.classList.remove("chosen"); }, 340);
-
-      var slotBox = $("slots").children[idx];
-      var slot = slotBox.querySelector(".slot");
-      slot.classList.add("filled");
-      slot.style.border = "1.5px solid rgba(212,185,106,.6)";
-      slot.style.background = "linear-gradient(160deg, #3a2a7a, #1b1246)";
-      slot.innerHTML = '<span class="pick-no">' + (idx + 1) + "</span>";
-
-      var left = sp.count - state.picked.length;
-      if (left > 0) {
-        $("draw-status").innerHTML = "已抽 <b>" + state.picked.length + "</b> 张 · 再抽 <b>" + left + "</b> 张";
-      } else {
-        $("draw-status").innerHTML = "牌已抽好，<b>查看解读</b>";
-        $("btn-to-result").style.display = "block";
-        $("deck").style.pointerEvents = "none";
-        Array.prototype.forEach.call(document.querySelectorAll("#deck .cardback"), function (b) {
-          b.style.opacity = ".35";
-        });
-      }
-    });
-  });
 
   $("btn-to-result").addEventListener("click", function () {
     // 合盘加入者抽完后走「合并到房间」，不进普通结果页
@@ -641,6 +679,24 @@
       blocks.push("如果只看一件事，就看「" + sp.positions[kp].label + "」——「" + P[kp].name + "」（" +
         ori(kp) + "）在这一位上分量最重。先把「" + kw(kp) + "」这件事想清楚，下一步往哪里走也就清楚了。");
     }
+
+    // ③-b 明确解释：用一句话把牌面落到「你接下来该怎么做」，避免看完只有意象没有结论
+    var conclusion;
+    if (total === 1) {
+      conclusion = "一句话结论：这张「" + P[0].name + "」（" + ori(0) +
+        "）在提醒你——" + (picked[0].reversed
+          ? "先收一收、别硬推，把眼前这件事理清楚、该补的补上，再谈下一步。"
+          : "可以顺着它给的方向，今天就迈出具体的一步。");
+    } else {
+      var kp = sp.keyPos;
+      conclusion = "一句话结论：重点看「" + sp.positions[kp].label + "」的「" + P[kp].name + "」（" + ori(kp) + "），" +
+        (revCount >= Math.ceil(total * 0.6)
+          ? "眼下宜守不宜攻，先把没做完的收尾、把关系里松动的地方补上。"
+          : revCount === 0
+            ? "势头是顺的，趁现在把计划往前推，别错过这股劲。"
+            : "能动的先动、暂时卡住的先放一放，分清主次就不会乱。");
+    }
+    blocks.push(conclusion);
 
     // ④ 收尾：把决定权交回用户手里
     blocks.push("塔罗是一面镜子，不是判决书。看完之后，挑一件今天就能动的小事去做，比反复琢磨牌面有用得多。");

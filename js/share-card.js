@@ -269,9 +269,11 @@
         '<div class="share-head"><b>分享卡片</b><button class="share-x" id="share-close">✕</button></div>' +
         '<div class="share-body" id="share-body"></div>' +
         '<p class="share-tip">手机里<b>长按图片</b>即可保存；电脑上点「下载图片」。</p>' +
+        '<p class="share-tip" id="share-wx-tip" style="display:none">请点击右上角 <b>···</b> 分享给朋友或朋友圈</p>' +
         '<div class="share-actions">' +
+          '<button class="btn gold" id="share-share">分享</button>' +
           '<button class="btn ghost" id="share-download">下载图片</button>' +
-          '<button class="btn gold" id="share-done">好了</button>' +
+          '<button class="btn ghost" id="share-done">好了</button>' +
         "</div>" +
       "</div>";
     document.body.appendChild(mask);
@@ -287,6 +289,36 @@
   }
 
   var lastDataUrl = "";
+  var lastFile = null;
+
+  function isWeChat() {
+    return /micromessenger/i.test((navigator.userAgent || ""));
+  }
+
+  // dataURL → File，供 navigator.share 以图片方式直接分享
+  function dataUrlToFile(dataUrl, name) {
+    var m = dataUrl.match(/^data:(.*?);base64,(.*)$/);
+    if (!m) return null;
+    var mime = m[1], bstr = atob(m[2]), n = bstr.length, u8 = new Uint8Array(n);
+    while (n--) u8[n] = bstr.charCodeAt(n);
+    return new File([u8], name, { type: mime });
+  }
+
+  function doShare(opts, file) {
+    var title = "问星 · 塔罗";
+    var text = "我抽到的牌，你也来试试～";
+    try {
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({ files: [file], title: title, text: text }).catch(function () {});
+        return;
+      }
+      if (navigator.share) {
+        navigator.share({ title: title, text: text, url: opts.url || location.href }).catch(function () {});
+        return;
+      }
+    } catch (e) {}
+    if (window.toast) window.toast("当前环境不支持直接分享，请长按图片保存后转发");
+  }
 
   function download() {
     if (!lastDataUrl) return;
@@ -331,7 +363,19 @@
 
       var dataUrl = canvas.toDataURL("image/png");
       lastDataUrl = dataUrl;
+      lastFile = dataUrlToFile(dataUrl, "问星-" + Date.now() + ".png");
       body.innerHTML = '<img class="share-img" id="share-img" src="' + dataUrl + '" alt="问星分享卡片">';
+
+      // 分享：微信内走右上角菜单；其余环境优先系统分享（直接发图片），不支持则提示长按保存
+      var shareBtn = mask.querySelector("#share-share");
+      var wxTip = mask.querySelector("#share-wx-tip");
+      if (isWeChat()) {
+        if (shareBtn) shareBtn.style.display = "none";
+        if (wxTip) wxTip.style.display = "block";
+      } else if (shareBtn) {
+        shareBtn.onclick = function () { doShare(opts, lastFile); };
+        if (wxTip) wxTip.style.display = "none";
+      }
       return dataUrl;
     });
   }

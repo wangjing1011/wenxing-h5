@@ -117,7 +117,8 @@ Object.keys(COUNTS).forEach((key) => {
 
   const ps = $$("#r-summary p");
   const texts = ps.map((p) => (p.textContent || "").trim());
-  const expect = n === 1 ? 3 : n + 3;
+  // 段落构成（每段只说一件事）：开场1 + 逐张 n + 重点1 + 明确结论1 + 收尾1
+  const expect = n === 1 ? 4 : n + 4;
   ok(ps.length === expect, key + "（" + n + " 牌）：综合提示分 " + expect + " 段，实得 " + ps.length);
   ok(texts.every((t) => t.length > 0), key + "：无空段");
   const longest = texts.reduce((a, b) => (b.length > a.length ? b : a), "");
