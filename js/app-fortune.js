@@ -534,7 +534,7 @@
       '<div class="bz-sec"><h4>日主 · ' + esc(m.dmGan) + (m.dm.el ? "（" + esc(m.dm.el) + "）" : "") + "</h4>" +
         '<div class="bz-dm">' +
           '<div class="row"><span class="k">气质</span><span class="v">' + esc(m.dm.trait) + "</span></div>" +
-          '<div class="row"><span class="k">提醒</span><span class="v">' + esc(m.dm.tip) + "</span></div>" +
+          '<div class="row"><span class="k">提醒</span><span class="v">' + esc(String(m.dm.tip || "").replace(/^提醒[:：]\s*/, "")) + "</span></div>" +
           '<div class="row"><span class="k">强弱参考</span><span class="v">' + esc(window.BAZI_LIB.strength[m.strengthKey]) +
           (m.deLing ? "日主得月令，先天底气较足。" : "日主不得月令，更依赖后天的环境与积累。") + "</span></div>" +
         "</div>" +
