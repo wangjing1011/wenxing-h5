@@ -536,11 +536,9 @@ var server = http.createServer(function (req, res) {
     return handlePairState(req, res, u);
   }
   if (u.indexOf("/health") === 0) {
-    return sendJson(res, 200, {
-      ok: true,
-      key: !!process.env.AI_KEY,
-      pair: { rooms: pair._rooms.size, ttlHours: pair._ttl / 3600000 }
-    });
+    // 只回 ok：曾经还带 key 是否配置、合盘房间数——对外等于免费给攻击者做侦察
+    // （判断值不值得刷、房间存量多少）。判「是否配了模型」改成看日志或内部排查。
+    return sendJson(res, 200, { ok: true });
   }
   if (SERVE_STATIC) {
     if (req.method !== "GET" && req.method !== "HEAD") {
